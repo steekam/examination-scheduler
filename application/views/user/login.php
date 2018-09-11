@@ -1,18 +1,37 @@
 <div class="login-content">
+
     <!-- Login -->
     <div class="lc-block toggled" id="l-login">
-        <form action="" method="POST" class="lcb-form">
+        <form action="<?php echo base_url()?>" method="POST" class="lcb-form">
+
+            <?php echo validation_errors() ?>
+            <?php if($this->session->flashdata('login_failed')): ?>
+                <?php 
+                    echo '<p class="alert alert-danger">'.
+                    $this->session->flashdata('login_failed').
+                    '</p>' 
+                ?>
+            <?php endif; ?>
+
+            <?php if($this->session->flashdata('user_logged_out')): ?>
+                <?php 
+                    echo '<p class="alert alert-success">'.
+                    $this->session->flashdata('user_logged_out').
+                    '</p>' 
+                ?>
+            <?php endif; ?>
+
             <div class="input-group m-b-20">
                 <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
                 <div class="fg-line">
-                    <input type="text" name="username" class="form-control" placeholder="Username">
+                    <input type="text" name="username" class="form-control" placeholder="Username" required>
                 </div>
             </div>
 
             <div class="input-group m-b-20">
                 <span class="input-group-addon"><i class="zmdi zmdi-male"></i></span>
                 <div class="fg-line">
-                    <input type="password" name="password" class="form-control" placeholder="Password">
+                    <input type="password" name="password" class="form-control" placeholder="Password" required>
                 </div>
             </div>
 

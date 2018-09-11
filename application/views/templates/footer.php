@@ -1,7 +1,6 @@
-<footer id="footer" <?php if($this->uri->segment(1)=='') echo "style='padding-left:0';" ?>>
+<footer id="footer">
     Copyright &copy; 2018 Examination Scheduler
 
-    <?php if($this->uri->segment(1)):?>
         <ul class="f-menu">
             <li><a href="#">Home</a></li>
             <li><a href="#">Dashboard</a></li>
@@ -9,7 +8,6 @@
             <li><a href="#">Support</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
-    <?php endif;?>
 </footer>
 
 <!-- Page Loader -->

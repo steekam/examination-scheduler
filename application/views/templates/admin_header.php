@@ -60,7 +60,7 @@
                     </ul>
                 </li>
                 <li>
-                    <button class="btn btn-primary">LOGOUT</button>
+                    <a href="<?php echo base_url('user/logout'); ?>" class="btn btn-primary">LOGOUT</a>
                 </li>
             </ul>
         </li>
@@ -74,8 +74,8 @@
                 <a href="#" data-ma-action="submenu-toggle" class="media">
                     <img class="pull-left" src="<?php echo base_url() ?>vendors/dark/img/profile-pics/1.jpg" alt="">
                     <div class="media-body">
-                        Super Admin
-                        <small>root@strathmore.edu</small>
+                        <?= $this->session->userdata('name'); ?>
+                        <small><?= $this->session->userdata('email');?></small>
                     </div>
                 </a>
 
