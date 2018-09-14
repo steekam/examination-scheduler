@@ -12,7 +12,7 @@ $(document).ready(function (){
     (function formErrorCheck() {
         //Add has-error class if there is an error
         const errorBlock = document.querySelectorAll('.form-group .help-block');
-
+        
         //Custom event
         var event = new CustomEvent('formError', {
             bubbles: true,
@@ -88,8 +88,5 @@ $(document).ready(function (){
         var nAnimOut = $(this).attr('data-animation-out');
         
         notify(nFrom, nAlign, nIcons, nType, nAnimIn, nAnimOut);
-    });
-
-
-    
+    }); 
 });

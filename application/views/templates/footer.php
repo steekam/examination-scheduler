@@ -48,6 +48,17 @@
 
         <script src="<?php echo base_url() ?>assets/js/app.js"></script>
         <script src="<?php echo base_url() ?>assets/js/main.js"></script>
+
+        <!-- Helper for the forgot password logic -->
+        <?php if(isset($forgot_trigger)): ?>
+            <script>
+                var tag = document.querySelector('#l-login .lcb-navigation a[data-ma-action="login-switch"]');
+                
+                $(window).load( ()=> {
+                    $(tag).trigger('click');
+                });
+            </script>
+        <?php endif;?>
         
     </body>
 

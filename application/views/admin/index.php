@@ -6,8 +6,13 @@
                 '</p>' 
             ?>
         <?php endif; ?>
-
-
+        <?php if($this->session->flashdata('updated_password')): ?>
+            <?php 
+                echo '<p class="alert alert-success">'.
+                $this->session->flashdata('updated_password').
+                '</p>' 
+            ?>
+        <?php endif; ?>
         <div class="notification-demo row">
             <div class="col-sm-2 col-xs-6">
                 <a href="#" class="btn btn-default" data-type="success" data-from="top" data-align="left" data-icon="fa fa-check">Top Left</a>
