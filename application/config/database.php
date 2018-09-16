@@ -75,11 +75,11 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'scheduler',
-	'password' => 'exam',
-	'database' => 'exam_scheduler',
-	'dbdriver' => 'mysqli',
+	'hostname' => 'ec2-54-247-79-32.eu-west-1.compute.amazonaws.com',
+	'username' => 'uiroeewhwmpenl',
+	'password' => '5d2e180feb5f03ac1181b7f8dd369ce44526295746d720aeed0ff7ea05c35902',
+	'database' => 'd8muhorfgf1cna',
+	'dbdriver' => 'postgre',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
