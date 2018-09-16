@@ -16,7 +16,16 @@
                 'role' => $this->input->post('role'),
                 'password' => $enc_password
             );
-            return $this->db->insert('users',$data);
+            $user_insert = $this->db->insert('users',$data);
+            $user_id = $this->get_user(false,$this->input->post('email'))['id'];
+            if($data['role'] == "faculty representative"){
+                $other_data = array(
+                    'rep_id' => $user_id,
+                    'faculty_id' => $this->input->post('faculty')
+                );
+                $this->db->insert('faculty_rep',$other_data);
+            }
+            return $user_insert;
         }
 
         //Login user
