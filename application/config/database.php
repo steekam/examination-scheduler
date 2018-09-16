@@ -76,9 +76,9 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'	=> 'mysql://bcde260b25810c:d97ebc06@eu-cdbr-west-02.cleardb.net/heroku_38060fc5e6853bf?reconnect=true',
 	'hostname' => 'eu-cdbr-west-02.cleardb.net',
-	'username' => 'heroku_38060fc5e6853bf',
+	'username' => 'bcde260b25810c',
 	'password' => 'd97ebc06',
-	'database' => 'd8muhorfgf1cna',
+	'database' => 'heroku_38060fc5e6853bf',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
