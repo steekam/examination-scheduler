@@ -55,6 +55,8 @@ $route['admin'] = 'admin/index';
 $route['login'] = 'user/login';
 $route['password_reset_activation'] = 'user/password_reset_activation';
 
+$route['faculty'] = 'faculty/index';
+
 $route['default_controller'] = 'user/login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

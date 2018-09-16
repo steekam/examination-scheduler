@@ -20,6 +20,10 @@
                 $this->user_redirect($this->session->userdata('role'));
             }
 
+            if($this->session->userdata('logged_in')){
+                $this->user_redirect($this->session->userdata('role'));
+            }
+
             //Form validation
             $this->form_validation->set_rules('username','Username','trim|required');
             $this->form_validation->set_rules('password','Password','trim|required');
@@ -204,14 +208,16 @@
             return $this->user_model->check_email($email);
         }
 
-        //Helps with the redirect based on user type 
+        /**
+         * Helps with the redirect based on the user role
+         */
         public function user_redirect($role){
             switch($role){
                 case 'administrator':
                     redirect('admin');
                     break;
                 case 'faculty representative':
-                    redirect();
+                    redirect('faculty');
                     break;
                 case 'scheduler manager':
                     redirect();

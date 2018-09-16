@@ -10,7 +10,8 @@
             }
 
             $this->load->view('templates/header');
-            $this->load->view('templates/admin_header');
+            $this->load->view('templates/top_header');
+            $this->load->view('admin/sidenav');
             $this->load->view('admin/index');
             $this->load->view('templates/footer');
         }
@@ -36,7 +37,8 @@
 
             if ($this->form_validation->run() === FALSE) {
                 $this->load->view('templates/header');
-                $this->load->view('templates/admin_header');
+                $this->load->view('templates/top_header');
+                $this->load->view('admin/sidenav');
                 $this->load->view('admin/register_user');
                 $this->load->view('templates/footer');
             } else {

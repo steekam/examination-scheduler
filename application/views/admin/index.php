@@ -6,7 +6,6 @@
                 '</p>' 
             ?>
         <?php endif; ?>
-
     </section>
 
     <!-- Close the #main section -->
