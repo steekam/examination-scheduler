@@ -65,6 +65,13 @@
 
         //Updates the reset code on password change request
         public function set_reset_code($reset_code,$user_id){
+            //Check if there is a valid reset code
+            $this->db->where('user_id',$user_id);
+            $result = $this->db->get('password_reset');
+            if($result->num_rows() > 0){
+                $message = "";
+            }
+
             $data = array(
                 'user_id' => $user_id,
                 'reset_code' => $reset_code
