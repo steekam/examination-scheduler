@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 09, 2018 at 05:53 PM
+-- Generation Time: Sep 16, 2018 at 05:26 PM
 -- Server version: 10.2.17-MariaDB
 -- PHP Version: 7.1.21
 
@@ -32,7 +32,8 @@ CREATE TABLE `password_reset` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `reset_code` varchar(255) NOT NULL,
-  `sent_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `sent_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `valid` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -54,6 +55,13 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `first_name`, `last_name`, `role`, `registered_at`, `activated`) VALUES
+(13, 'SWanyee', 'waynewanyee@gmail.com', '$2y$10$aRsG7wpHpxr7H5XJRVLZ8OqOcdBrwrZc.z1wdhMbYMQje6.xX/wai', 'Stephen', 'Wanyee', 'administrator', '2018-09-11 19:31:42', 'true');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -62,7 +70,7 @@ CREATE TABLE `users` (
 --
 ALTER TABLE `password_reset`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `password_reset_ibfk_1` (`user_id`);
 
 --
 -- Indexes for table `users`
@@ -78,13 +86,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `password_reset`
 --
 ALTER TABLE `password_reset`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Constraints for dumped tables
@@ -94,7 +102,7 @@ ALTER TABLE `users`
 -- Constraints for table `password_reset`
 --
 ALTER TABLE `password_reset`
-  ADD CONSTRAINT `password_reset_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `password_reset_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
