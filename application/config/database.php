@@ -74,12 +74,12 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
-	'dsn'	=> '',
-	'hostname' => 'ec2-54-247-79-32.eu-west-1.compute.amazonaws.com',
-	'username' => 'uiroeewhwmpenl',
-	'password' => '5d2e180feb5f03ac1181b7f8dd369ce44526295746d720aeed0ff7ea05c35902',
+	'dsn'	=> 'mysql://bcde260b25810c:d97ebc06@eu-cdbr-west-02.cleardb.net/heroku_38060fc5e6853bf?reconnect=true',
+	'hostname' => 'eu-cdbr-west-02.cleardb.net',
+	'username' => 'heroku_38060fc5e6853bf',
+	'password' => 'd97ebc06',
 	'database' => 'd8muhorfgf1cna',
-	'dbdriver' => 'postgre',
+	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
