@@ -36,11 +36,11 @@ $(document).ready(function (){
     /*
     * Notifications
     */
-    function notify(from, align, icon, type, animIn, animOut){
+    function notify(message,from, align, icon, type, animIn, animOut){
         $.growl({
             icon: icon,
             title: ' ',
-            message: 'You are logged in',
+            message: message,
             url: ''
         },{
                 element: 'body',
@@ -87,6 +87,7 @@ $(document).ready(function (){
         var nAnimIn = $(this).attr('data-animation-in');
         var nAnimOut = $(this).attr('data-animation-out');
         
-        notify(nFrom, nAlign, nIcons, nType, nAnimIn, nAnimOut);
+        notify("Welcome",nFrom, nAlign, nIcons, nType, nAnimIn, nAnimOut);
     }); 
+
 });

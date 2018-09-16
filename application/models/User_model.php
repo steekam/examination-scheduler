@@ -32,16 +32,16 @@
         }
 
         //Updates the password
-        public function update_password($enc_password, $activated = FALSE){
+        public function update_password($enc_password, $user_id, $activated = FALSE){
             $data = array(
                 'password' => $enc_password,
             );
             if(!$activated){
                 $data['activated'] = 'true';
-            }            
-            
-            $this->db->where('id',$this->session->userdata('user_id'));
+            }           
+            $this->db->where('id',$user_id);
             return $this->db->update('users',$data);
+
         }
 
         //Gets user details 
@@ -65,12 +65,8 @@
 
         //Updates the reset code on password change request
         public function set_reset_code($reset_code,$user_id){
-            //Check if there is a valid reset code
-            $this->db->where('user_id',$user_id);
-            $result = $this->db->get('password_reset');
-            if($result->num_rows() > 0){
-                $message = "";
-            }
+            //Revoke any expired codes
+            $this->revoke_expired_codes();
 
             $data = array(
                 'user_id' => $user_id,
@@ -78,5 +74,55 @@
             );
 
             return $this->db->insert('password_reset',$data);
+        }
+
+        /**
+         * Checks if the reset code is still valid
+         */
+        public function validate_reset_code($user_id,$reset_code){
+            //Revoke any expired codes
+            $this->revoke_expired_codes();
+
+            $where = array(
+                'user_id' => $user_id,
+                'reset_code' => $reset_code,
+                'valid' => 1
+            );
+            $this->db->where($where);
+            $query = $this->db->get('password_reset');
+
+            return ($query->num_rows() === 1);
+        }
+
+        //Revoke any links expired for password reset
+        public function revoke_expired_codes(){
+            $this->db->where('valid',1);
+            $query = $this->db->get('password_reset');
+            if($query->num_rows() > 0){
+                
+                foreach ($query->result() as $row) {
+                    $sent_at = date_create($row->sent_at);
+                    $now = date_create();
+                    $diff = date_diff($now,$sent_at);
+
+                    if($diff->d >= 2){
+                        $this->db->update('password_reset',array('valid'=>0),array('reset_code'=> $row->reset_code));
+                    }
+                    
+                }
+            }
+        }
+
+        /**
+         * Revoke used reset codes
+         */
+        public function revoke_reset_code($user_id,$reset_code){
+            $where = array(
+                'user_id' => $user_id,
+                'reset_code' => $reset_code                
+            );
+            $data = array('valid'=>0);
+            $this->db->where($where);
+            return $this->db->update('password_reset',$data);
         }
     }

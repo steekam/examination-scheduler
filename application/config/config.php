@@ -25,6 +25,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $config['base_url'] = '';
 
+///Time zone
+date_default_timezone_set('Africa/Nairobi');
+
 /*
 |--------------------------------------------------------------------------
 | Index File

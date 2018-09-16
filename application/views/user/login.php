@@ -11,6 +11,14 @@
                 ?>
             <?php endif; ?>
 
+            <?php if($this->session->flashdata('invalid_reset_code')): ?>
+                <?php 
+                    echo '<p class="alert alert-danger">'.
+                    $this->session->flashdata('invalid_reset_code').
+                    '</p>' 
+                ?>
+            <?php endif; ?>
+
             <?php if($this->session->flashdata('user_logged_out')): ?>
                 <?php 
                     echo '<p class="alert alert-success">'.
@@ -19,6 +27,13 @@
                 ?>
             <?php endif; ?>
 
+            <?php if($this->session->flashdata('updated_password')): ?>
+                <?php 
+                    echo '<p class="alert alert-success">'.
+                    $this->session->flashdata('updated_password').
+                    '</p>' 
+                ?>
+            <?php endif; ?>
             <div class="input-group m-b-20">
                 <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
                 <div class="fg-line">

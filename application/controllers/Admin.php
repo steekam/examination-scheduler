@@ -5,7 +5,7 @@
          * Loads default view of the admin dashboard
          */
         public function index(){
-            if(!$this->session->userdata('user_id')){
+            if(!$this->session->userdata('logged_in')){
                 redirect(base_url());
             }
 
@@ -19,7 +19,7 @@
          * Deals with registration of new users
          */
         public function register_user(){
-            if(!$this->session->userdata('user_id')){
+            if(!$this->session->userdata('logged_in')){
                 redirect(base_url());
             }
 
@@ -86,9 +86,9 @@
          * 
          * Checks if the email input is a valid strathmore.edu email.
          * 
-         * @param String $email Input passed in the form.
+         * @param string $email Input passed in the form.
          * 
-         * @return Boolean Indicates whether email is valid.
+         * @return boolean Indicates whether email is valid.
          */
         public function check_email($email){
             $this->form_validation->set_message('check_email','Email does not belong to strathmore.edu');
