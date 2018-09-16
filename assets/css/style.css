@@ -1,3 +1,15 @@
 select option {
     background-color: #2b343a; 
 }
+
+#addFacultyModal .modal-content {
+    background: #282E35;
+    
+}
+
+#addFacultyModal .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 20px;
+
+}

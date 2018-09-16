@@ -97,4 +97,13 @@
 
             return (strpos($email, 'strathmore.edu') !== FALSE);
         }
+
+        /**
+         * Adds new faculty to the database
+         */
+        public function add_faculty(){
+            if(isset($_POST['name'])){
+                return $this->faculty_model->add_faculty($_POST['name']);
+            }
+        }
     }

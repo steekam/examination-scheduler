@@ -10,4 +10,11 @@
             $this->load->view('faculty/index');
             $this->load->view('templates/footer');
         }
+
+        /**
+         * Gets all the faculties and encodes in JSON format
+         */
+        public function get_faculties(){
+            echo json_encode($this->faculty_model->get_faculties());
+        }
     }

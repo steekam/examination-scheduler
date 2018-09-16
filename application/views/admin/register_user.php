@@ -66,12 +66,52 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group hidden" id="faculty-select">
+                <label class="col-sm-2 control-label">Faculty</label>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <select name="faculty" class="form-control" data-source="<?= base_url('faculty/get_faculties') ?>">
+                        </select>
+                    </div>
+                    <button id="addNewFaculty" class="btn bgm-teal m-t-5 btn-icon-text"><i class="zmdi zmdi-plus"></i> Add new faculty</button>
+                </div>
+            </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-default">Register</button>
+                    <button type="submit" class="btn btn-success">Register</button>
                 </div>
             </div>
         </div>
     </form>
+
+    <!-- Add faculty modal -->
+    <div class="modal fade" id="addFacultyModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content c-white">
+                <div class="modal-header">
+                    <h5 class="modal-title c-white">ADD NEW FACULTY</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body row">
+                    <form method="post" action="<?= base_url('admin/add_faculty') ?>">
+                        <div class="form-group">
+                             <label class="col-sm-2 control-label">Faculty Name</label>
+                            <div class="col-sm-8">
+                                <div class="fg-line">
+                                    <input type="text" id="facultyName" name="faculty" placeholder="Faculty name" class="form-control" required autofocus>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer row  p-b-20">
+                    <button type="button" class="btn btn-danger offset-3" data-dismiss="modal">Cancel</button>
+                    <button type="button" id="addFaculty" class="btn bgm-teal">Add faculty</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </section>
