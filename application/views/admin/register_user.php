@@ -17,7 +17,7 @@
     <?php endif; ?>
     <form action="<?php echo base_url('admin/register_user');?>" method="post" class="form-horizontal card" role="form">
         <div class="card-header">
-            <h2>Fill in user details</h2>
+            <h2>USER REGISTRATION</h2>
         </div>
         
         <div class="card-body card-padding">

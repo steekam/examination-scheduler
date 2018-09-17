@@ -13,3 +13,19 @@ select option {
     padding-right: 20px;
 
 }
+
+.details-card > .bs-item{
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.details-card > .bs-item > .number{
+    font-size: 3.8em;
+}
+
+.details-card > .bs-item > .text{
+    font-size: 1.5em;
+    padding-left: 10px;
+}

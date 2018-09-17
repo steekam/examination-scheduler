@@ -17,4 +17,15 @@
         public function get_faculties(){
             echo json_encode($this->faculty_model->get_faculties());
         }
+
+        /**
+         * Interface for dealing with details provided by the facult representative
+         */
+        public function details(){
+            $this->load->view('templates/header');
+            $this->load->view('templates/top_header');
+            $this->load->view('faculty/sidenav');
+            $this->load->view('faculty/details');
+            $this->load->view('templates/footer');
+        }
     }

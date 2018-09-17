@@ -90,10 +90,22 @@ $(document).ready(function (){
         notify("Welcome",nFrom, nAlign, nIcons, nType, nAnimIn, nAnimOut);
     }); 
 
-    /**
+    //Call functions only used in the page
+    var page = window.location.pathname;
+    if( page.includes('admin/register_user') ){
+        adminUserRegistration();
+    }
+    
+    
+    
+
+    
+});
+
+/**
      *  Faculty representative helper
      */
-   
+function adminUserRegistration() {
     var role = document.querySelector('select[name="role"]');
     var faculty = document.querySelector('#faculty-select');
 
@@ -108,30 +120,30 @@ $(document).ready(function (){
             faculty.classList.remove('hidden');
         } else {
             faculty.classList.add('hidden');
-        }    
+        }
     });
 
     /**
      * Add faculty option
      */
     var btnAddNewFaculty = document.querySelector('#addNewFaculty');
-    
-    btnAddNewFaculty.addEventListener('click',function(event){
+
+    btnAddNewFaculty.addEventListener('click', function (event) {
         event.preventDefault();
-        $('#addFacultyModal').modal('show');                
-    },false);
+        $('#addFacultyModal').modal('show');
+    }, false);
 
     var addFaculty = document.querySelector('#addFaculty');
-    addFaculty.addEventListener('click',function(event){
+    addFaculty.addEventListener('click', function (event) {
         event.preventDefault();
         var facultyName = document.querySelector("#facultyName").value;
         var url = document.querySelector("#facultyName").closest('form').action;
-        
+
         $.ajax({
-            method:"POST",
+            method: "POST",
             url: url,
-            data: {name: facultyName }
-        }).done( ()=> {
+            data: { name: facultyName }
+        }).done(() => {
             $('#addFacultyModal').modal('hide');
             swal({
                 title: "Success",
@@ -139,24 +151,24 @@ $(document).ready(function (){
                 type: "success",
                 showConfirmButton: false,
                 timer: 2000
-            });            
-        }).fail( () =>{
+            });
+        }).fail(() => {
             swal({
                 title: "Could not update faculty",
                 text: "Try again later",
                 type: "warning",
                 showConfirmButton: false,
                 timer: 2000
-            }); 
+            });
             $('#addFacultyModal').modal('hide');
 
         });
     });
 
-    $('#addFacultyModal').on('hidden.bs.modal', function (){
+    $('#addFacultyModal').on('hidden.bs.modal', function () {
         document.querySelector("#facultyName").value = "";
     });
-    
+
     /**
      * Update the faculties from the database
      */
@@ -168,17 +180,15 @@ $(document).ready(function (){
      */
     function fillFaculties(data) {
         data.forEach(element => {
-            var option = '<option value="' + element["id"] + '"<?php echo  set_select("faculty", '+element["name"]+', TRUE); ?>'+element['name']+'</option>';
-            $( document.querySelector("select[name=faculty]") ).append(option);
+            var option = '<option value="' + element["id"] + '"<?php echo  set_select("faculty", ' + element["name"] + ', TRUE); ?>' + element['name'] + '</option>';
+            $(document.querySelector("select[name=faculty]")).append(option);
         });
     }
-    
-    $.post(fetchUrl,function(data){
-        fillFaculties(data);        
-    },"json")
-    .fail(() => {
-            console.log("Error in fetch");            
-        });
 
-    
-});
+    $.post(fetchUrl, function (data) {
+        fillFaculties(data);
+    }, "json")
+        .fail(() => {
+            console.log("Error in fetch");
+        });
+}
