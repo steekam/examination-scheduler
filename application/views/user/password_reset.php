@@ -1,4 +1,13 @@
-<form action="<?php echo base_url('user/password_reset/'.$this->uri->segment(3).'/'.$this->uri->segment(4));?>" method="post">
+<?php 
+    $action_url = "";
+    if($this->uri->segment(3) == null && $this->uri->segment(4) == null ){
+        $actin_url = base_url('user/password_reset/'.$this->uri->segment(3).'/'.$this->uri->segment(4));
+    }else{
+        $action_url = base_url('user/password_reset/');
+    }
+?>
+    
+<form action="<?= $action_url; ?>" method="post">
     <div class="card col-md-4 col-sm-6 col-sm-offset-3 col-md-offset-4 m-t-30">
         <div class="card-header ch-alt text-center text-capitalize">
             <h2>Enter your new password </h2>
