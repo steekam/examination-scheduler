@@ -96,7 +96,23 @@ $(document).ready(function (){
         adminUserRegistration();
     }
     
-    
+    $(document).on('show.bs.collapse','.collapse',function(event){
+        //Change the plus icon to minus
+        let $this = event.currentTarget;
+        let pullLeft = $($this).parent().siblings()[0];
+        let label = $(pullLeft).children()[0];
+        let icon = $(label).children()[0];
+        $(icon).removeClass('zmdi-plus').addClass('zmdi-minus');
+    });
+
+    $(document).on('hide.bs.collapse', '.collapse', function (event) {
+        //Change the plus icon to minus
+        let $this = event.currentTarget;
+        let pullLeft = $($this).parent().siblings()[0];
+        let label = $(pullLeft).children()[0];
+        let icon = $(label).children()[0];
+        $(icon).removeClass('zmdi-minus').addClass('zmdi-plus');
+    });
     
 
     
