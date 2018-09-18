@@ -99,7 +99,10 @@
                     $this->session->set_flashdata('invalid_reset_code',"The reset link has expired or does not exist");
                     redirect(base_url());
                 }
+            }else{
+                $user_id = $this->session->userdata('user_id');
             }
+
             //Form validation
             $this->form_validation->set_rules('password','Password','trim|required');
             $this->form_validation->set_rules('password2','Confirm Password','trim|required|matches[password]',array(
@@ -113,7 +116,11 @@
             }else{
                 $enc_password = password_hash($this->input->post('password'),PASSWORD_BCRYPT);
                 $this->user_model->update_password($enc_password,$user_id,TRUE);
-                $this->user_model->revoke_reset_code($user_id,$reset_code);
+
+                if($user_id && $reset_code){
+                    $this->user_model->revoke_reset_code($user_id,$reset_code);
+                }
+
                 $this->session->set_flashdata('updated_password','Password successfully updated');
                 redirect(base_url());
             } 
