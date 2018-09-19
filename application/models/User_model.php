@@ -115,7 +115,7 @@
                     $diff = date_diff($now,$sent_at);
 
                     if($diff->d >= 2){
-                        $this->db->update('password_reset',array('valid'=>0),array('reset_code'=> $row->reset_code));
+                        $this->db->update('password_reset',array('valid' => 0),array('reset_code'=> $row->reset_code));
                     }
                     
                 }
