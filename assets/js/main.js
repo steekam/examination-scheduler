@@ -114,8 +114,6 @@ $(document).ready(function (){
         $(icon).removeClass('zmdi-minus').addClass('zmdi-plus');
     });
     
-
-    
 });
 
 /**

@@ -28,7 +28,7 @@
                 <a href="#">Examinations</a>
             </li>
             <li class="<?php if($this->uri->uri_string() =='faculty/details') echo 'active'; ?>">
-                <a href="<?= base_url('faculty/details') ?>">Faculty details</a>
+                <a href="<?= base_url('faculty/details') ?>">Faculty Details</a>
             </li>
         </ul>
     </aside>
