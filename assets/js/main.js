@@ -31,7 +31,7 @@ $(document).ready(function (){
         });  
     })();
 
-    // $('input').attr('autocomplete','off');
+    $('input').attr('autocomplete','off');
     
     /*
     * Notifications
@@ -94,8 +94,12 @@ $(document).ready(function (){
     var page = window.location.pathname;
     if( page.includes('admin/register_user') ){
         adminUserRegistration();
+    } else if (page.includes('faculty/view_course')){
+        faculty_view_course();
     }
     
+
+    //General utility
     $(document).on('show.bs.collapse','.collapse',function(event){
         //Change the plus icon to minus
         let $this = event.currentTarget;
@@ -117,8 +121,8 @@ $(document).ready(function (){
 });
 
 /**
-     *  Faculty representative helper
-     */
+ *  Faculty representative registration helper
+ */
 function adminUserRegistration() {
     var role = document.querySelector('select[name="role"]');
     var faculty = document.querySelector('#faculty-select');
@@ -205,4 +209,53 @@ function adminUserRegistration() {
         .fail(() => {
             console.log("Error in fetch");
         });
+}
+
+/**
+ * Faculty js interactions
+ */
+function faculty_view_course(){
+    $(document).on('click','.edit-course, .edit-unit, .edit-units',function(event){
+        let target = $(this).attr('data-target');
+
+        switch(target)
+        {
+            case "#general":
+            {
+                let form = $(target).children()[0];
+                var hideDiv = $(form).children()[1];
+                $(hideDiv).toggleClass('hidden');
+                $($(form).children()[0]).children().find('input').prop('disabled',(i,v)=>{return !v});
+                $('.edit-course > i').toggleClass('zmdi-close zmdi-edit');
+                
+                //Cancel button
+                $('.cancel-general').click(function(event){
+                    event.preventDefault();
+                    $('.edit-course > i').removeClass('zmdi-close').addClass('zmdi-edit');
+                    $(hideDiv).addClass('hidden');
+                });
+                break;
+                
+            }
+            case "#units":
+            {
+                $('.edit-units>i').toggleClass('zmdi-close zmdi-edit');                    
+                $('#units .pull-right').toggleClass('hidden');
+                $('.add-unit').toggleClass('hidden');
+                break;
+                
+            }
+            case '#unit':
+            {
+                console.log("unit");
+                
+                break;
+            }
+            default:
+            {
+
+            }
+        }
+        
+    });
 }

@@ -2,7 +2,10 @@ select option {
     background-color: #2b343a; 
 }
 
-#addFacultyModal .modal-content, #new_course_modal .modal-content {
+#addFacultyModal .modal-content, 
+#new_course_modal .modal-content, 
+#new_unit_modal .modal-content,
+#edit_unit_modal .modal-content {
     background: #282E35;
     
 }
