@@ -6,6 +6,8 @@
         public function index(){
             // Gets the faculty details of every rep
             $data['faculty'] = $this->faculty_model->get_faculty_rep();
+            $data['course_count'] = $this->faculty_model->get_course($data['faculty']['id']);
+            $data['unit_count'] = $this->faculty_model->get_unit_count($data['faculty']['id']);
 
             $this->load->view('templates/header');
             $this->load->view('templates/top_header');
