@@ -1,3 +1,6 @@
+body{
+    font-family: 'Raleway', sans-serif;
+}
 select option {
     background-color: #2b343a; 
 }

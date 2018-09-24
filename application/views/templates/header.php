@@ -6,6 +6,7 @@
     <title>Examination Scheduler</title>
 
     <!-- Vendor CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link href="<?php echo base_url() ?>vendors/dark/vendors/bower_components/animate.css/animate.min.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>vendors/dark/vendors/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>vendors/dark/vendors/bower_components/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
