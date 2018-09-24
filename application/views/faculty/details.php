@@ -172,14 +172,6 @@
             </div>
             <div class="modal-body">
                 <form method="POST" action=" " class="row">
-                    <div class="col-md-2 col-xs-2">
-                        <div class="input-group fg-float w-100">
-                            <div class="fg-line">
-                                <input type="text" name="code" class="form-control">
-                                <label class="fg-label">Code</label>
-                            </div>
-                        </div>
-                    </div>
 
                      <div class="col-md-6 col-xs-6">
                         <div class="input-group fg-float w-100">
@@ -202,7 +194,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success">Save changes</button>
+                <a href="#" class="btn btn-success" data-type="success">Success</a>
+                <!-- <button type="button" class="btn btn-success" data-type="success">Save changes</button> -->
             </div>
         </div>
     </div>
