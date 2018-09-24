@@ -2,7 +2,7 @@
     <div class="row container">
         <div class="card">
             <div class="card-header">
-                <span><?php echo $faculty['name'];?></span>
+                <span style='font-family: 'Raleway', sans-serif;'><?= $faculty['name'];?></span>
             </div>
         </div>
     </div>
@@ -13,7 +13,7 @@
             <div class="bs-item z-depth-2 card-header">
                 <span class="number">
                     <i class="zmdi zmdi-library c-bluegray"></i>
-                    8 
+                    <?= $course_count; ?> 
                 </span> 
                 <span class="text">Courses</span>  
             </div>
@@ -23,7 +23,7 @@
             <div class="bs-item z-depth-2 card-header">
                 <span class="number">
                     <i class="zmdi zmdi-book c-bluegray"></i>
-                    20 
+                    <?= isset($unit_count["units"]) ? $unit_count["units"] : 0; ?> 
                 </span> 
                 <span class="text">Units</span>
             </div>
