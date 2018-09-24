@@ -31,6 +31,32 @@
             $query = $this->db->get();
             return $query->row_array();
         }
+         /**
+         * Gets the course details
+         */
+        public function get_course($faculty_id){
+            $rep_id = $this->session->userdata('user_id');
+            $this->db->from('course');
+            $this->db->join('faculty','faculty.id = course.faculty_id');
+            $this->db->where(array('faculty_id'=>$faculty_id));
+            // $query = $this->db->get();
+            return $this->db->count_all_results();
+        }
+        /**
+         *  Gets the total units per faculty
+         */
+        public function get_unit_count($faculty_id){
+            $sql = "SELECT course.id AS course, COUNT(unit.id) AS units
+            FROM unit
+            INNER JOIN
+            course ON course.id = unit.course_id
+            WHERE course.faculty_id = ?
+            GROUP BY (course.id)";
+            $result = $this->db->query($sql, array($faculty_id));
+            return $result->row_array();
+            
+        }
+
         /**
          *  Updates the courses table
         */
