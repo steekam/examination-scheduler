@@ -2,7 +2,7 @@
     <div class="row container">
         <div class="card">
             <div class="card-header">
-                <span>Faculty of Information Technology</span>
+                <span><?php echo $faculty['name'];?></span>
             </div>
         </div>
     </div>

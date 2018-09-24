@@ -4,10 +4,13 @@
          * Index function for the faculty representative
          */
         public function index(){
+            // Gets the faculty details of every rep
+            $data['faculty'] = $this->faculty_model->get_faculty_rep();
+
             $this->load->view('templates/header');
             $this->load->view('templates/top_header');
             $this->load->view('faculty/sidenav');
-            $this->load->view('faculty/index');
+            $this->load->view('faculty/index',$data);
             $this->load->view('templates/footer');
         }
 
@@ -42,5 +45,12 @@
             $this->load->view('faculty/sidenav');
             $this->load->view('faculty/view_course',$data);
             $this->load->view('templates/footer');
+        }
+
+        /** 
+         * Gets the faculty details
+         */
+        public function view_faculty(){
+            $data['faculty'] = $this->faculty_model->get_faculty_rep();
         }
     }
