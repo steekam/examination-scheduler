@@ -39,7 +39,7 @@ $(document).ready(function (){
     function notify(message,from, align, icon, type, animIn, animOut){
         $.growl({
             icon: icon,
-            title: ' ',
+            title: '',
             message: message,
             url: ''
         },{
@@ -78,7 +78,8 @@ $(document).ready(function (){
         });
     };
     
-    $('.notification-demo > div > .btn').click(function(e){
+    //Notification message when a new course is added.
+    $('.succesful-course-notification > .btn-success').click(function(e){
         e.preventDefault();
         var nFrom = $(this).attr('data-from');
         var nAlign = $(this).attr('data-align');
@@ -87,7 +88,19 @@ $(document).ready(function (){
         var nAnimIn = $(this).attr('data-animation-in');
         var nAnimOut = $(this).attr('data-animation-out');
         
-        notify("Welcome",nFrom, nAlign, nIcons, nType, nAnimIn, nAnimOut);
+        notify("Course has been succesfully registered",nFrom, nAlign, nIcons, nType, nAnimIn, nAnimOut);
+    }); 
+    //Notification message when a new course is not added.
+    $('.failed-course-notification > .btn').click(function(e){
+        e.preventDefault();
+        var nFrom = $(this).attr('data-from');
+        var nAlign = $(this).attr('data-align');
+        var nIcons = $(this).attr('data-icon');
+        var nType = $(this).attr('data-type');
+        var nAnimIn = $(this).attr('data-animation-in');
+        var nAnimOut = $(this).attr('data-animation-out');
+        
+        notify("Course has not been succesfully registered",nFrom, nAlign, nIcons, nType, nAnimIn, nAnimOut);
     }); 
 
     //Call functions only used in the page
