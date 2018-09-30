@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <section class="create-user-content" id="content">
 
     <?php if($this->session->flashdata('user_registered')): ?>

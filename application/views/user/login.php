@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <div class="login-content">
     <!-- Login -->
     <div class="lc-block toggled" id="l-login">

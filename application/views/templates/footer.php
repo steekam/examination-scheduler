@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <footer id="footer">
     Copyright &copy; 2018 Examination Scheduler
 
