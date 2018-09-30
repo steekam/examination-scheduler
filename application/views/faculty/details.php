@@ -1,8 +1,23 @@
 <section id="content">
+    <?php if($this->session->flashdata('course_registered')): ?>
+        <?php 
+            echo '<p class="alert alert-success">'.
+            $this->session->flashdata('course_registered').
+            '</p>' 
+        ?>
+    <?php endif; ?>
+    
+    <?php if($this->session->flashdata('course_not_registered')): ?>
+        <?php 
+            echo '<p class="alert alert-danger">'.
+            $this->session->flashdata('course_not_registered').
+            '</p>' 
+        ?>
+    <?php endif; ?>
     <div class="row container">
         <div class="card">
             <div class="card-header">
-                <span>Faculty of Information Technology</span>
+                <span><?= $faculty['name'];?></span>
             </div>
         </div>
     </div>
@@ -171,32 +186,34 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="POST" action=" " class="row">
+                <?php echo form_open('faculty/add_course');?>
+                    <div class="row">
+                        <div class="col-md-6 col-xs-6">
+                            <div class="input-group fg-float w-100">
+                                <div class="fg-line">
+                                    <input type="text" name="name" class="form-control">
+                                    <label class="fg-label">Name</label>
+                                </div>
+                            </div>
+                        </div>
 
-                     <div class="col-md-6 col-xs-6">
-                        <div class="input-group fg-float w-100">
-                            <div class="fg-line">
-                                <input type="text" name="name" class="form-control">
-                                <label class="fg-label">Name</label>
+                        <div class="col-md-4 col-xs-4">
+                            <div class="input-group fg-float w-100">
+                                <div class="fg-line">
+                                    <input type="text" name="abbrev" class="form-control">
+                                    <label class="fg-label">Abbreviation</label>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                     <div class="col-md-4 col-xs-4">
-                        <div class="input-group fg-float w-100">
-                            <div class="fg-line">
-                                <input type="text" name="abbrev" class="form-control">
-                                <label class="fg-label">Abbreviation</label>
-                            </div>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success" data-type="success" data-dismiss="modal">ADD</button>
+                        <!-- <button type="button" class="btn btn-success" data-type="success">Save changes</button> -->
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <a href="#" class="btn btn-success" data-type="success">Success</a>
-                <!-- <button type="button" class="btn btn-success" data-type="success">Save changes</button> -->
-            </div>
+            
         </div>
     </div>
 </div>
