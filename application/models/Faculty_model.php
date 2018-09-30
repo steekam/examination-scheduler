@@ -60,13 +60,14 @@
         /**
          *  Updates the courses table
         */
-        public function add_course(){
-            // Stores the course details to be passed to the database
+        public function add_course($faculty_id){
             $data = array(
-                'course_code' => $this->input->post('course_id'),
+                'abbrev' => $this->input->post('abbrev'),
                 'name' => $this->input->post('name'),
-                'faculty_id' => $this->input->post('faculty_id')
+                'faculty_id' => $faculty_id
             );
-            return $this->db->insert('course',$data);
+            $course_insert = $this->db->insert('course',$data);
+
+            return $course_insert;
         }
     }
