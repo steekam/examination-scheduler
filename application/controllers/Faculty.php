@@ -28,10 +28,13 @@
          * i.e courses and units in each course
          */
         public function details(){
+            $data['faculty'] = $this->faculty_model->get_faculty_rep();
+            // $data['course'] = $this->faculty_model->add_course($data['faculty']['id']);
+
             $this->load->view('templates/header');
             $this->load->view('templates/top_header');
             $this->load->view('faculty/sidenav');
-            $this->load->view('faculty/details');
+            $this->load->view('faculty/details',$data);
             $this->load->view('templates/footer');
         }
 
@@ -54,5 +57,52 @@
          */
         public function view_faculty(){
             $data['faculty'] = $this->faculty_model->get_faculty_rep();
+        }
+
+        /**
+         * Adds new course 
+         */
+        public function add_course()
+        {
+            $data['faculty'] = $this->faculty_model->get_faculty_rep();
+            $faculty_id = $data['faculty']['id'];
+
+            //Set form validations
+            $this->form_validation->set_rules('abbrev','Abbreviation','trim|required|is_unique[course.abbrev]',array(
+                'is_unique' => 'This %s already exists'
+            ));
+            $this->form_validation->set_rules('name','Name','trim|required|is_unique[course.name]',array(
+                'is_unique' => 'This %s already exists'
+            ));
+
+            if ($this->form_validation->run() === FALSE) {
+                $this->load->view('templates/header');
+                $this->load->view('templates/top_header');
+                $this->load->view('faculty/sidenav');
+                $this->load->view('faculty/view_course',$data);
+                $this->load->view('templates/footer');
+            } else {
+                $data = array(
+                    'abbrev' => $this->input->post('abbrev'),
+                    'name' => $this->input->post('name'),
+                    'faculty_id' => $faculty_id
+                );
+                if($this->faculty_model->add_course($faculty_id)){
+                    //Set session message
+                    $this->session->set_flashdata('course_registered','New course has been registered');
+                }else{
+                    $this->session->set_flashdata('course_not_registered','New course has not been registered');
+                }
+                
+                 
+
+                 redirect('faculty/details');
+            }
+
+            // Stores the course details to be passed to the database
+            
+            //Transfer the data to the model
+            $this->faculty_model->add_course($data);
+            $this->load->view('faculty/view_course',$data);
         }
     }
