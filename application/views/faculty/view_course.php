@@ -30,7 +30,7 @@
                             </div>
                         </div>
     
-                         <div class="col-md-6 col-xs-6">
+                        <div class="col-md-6 col-xs-6">
                             <div class="input-group fg-float w-100">
                                 <div class="fg-line">
                                     <input type="text" name="name" class="form-control" disabled>
@@ -39,7 +39,7 @@
                             </div>
                         </div>
     
-                         <div class="col-md-4 col-xs-4">
+                        <div class="col-md-4 col-xs-4">
                             <div class="input-group fg-float w-100">
                                 <div class="fg-line">
                                     <input type="text" name="abbrev" class="form-control" disabled>
@@ -158,7 +158,7 @@
                         </div>
                     </div>
 
-                     <div class="col-md-6 col-xs-6">
+                    <div class="col-md-6 col-xs-6">
                         <div class="input-group fg-float w-100">
                             <div class="fg-line">
                                 <input type="text" name="name" class="form-control">
@@ -197,7 +197,7 @@
                         </div>
                     </div>
 
-                     <div class="col-md-6 col-xs-6">
+                    <div class="col-md-6 col-xs-6">
                         <div class="input-group fg-float w-100">
                             <div class="fg-line">
                                 <input type="text" name="name" class="form-control">

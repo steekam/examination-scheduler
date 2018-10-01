@@ -62,8 +62,7 @@
         /**
          * Adds new course 
          */
-        public function add_course()
-        {
+        public function add_course(){
             $data['faculty'] = $this->faculty_model->get_faculty_rep();
             $faculty_id = $data['faculty']['id'];
 
@@ -94,15 +93,43 @@
                     $this->session->set_flashdata('course_not_registered','New course has not been registered');
                 }
                 
-                 
-
-                 redirect('faculty/details');
+                redirect('faculty/details');
             }
+        }
+            
+                
+                                                                                                                        }                                                                                                               }
 
             // Stores the course details to be passed to the database
             
             //Transfer the data to the model
-            $this->faculty_model->add_course($data);
-            $this->load->view('faculty/view_course',$data);
+            // $this->faculty_model->add_course($data);
+            // $this->load->view('faculty/view_course',$data);
+    
+        /*
+        * Function that registers courses
+        */
+        public function register_course(){
+            $data['faculty'] = $this->faculty_model->get_faculty_rep();
+
+            $this->load->view('templates/header');
+            $this->load->view('templates/top_header');
+            $this->load->view('faculty/sidenav');
+            $this->load->view('faculty/register_course',$data);
+            $this->load->view('templates/footer');
+            
+        }
+         /*
+        * Function that registers units
+        */
+        public function register_unit(){
+            $data['faculty'] = $this->faculty_model->get_faculty_rep();
+
+            $this->load->view('templates/header');
+            $this->load->view('templates/top_header');
+            $this->load->view('faculty/sidenav');
+            $this->load->view('faculty/register_unit',$data);
+            $this->load->view('templates/footer');
+            
         }
     }
