@@ -228,7 +228,7 @@
                     redirect('faculty');
                     break;
                 case 'scheduler manager':
-                    redirect();
+                    redirect('scheduler');
                     break;
                 default:
                     redirect(base_url());
