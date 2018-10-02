@@ -2,7 +2,7 @@ select option {
     background-color: #2b343a; 
 }
 
-#addFacultyModal .modal-content {
+#addFacultyModal .modal-content, .myModal .modal-content {
     background: #282E35;
     
 }
@@ -17,4 +17,16 @@ select option {
 .rooms-card {
     width: 80%;
     margin: 0 auto;
+}
+
+.building-name{
+    font-size: 1.8em;
+}
+
+.building-icon{
+    font-size: 1.4em;
+}
+
+.room-name, .room-icon{
+    font-size: 1.1em;
 }
