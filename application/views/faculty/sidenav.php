@@ -28,16 +28,15 @@
                 <a href="#">Examinations</a>
             </li>
             <li class="sub-menu toogled <?php if($this->uri->uri_string() =='faculty/index') echo 'active'; ?>">
-                <a data-ma-action="submenu-toggle" href="<?= base_url('faculty/index') ?>">Faculty</a>
+                <a data-ma-action="submenu-toggle" href="<?= base_url('faculty/index') ?>">Faculty Details</a>
                 <ul>
-                <li style="margin-left:15px;"><a href="<?= base_url('faculty/index')?>"
-                class="<?php if($this->uri->uri_string() =='faculty/index') echo 'active'; ?>">Overview</a></li>
                 <li style="margin-left:15px;"><a href="<?= base_url('faculty/details')?>"
-                class="<?php if($this->uri->uri_string() =='faculty/details') echo 'active'; ?>">Details</a></li>
+                class="<?php if($this->uri->uri_string() =='faculty/details') echo 'active'; ?>">Overview</a></li>
                 <li style="margin-left:15px;"><a href="<?= base_url('faculty/register_course')?>"
                 class="<?php if($this->uri->uri_string() =='faculty/register_course') echo 'active'; ?>">Register Course</a></li>
                 <li style="margin-left:15px;"><a href="<?= base_url('faculty/register_unit')?>"
                 class="<?php if($this->uri->uri_string() =='faculty/register_unit') echo 'active'; ?>">Register Unit</a></li>
+                
                 </ul>
             </li>
         </ul>
