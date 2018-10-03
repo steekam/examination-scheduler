@@ -53,14 +53,18 @@ var coreJS = function(){
     };
 }();
 
-/**
- * Initialize the code to be used in the admin module gegister user page
+/*
+  ***********************************************************************
+ ** 
+ **Administrator module
+ ** 
+ ************************************************************************
  */
 var initAdminRegisterUser = function(){
      /*
-     *  Faculty representative helper
-     *  Reveals a faculty dropdown if the role of added user is a faculty representative
-     *  
+     **  Faculty representative helper
+     **  Reveals a faculty dropdown if the role of added user is a faculty representative
+     **  
      */
     var role = document.querySelector('select[name="role"]');
     var faculty = document.querySelector('#faculty-select');
@@ -81,7 +85,7 @@ var initAdminRegisterUser = function(){
     
 
     /*
-     * Add faculty option
+     ** Add faculty option
      */
     var btnAddNewFaculty = document.querySelector('#addNewFaculty');
     
@@ -133,7 +137,7 @@ var initAdminRegisterUser = function(){
 
     /**
      * 
-     * @param {Array} data 
+     * @param {Array} data The faculty information to be inserted
      */
     function fillFaculties(data) {
         data.forEach(element => {
@@ -152,12 +156,42 @@ var initAdminRegisterUser = function(){
 
 };
 
+
 /*
- * *********************************************************************************
- *                                                                                 *
- * Utility functions                                                               *
- *                                                                                 * 
- * *********************************************************************************
+ ***********************************************************************
+ ** 
+ ** Scheduler module
+ ** 
+ ***********************************************************************
+ */
+var initSchedulerRooms = function(){
+    /*
+     ** Add buidling form event
+     */
+    $('#addNewBuildingForm').on('submit',function(event){
+        event.preventDefault();
+        var dataTarget = $(this).attr('action');
+        var dataSend = $(this).serialize();
+        var errorMessage = "Could not reach the server";
+        
+        
+        ajaxComm(dataTarget,dataSend,"json",errorMessage,()=>{
+            $('#addBuilding').modal('hide');
+            $('input[name="building_name"]').val(' ');
+        });
+        
+        
+        
+    });
+    
+}
+
+/*
+ *********************************************************************************
+ **                                                                                 
+ ** Utility functions                                                               
+ **                                                                                  
+ *********************************************************************************
  */
 
 /**
@@ -203,6 +237,42 @@ var notify = function(icon,type,message,url,align){
     });
 };
 
+/**
+ * Ajax comunication helper for data sending and receiving with the server
+ *  
+ * @callback doneCallback
+ * @param {String} dataTarget URL tp where to send the request
+ * @param {Object} dataSend   An object with data to send with request
+ * @param {String} dataType     json || text || html || xml This is whatever the server will respond with
+ * @param {String} errorMessage  Message to be displayed when ajax call fails
+ * @param {requestCallback} doneCallback  Function that is called when ajax call is done
+ */
+var ajaxComm = function(dataTarget,dataSend,dataType,errorMessage,doneCallback = function(){}){
+    $.ajax({
+        url: dataTarget,
+        type: "POST",
+        data: dataSend,
+        dataType: dataType ,
+        success:(data) =>{
+            /*
+             * Server should return a response array
+             * Elements: icon, message type, message
+             */
+            notify(data.icon,data.type,data.message);
+
+        },
+        error: (jqXHR,textStatus) => {
+            var icon = "zmdi zmdi-alert-circle-o";
+            notify(icon,"danger",errorMessage);
+            console.log(textStatus);
+            
+        }
+
+    }).done( function (){
+        doneCallback();
+    });
+}
+
 
 $(document).ready(function (){
     //Script bit common in all pages
@@ -212,5 +282,7 @@ $(document).ready(function (){
     var page = window.location.pathname;
     if(page.includes('admin/register_user')){
         initAdminRegisterUser();
+    }else if('scheduler/rooms'){
+        initSchedulerRooms();
     }
 });

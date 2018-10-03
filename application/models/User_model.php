@@ -1,12 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <?php 
     class User_model extends CI_Model {
-
-        //Load database
-        public function __construct(){
-            $this->load->database();
-        }
-
+        
         //Register user
         public function register($enc_password){
             $data = array(

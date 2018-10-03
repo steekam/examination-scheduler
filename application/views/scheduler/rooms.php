@@ -96,23 +96,23 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <form action="<?= base_url('scheduler/add_building'); ?>" method="post" id="addNewBuildingForm">
+                <form action="<?= base_url('scheduler/add_building'); ?>" method="post" id="addNewBuildingForm">
+                    <div class="modal-body">
                         <div class="form-group">
                             <div class="input-group fg-float">
                                 <span class="input-group-addon"><i class="zmdi zmdi-city"></i></span>
                                 <div class="fg-line">
-                                    <input type="text" class="form-control" name="building_name" required>
+                                    <input type="text" class="form-control" name="building_name" autofocus required>
                                     <label class="fg-label">Building Name</label>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-success">Submit details</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-success" id="submitNewBuilding">Submit details</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
