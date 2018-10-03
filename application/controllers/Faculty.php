@@ -96,15 +96,11 @@
                 redirect('faculty/details');
             }
         }
-            
-                
-                                                                                                                        }                                                                                                               }
-
-            // Stores the course details to be passed to the database
-            
-            //Transfer the data to the model
-            // $this->faculty_model->add_course($data);
-            // $this->load->view('faculty/view_course',$data);
+        // Stores the course details to be passed to the database
+        
+        //Transfer the data to the model
+        // $this->faculty_model->add_course($data);
+        // $this->load->view('faculty/view_course',$data);
     
         /*
         * Function that registers courses
