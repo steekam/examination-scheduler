@@ -165,25 +165,132 @@ var initAdminRegisterUser = function(){
  ***********************************************************************
  */
 var initSchedulerRooms = function(){
+    /**
+     * Refreshes the building entries
+     */
+    var refreshBuildings = function(){
+        var dataTarget = $('.rooms-card').data('target');
+        var errorMessage = "Could not reach the server";
+
+        $.ajax({
+            url: dataTarget,
+            type: "POST",
+            dataType: "html" ,
+            success:(data) =>{
+                var content = $(data).find(".entries").html();
+                $(".entries").html(content);
+                
+            },
+            error: (jqXHR,textStatus) => {
+                var icon = "zmdi zmdi-alert-circle-o";
+                notify(icon,"danger",errorMessage);
+                console.log(textStatus);                
+            }    
+        });
+    }
+
     /*
      ** Add buidling form event
      */
-    $('#addNewBuildingForm').on('submit',function(event){
+    $(document).on('submit','#addNewBuildingForm',function(event){
         event.preventDefault();
         var dataTarget = $(this).attr('action');
         var dataSend = $(this).serialize();
-        var errorMessage = "Could not reach the server";
-        
+        var errorMessage = "Could not reach the server";       
         
         ajaxComm(dataTarget,dataSend,"json",errorMessage,()=>{
             $('#addBuilding').modal('hide');
             $('input[name="building_name"]').val(' ');
         });
-        
-        
-        
+        refreshBuildings();
     });
-    
+
+    /*
+     ** Edit building event
+     */
+    $('li>a.edit-building').on('click',function(event){
+        event.preventDefault();
+        var building_id = $(this).data('building-id');
+        var building_name = $(this).data('building-name');
+        
+        var modal_form = $("#addBuilding form");
+        $(modal_form).attr('id','editBuildingForm');
+        $('#editBuildingForm input[name="building_name"]').val(building_name);
+        $('#editBuildingForm button[type="submit"]').attr('id',"saveBuildingChanges");
+        $('#editBuildingForm button[type="submit"]').html("Save changes");
+        $('#addBuilding .modal-title').html("EDIT BUILDING DETAILS");
+        $('#addBuilding').modal('show');
+
+        //Submit form event
+        $(modal_form).on('submit',function(event){
+            event.preventDefault();
+            var dataTarget = $(this).data('edit-action');
+            var dataSend = $(this).serializeArray();
+            dataSend.push({"name": "building_id","value": building_id});
+            var errorMessage = "Could not reach the server";
+
+            ajaxComm(dataTarget,dataSend,"json",errorMessage,()=>{
+                $('#addBuilding').modal('hide');
+                $('input[name="building_name"]').val(' ');
+            });
+            refreshBuildings();
+            
+        });      
+    });
+
+    /*
+     ** Delete building event
+     */
+    $('li>a.delete-building').on('click',function(event){
+        event.preventDefault();
+        var building_id = $(this).data('building-id');
+        var dataTarget = $(this).data('delete-action');
+        var dataSend = {"building_id":building_id};
+        var errorMessage = "Could not reach the server";
+
+        console.log(dataSend);
+        
+
+        swal({   
+            title: "Are you sure?",   
+            text: "You will not be able to recover this record",   
+            type: "warning",   
+            showCancelButton: true,   
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: "Yes, delete building!",   
+            closeOnConfirm: true
+        }, function(){
+            ajaxComm(dataTarget,dataSend,"json",errorMessage,()=>{
+                //Empty callback
+            });
+            refreshBuildings();
+
+        });
+
+    });
+        
+    /*
+    ** Add new room event
+    */
+    $(document).on('click','.add-room',function(event){
+        var building_id = $(this).data('building-id');
+        var building_name = $(this).data('building-name');
+        $("#addRoom #building").text(building_name);
+
+        $(document).on('submit','#addNewRoomForm',function(event){
+            event.preventDefault();
+            var dataTarget = $(this).attr('action');
+            var dataSend = $(this).serializeArray();
+            dataSend.push({"name": "building_id","value": building_id});
+            var errorMessage = "Could not reach the server";
+        
+            ajaxComm(dataTarget,dataSend,"json",errorMessage,()=>{
+                $('#addRoom').modal('hide');
+                $('input[name="room_name"]').val(' ');
+            });     
+            refreshBuildings();
+        });
+    });
 }
 
 /*
@@ -220,7 +327,7 @@ var notify = function(icon,type,message,url,align){
         z_index: 1033,
         delay: 5000,
         timer: 1000,
-        template: '<div data-notify="container" class="col-11 col-sm-3 alert alert-{0}" role="alert">' +
+        template: '<div data-notify="container" class="col-11 col-sm-4 alert alert-{0}" role="alert">' +
                     '<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
                     '<span data-notify="icon"></span> ' +
                     '<span data-notify="title">{1}</span> ' +
