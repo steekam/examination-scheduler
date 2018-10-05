@@ -131,7 +131,7 @@ var initAdminRegisterUser = function(){
     });
 
     /*
-     * Update the faculties from the database
+     ** Update the faculties from the database
      */
     var fetchUrl = document.querySelector("select[name=faculty]").getAttribute('data-source');
 
@@ -172,21 +172,16 @@ var initSchedulerRooms = function(){
         var dataTarget = $('.rooms-card').data('target');
         var errorMessage = "Could not reach the server";
 
-        $.ajax({
-            url: dataTarget,
-            type: "POST",
-            dataType: "html" ,
-            success:(data) =>{
+        fetch(dataTarget)
+            .then(response => response.text())
+            .then(data => {
                 var content = $(data).find(".entries").html();
                 $(".entries").html(content);
-                
-            },
-            error: (jqXHR,textStatus) => {
+            })
+            .catch((error) => {
                 var icon = "zmdi zmdi-alert-circle-o";
                 notify(icon,"danger",errorMessage);
-                console.log(textStatus);                
-            }    
-        });
+            });        
     }
 
     /*
@@ -201,14 +196,14 @@ var initSchedulerRooms = function(){
         ajaxComm(dataTarget,dataSend,"json",errorMessage,()=>{
             $('#addBuilding').modal('hide');
             $('input[name="building_name"]').val(' ');
+            refreshBuildings();
         });
-        refreshBuildings();
     });
 
     /*
      ** Edit building event
      */
-    $('li>a.edit-building').on('click',function(event){
+    $('.rooms-card').on('click','li>a.edit-building',function(event){
         event.preventDefault();
         var building_id = $(this).data('building-id');
         var building_name = $(this).data('building-name');
@@ -216,7 +211,6 @@ var initSchedulerRooms = function(){
         var modal_form = $("#addBuilding form");
         $(modal_form).attr('id','editBuildingForm');
         $('#editBuildingForm input[name="building_name"]').val(building_name);
-        $('#editBuildingForm button[type="submit"]').attr('id',"saveBuildingChanges");
         $('#editBuildingForm button[type="submit"]').html("Save changes");
         $('#addBuilding .modal-title').html("EDIT BUILDING DETAILS");
         $('#addBuilding').modal('show');
@@ -232,8 +226,13 @@ var initSchedulerRooms = function(){
             ajaxComm(dataTarget,dataSend,"json",errorMessage,()=>{
                 $('#addBuilding').modal('hide');
                 $('input[name="building_name"]').val(' ');
+                //Revert form to default id
+                $(modal_form).attr('id','addNewBuildingForm');
+
+                //Revert button to default text
+                $('#addNewBuildingForm button[type="submit"]').html("Submit details");
+                refreshBuildings();
             });
-            refreshBuildings();
             
         });      
     });
@@ -241,15 +240,12 @@ var initSchedulerRooms = function(){
     /*
      ** Delete building event
      */
-    $('li>a.delete-building').on('click',function(event){
+    $('.rooms-card').on('click','li>a.delete-building',function(event){
         event.preventDefault();
         var building_id = $(this).data('building-id');
         var dataTarget = $(this).data('delete-action');
         var dataSend = {"building_id":building_id};
         var errorMessage = "Could not reach the server";
-
-        console.log(dataSend);
-        
 
         swal({   
             title: "Are you sure?",   
@@ -261,14 +257,12 @@ var initSchedulerRooms = function(){
             closeOnConfirm: true
         }, function(){
             ajaxComm(dataTarget,dataSend,"json",errorMessage,()=>{
-                //Empty callback
+                refreshBuildings();
             });
-            refreshBuildings();
-
         });
 
     });
-        
+
     /*
     ** Add new room event
     */
@@ -287,8 +281,49 @@ var initSchedulerRooms = function(){
             ajaxComm(dataTarget,dataSend,"json",errorMessage,()=>{
                 $('#addRoom').modal('hide');
                 $('input[name="room_name"]').val(' ');
+                refreshBuildings();
             });     
-            refreshBuildings();
+        });
+    });
+
+    /*
+    **Edit room event
+    **
+    */
+    $(document).on('click','.edit-room',function(event){
+        var room_id = $(this).data('room-id');
+        var room_name = $(this).data('room-name');
+        var building = ($(this).closest('.list-group')).find('.building-name').text();
+
+        var modal_form = $("#addRoom form");
+        $(modal_form).attr('id','editRoomForm');
+        $('#editRoomForm input[name="room_name"]').val(room_name);
+        $('#editRoomForm button[type="submit"]').html("Save changes");
+        $('#addRoom .modal-title').html(building+": EDIT ROOM DETAILS");
+        $('#addRoom').modal('show');
+
+        //Submit form event
+        $(modal_form).on('submit',function(event){
+            event.preventDefault();    
+            let dataTarget = $(this).data('edit-action');
+            let dataSend = $(this).serializeArray();
+            dataSend.push({"name": "room_id","value": room_id});
+            let errorMessage = "Could not reach the server";
+
+            ajaxComm(dataTarget,dataSend,"json",errorMessage,()=>{
+                $('#addRoom').modal('hide');
+                $('input[name="room_name"]').val(' ');
+
+                //Revert form to default id
+                $(modal_form).attr('id','addNewRoomForm');
+        
+                $('#addRoom .modal-title').html("<span id='building'>"+building+"</span>: ADD NEW ROOM");
+
+                //Revert submit button to default id
+                $('#addNewRoomForm button[type="submit"]').html("Submit details");
+                refreshBuildings();
+            });
+            
         });
     });
 }
@@ -354,7 +389,7 @@ var notify = function(icon,type,message,url,align){
  * @param {String} errorMessage  Message to be displayed when ajax call fails
  * @param {requestCallback} doneCallback  Function that is called when ajax call is done
  */
-var ajaxComm = function(dataTarget,dataSend,dataType,errorMessage,doneCallback = function(){}){
+var ajaxComm = function(dataTarget,dataSend,dataType,errorMessage,doneCallback){
     $.ajax({
         url: dataTarget,
         type: "POST",
@@ -362,8 +397,8 @@ var ajaxComm = function(dataTarget,dataSend,dataType,errorMessage,doneCallback =
         dataType: dataType ,
         success:(data) =>{
             /*
-             * Server should return a response array
-             * Elements: icon, message type, message
+             **Server should return a response array
+             **Elements: icon, message type, message
              */
             notify(data.icon,data.type,data.message);
 
@@ -375,7 +410,7 @@ var ajaxComm = function(dataTarget,dataSend,dataType,errorMessage,doneCallback =
             
         }
 
-    }).done( function (){
+    }).done( function (event){
         doneCallback();
     });
 }

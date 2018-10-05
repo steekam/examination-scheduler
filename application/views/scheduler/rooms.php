@@ -67,7 +67,7 @@
                                         </div>
                                         <div class="pull-right">
                                             <div class="d-flex">
-                                                <button class="btn btn-info edit-room" title="Edit" data-room-id="<?= $room['id'];?>"><i class="zmdi zmdi-edit"></i></button>
+                                                <button class="btn btn-info edit-room" title="Edit" data-room-id="<?= $room['id'];?>" data-room-name="<?= $room['name'];?>"><i class="zmdi zmdi-edit"></i></button>
                                                 <button class="btn btn-danger delete-room" title="Delete" data-room-id="<?= $room['id'];?>"><i class="zmdi zmdi-delete"></i></button>                        
                                             </div>
                                             <div></div>
@@ -100,7 +100,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="<?= base_url('scheduler/add_building'); ?>" data-edit-action="<?= base_url('scheduler/edit_building'); ?>" method="post" id="addNewBuildingForm">
+                <form action="<?= base_url('scheduler/add_building'); ?>" data-edit-action="<?= base_url('scheduler/edit_building'); ?>" method="post">
                     <div class="modal-body">
                         <div class="form-group">
                             <div class="input-group">
@@ -114,7 +114,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="reset" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-success" id="submitNewBuilding">Submit details</button>
+                        <button type="submit" class="btn btn-success">Submit details</button>
                     </div>
                 </form>
             </div>
@@ -134,14 +134,14 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="<?= base_url('scheduler/add_room'); ?>" method="post" id="addNewRoomForm">
+                <form action="<?= base_url('scheduler/add_room'); ?>" method="post" id="addNewRoomForm" data-edit-action="<?= base_url('scheduler/edit_room');?>" data-delete-action="<?= base_url('scheduler/delete_room');?>">
                     <div class="modal-body">
                         <div class="form-group">
-                            <div class="input-group fg-float">
+                            <div class="input-group">
                                 <span class="input-group-addon"><i class="zmdi zmdi-city"></i></span>
                                 <div class="fg-line">
-                                    <input type="text" class="form-control" name="room_name" required>
                                     <label class="fg-label">Room Name</label>
+                                    <input type="text" class="form-control" name="room_name" required>
                                 </div>
                             </div>
                         </div>

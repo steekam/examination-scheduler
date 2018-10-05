@@ -68,7 +68,7 @@
         $data = array(
             "name" => $this->input->post('room_name')
         );
-        $this->db->where('id','room_id');
+        $this->db->where('id',$this->input->post('room_id'));
         return $this->db->update('room',$data);
     }
 
