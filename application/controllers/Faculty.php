@@ -78,7 +78,7 @@
                 $this->load->view('templates/header');
                 $this->load->view('templates/top_header');
                 $this->load->view('faculty/sidenav');
-                $this->load->view('faculty/view_course',$data);
+                $this->load->view('faculty/register_course',$data);
                 $this->load->view('templates/footer');
             } else {
                 $data = array(
@@ -86,14 +86,7 @@
                     'name' => $this->input->post('name'),
                     'faculty_id' => $faculty_id
                 );
-                if($this->faculty_model->add_course($faculty_id)){
-                    //Set session message
-                    $this->session->set_flashdata('course_registered','New course has been registered');
-                }else{
-                    $this->session->set_flashdata('course_not_registered','New course has not been registered');
-                }
-                
-                redirect('faculty/details');
+                echo $this->faculty_model->add_course($faculty_id);
             }
         }
         // Stores the course details to be passed to the database

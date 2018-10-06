@@ -272,3 +272,39 @@ function faculty_view_course(){
         
     });
 }
+/*
+ *  Faculty Add Course Js Interactions
+ */
+$('#register-course').on('click', function(event){
+    //Prevents the browser from submitting the form
+    event.preventDefault();
+    //Serialize the form data
+    var formdata = $('form').serialize();
+    //Get the location of the script where the data will be sent to
+    var action = $('form').attr('action');
+    //Check the location of the action from the console
+    $.ajax({
+        url: action,
+        type: "POST",
+        data: formdata,
+        //Function that interacts with the success interaction of the php file
+        success: function(data){
+            $('#feedback-result').addClass('alert-success');
+            $('#feedback-result').val('Course inserted succesfully');
+            $('#feedback-result').attr('style','visibility:visible');
+            $('#name').val('');
+            $('#name').focuout();
+            $('#abbrev').val('');
+            $('#abbrev').focuout();
+        },
+        error: function(jqXHR,textStatus){
+            $('#feedback-result').addClass('alert-danger');
+            $('#feedback-result').val('Course not inserted succesfully');
+            $('#feedback-result').attr('style','visibility:visible');
+            $('#name').val('');
+            $('#name').focuout();
+            $('#abbrev').val('');
+            $('#abbrev').focuout();
+        }
+    });
+});

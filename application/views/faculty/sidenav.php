@@ -27,7 +27,9 @@
             <li class="<?php if($this->uri->uri_string() =='faculty/examinations') echo 'active'; ?>">
                 <a href="#">Examinations</a>
             </li>
-            <li class="sub-menu toogled <?php if($this->uri->uri_string() =='faculty/index') echo 'active'; ?>">
+            <li class="sub-menu toogled <?php if($this->uri->uri_string() =='faculty/details'||
+                $this->uri->uri_string() =='faculty/register_course'||
+                $this->uri->uri_string() =='faculty/register_unit') echo 'active'; ?>">
                 <a data-ma-action="submenu-toggle" href="<?= base_url('faculty/index') ?>">Faculty Details</a>
                 <ul>
                 <li style="margin-left:15px;"><a href="<?= base_url('faculty/details')?>"

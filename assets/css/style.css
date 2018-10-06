@@ -42,3 +42,14 @@ select option {
 }
 
 /* Add course styles */
+.register-course{
+    width: 50%;
+    margin: 0 auto;
+}
+.btn-register-course{
+    margin: 0 auto;
+    margin-left: 25%;
+}
+#feedback-result{
+    /* margin-bottom: 10px; */
+}
