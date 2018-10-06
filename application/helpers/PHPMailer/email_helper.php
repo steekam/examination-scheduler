@@ -3,7 +3,7 @@
 if (!function_exists('send_email'))
 {
      /**
-     * @param mixed $settings an associative array with email data
+     * @param Array $settings an associative array with email data
      * 
      * @return Boolean TRUE | FALSE whether email is sent
      */
