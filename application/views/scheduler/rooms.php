@@ -4,11 +4,11 @@
         <div class="card rooms-card" data-target="<?= base_url('scheduler/rooms');?>">
             <div class="list-group lg-odd-white">
                 <div class="action-header clearfix">
-                    <div class="ah-label" style="font-size: 1.6em;">AVAILABLE ROOMS</div>
+                    <div class="ah-label">AVALAIBLE EXAMINATION ROOMS</div>
                 
                     <ul class="actions">
                         <li>
-                            <button class="btn bgm-teal" data-toggle="modal" data-target="#addBuilding">
+                            <button class="btn bgm-teal add-building" data-toggle="modal" data-target="#modalBuilding">
                                 <i class="zmdi zmdi-plus"></i> ADD BUILDING
                             </button>
                         </li>
@@ -33,7 +33,7 @@
                                         <div class="pull-right">
                                             <ul class="actions">
                                                 <li>
-                                                    <button class="btn bgm-teal add-room" data-toggle="modal" data-target="#addRoom" data-building-id="<?= $entry['building']['id']?>" data-building-name="<?= $entry['building']['name'];?>">
+                                                    <button class="btn bgm-teal add-room" data-toggle="modal" data-target="#modalRoom" data-building-id="<?= $entry['building']['id']?>" data-building-name="<?= $entry['building']['name'];?>">
                                                         <i class="zmdi zmdi-plus"></i> ADD ROOM
                                                     </button>
                                                 </li>
@@ -66,9 +66,9 @@
                                             </label>
                                         </div>
                                         <div class="pull-right">
-                                            <div class="d-flex">
-                                                <button class="btn btn-info edit-room" title="Edit" data-room-id="<?= $room['id'];?>" data-room-name="<?= $room['name'];?>"><i class="zmdi zmdi-edit"></i></button>
-                                                <button class="btn btn-danger delete-room" title="Delete" data-room-id="<?= $room['id'];?>"><i class="zmdi zmdi-delete"></i></button>                        
+                                            <div class="d-flex room-actions" data-room-id="<?= $room['id'];?>" data-room-name="<?= $room['name'];?>" data-delete-action="<?= base_url('scheduler/delete_room');?>">
+                                                <button class="btn btn-info edit-room" title="Edit" ><i class="zmdi zmdi-edit"></i></button>
+                                                <button class="btn btn-danger delete-room" title="Delete"><i class="zmdi zmdi-delete"></i></button>                        
                                             </div>
                                             <div></div>
                                         </div>
@@ -91,16 +91,16 @@
 </section>
 
     <!-- Add building modal -->
-    <div class="modal fade myModal" id="addBuilding" tabindex="-1" role="dialog">
+    <div class="modal fade myModal" id="modalBuilding" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title c-white">ENTER BUILDING NAME</h5>
+                    <h5 class="modal-title c-white"></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="<?= base_url('scheduler/add_building'); ?>" data-edit-action="<?= base_url('scheduler/edit_building'); ?>" method="post">
+                <form data-add-action="<?= base_url('scheduler/add_building'); ?>" data-edit-action="<?= base_url('scheduler/edit_building'); ?>" method="post" class="add-action">
                     <div class="modal-body">
                         <div class="form-group">
                             <div class="input-group">
@@ -108,6 +108,7 @@
                                 <div class="fg-line">
                                     <label class="fg-label">Building Name</label>
                                     <input type="text" class="form-control" name="building_name" autofocus required>
+                                    <input type="hidden" name="building_id" value="">
                                 </div>
                             </div>
                         </div>
@@ -121,20 +122,19 @@
         </div>
     </div>
 
-    <!-- Add room modal -->
-    <div class="modal fade myModal" id="addRoom" tabindex="-1" role="dialog">
+    <!-- Modal room  -->
+    <div class="modal fade myModal" id="modalRoom" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title c-white">
-                        <span id="building"></span>:
-                        ADD NEW ROOM
+                        
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="<?= base_url('scheduler/add_room'); ?>" method="post" id="addNewRoomForm" data-edit-action="<?= base_url('scheduler/edit_room');?>" data-delete-action="<?= base_url('scheduler/delete_room');?>">
+                <form data-add-action="<?= base_url('scheduler/add_room'); ?>" method="post" data-edit-action="<?= base_url('scheduler/edit_room');?>" class="add-action">
                     <div class="modal-body">
                         <div class="form-group">
                             <div class="input-group">
@@ -142,6 +142,8 @@
                                 <div class="fg-line">
                                     <label class="fg-label">Room Name</label>
                                     <input type="text" class="form-control" name="room_name" required>
+                                    <input type="hidden" name="room_id" value="">
+                                    <input type="hidden" name="building_id" value="">
                                 </div>
                             </div>
                         </div>

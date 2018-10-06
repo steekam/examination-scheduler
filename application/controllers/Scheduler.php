@@ -199,4 +199,25 @@
                 }
             }
         }
+
+        /**
+         * Delete room call handler
+         */
+        public function delete_room(){
+            if($this->scheduler_model->delete_room()){
+                $success = array(
+                    "icon" => "zmdi zmdi-badge-check",
+                    "type" => "success",
+                    "message" => "Room details deleted successfully"
+                );
+                echo json_encode($success);
+            }else{
+                $error = array(
+                    "icon" => "zmdi zmdi-alert-circle-o",
+                    "type" => "danger",
+                    "message" => "Error in deleting record. Try again later"
+                );
+                echo json_encode($error);
+            }
+        }
     }
