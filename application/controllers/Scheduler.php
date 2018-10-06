@@ -3,10 +3,13 @@
     class Scheduler extends CI_Controller{
         /**
          * Load the index view
-         * TODO: Remember to add the session check
          * 
          */        
         public function index(){
+            if(!$this->session->userdata('logged_in')){
+                redirect(base_url());
+            }
+
             $this->load->view('templates/header');
             $this->load->view('templates/top_header.php');
             $this->load->view('scheduler/sidenav');
@@ -18,6 +21,10 @@
          * Examination rooms page load
          */
         public function rooms(){
+            if(!$this->session->userdata('logged_in')){
+                redirect(base_url());
+            }
+
             $subdata = array();
             $buildings = $this->scheduler_model->get_buildings();
 
@@ -43,6 +50,10 @@
          * Add building to the database
          */
         public function add_building(){
+            if(!$this->session->userdata('logged_in')){
+                redirect(base_url());
+            }
+
             //Validation for the form
             $this->form_validation->set_rules('building_name','Building name','trim|required|is_unique[building.name]',array(
                 'is_unique' => 'This %s already exists'
@@ -78,6 +89,10 @@
          * Edit building call handler
          */
         public function edit_building(){
+            if(!$this->session->userdata('logged_in')){
+                redirect(base_url());
+            }
+
             //Validation for the form
             $this->form_validation->set_rules('building_name','Building name','trim|required|is_unique[building.name]',array(
                 'is_unique' => 'This %s already exists'
@@ -113,6 +128,10 @@
          * Delete building call handler
          */
         public function delete_building(){
+            if(!$this->session->userdata('logged_in')){
+                redirect(base_url());
+            }
+
             if($this->scheduler_model->delete_building()){
                 $success = array(
                     "icon" => "zmdi zmdi-badge-check",
@@ -134,6 +153,10 @@
          * Add new room entry into database
          */
         public function add_room(){
+            if(!$this->session->userdata('logged_in')){
+                redirect(base_url());
+            }
+
             //Validation for the form
             $this->form_validation->set_rules('room_name','Room name','trim|required|is_unique[room.name]',array(
                 'is_unique' => 'This %s already exists'
@@ -169,6 +192,10 @@
          * Edit room call handler
          */
         public function edit_room(){
+            if(!$this->session->userdata('logged_in')){
+                redirect(base_url());
+            }
+
             //Validation for the form
             $this->form_validation->set_rules('room_name','Room name','trim|required|is_unique[room.name]',array(
                 'is_unique' => 'This %s already exists'
@@ -204,6 +231,10 @@
          * Delete room call handler
          */
         public function delete_room(){
+            if(!$this->session->userdata('logged_in')){
+                redirect(base_url());
+            }
+
             if($this->scheduler_model->delete_room()){
                 $success = array(
                     "icon" => "zmdi zmdi-badge-check",
