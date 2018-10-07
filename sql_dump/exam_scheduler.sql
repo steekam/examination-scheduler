@@ -57,7 +57,7 @@ CREATE TABLE `course` (
   PRIMARY KEY (`id`),
   KEY `faculty_id` (`faculty_id`),
   CONSTRAINT `course_ibfk_1` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,7 +66,7 @@ CREATE TABLE `course` (
 
 LOCK TABLES `course` WRITE;
 /*!40000 ALTER TABLE `course` DISABLE KEYS */;
-INSERT INTO `course` VALUES (1,'BICS','Bachelor of Science In Informatics and Computer Science',1);
+INSERT INTO `course` VALUES (1,'BICS','Bachelor of Science In Informatics and Computer Science',1),(2,'BTC','Bachelor of Telecommunications',1),(3,'BBIT','Bachelor of Business Information Technology',1),(5,'DBIT','Diploma in Business Information and Technology',1);
 /*!40000 ALTER TABLE `course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -220,4 +220,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-30 19:00:16
+-- Dump completed on 2018-10-07 16:03:24
