@@ -20,7 +20,7 @@
         }
 
         /**
-         * Gets the faculty rep
+         * Gets the faculty details
          */
         public function get_faculty_rep(){
             $rep_id = $this->session->userdata('user_id');
@@ -32,9 +32,9 @@
             return $query->row_array();
         }
          /**
-         * Gets the course details
+         * Gets the total courses per faculty
          */
-        public function get_course($faculty_id){
+        public function get_course_count($faculty_id){
             $rep_id = $this->session->userdata('user_id');
             $this->db->from('course');
             $this->db->join('faculty','faculty.id = course.faculty_id');
@@ -69,5 +69,16 @@
             $course_insert = $this->db->insert('course',$data);
 
             return $course_insert;
+        }
+
+        /*
+         * Gets the course id
+         */
+        public function get_total_course($faculty_id){
+            $sql = "SELECT * FROM course WHERE faculty_id = ?";
+            $result = $this->db->query($sql, array($faculty_id));
+            return $result->row_array();
+            // $get_total_course = $this->db->get_where('course', array('faculty_id' => $faculty_id));
+            // return $get_total_course->row_array();
         }
     }

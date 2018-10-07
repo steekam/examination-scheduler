@@ -28,16 +28,38 @@
                 <label class="col-sm-2 control-label">Class Group</label>
                 <div class="col-sm-6">
                     <div class="fg-line">
-                        <select name="class_group" class="form-control">
-                            <option>Group A</option>
-                            <option>Group B</option>
-                            <option>Group C</option>
-                            <option>Group D</option>
-                            <option>Exempt</option>
-                        </select>
+                        <div class="select">
+                            <select class="form-control">
+                                <option>Select an Option</option>
+                                <option>Group A</option>
+                                <option>Group B</option>
+                                <option>Group C</option>
+                                <option>Group D</option>
+                                <option>Exempt</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Course</label>
+                <?php
+                                // echo $courses['name'];
+                                // foreach ($courses as $course) {
+                                //     # code...
+                                //     echo $course;
+                                // }
+                            ?>
+                <div class="col-sm-6">
+                    <div class="fg-line">
+                        <div class="select">
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
