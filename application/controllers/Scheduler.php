@@ -5,7 +5,9 @@
         public function test_graph(){
             $file_path = base_url('assets/config/test_sess.json');
             $config_data = json_decode(file_get_contents($file_path));
-            $unit_graph = $this->create_graph($config_data);
+            $unit_graph =  new MyGraph();
+            $unit_graph->create_graph($config_data);
+            $unit_graph->sort_graph();
         }
         /**
          * Load the index view
@@ -256,76 +258,5 @@
                 );
                 echo json_encode($error);
             }
-        }
-
-
-        /**
-         * 
-         * 
-         * TODO: Remember to remove
-         * !Don't forget
-         * Test area
-         * 
-         * 
-         * 
-         * 
-         * 
-         * 
-         * 
-         */
-
-
-        function create_graph($config_data=array()){
-            /**
-            * Graph representing the units to be scheduled
-            */
-            $G = new Structures_Graph(false);
-
-            /**
-             * Adjancey matrix of the nodes
-             */
-            $adj = array();
-    
-            /**
-            *  List of all courses to be scheduled.  
-            */
-            $nodeList = array();
-            //Get all the units and add nodes to G
-            if(isset($config_data)){
-                foreach ($config_data->faculties as $faculty) {
-                    foreach ($faculty as $year) {
-                        foreach ($year as $course) {
-                            $first = true;
-                            $prevNode = null;
-                            $first_node = null;
-                            foreach ($course as $unit_key => $unit_val) {
-                                //Create unit node
-                                $nodeList[$unit_key] = new Structures_Graph_Node();
-                                
-                                //Set metadata
-                                $nodeList[$unit_key]->setMetaData('meta',$unit_val);
-
-                                //Add the node to graph structure
-                                $G->addNode($nodeList[$unit_key]);
-                            
-                                //Units in the same course are adajacent
-                                if ($first) {
-                                    $first_node = $nodeList[$unit_key];
-                                    $first = false;
-                                }else{
-                                }
-                                $prevNode = $nodeList[$unit_key];
-                            }
-                        }
-                    }
-                }
-            }
-
-            echo $nodeList['ICS1101']->inDegree();
-            return $G;
-        }
-
-        function connect_adjacents($set=array()){
-            
         }
     }
