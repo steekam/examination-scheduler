@@ -8,7 +8,10 @@
             $unit_graph =  new MyGraph();
             $unit_graph->create_graph($config_data);
             $unit_graph->sort_graph();
+            $c_matrix = $unit_graph->vertex_coloring();
+            print_r($c_matrix);
         }
+
         /**
          * Load the index view
          * 

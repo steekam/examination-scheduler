@@ -120,7 +120,7 @@ class MyGraph {
     public function sort_graph(){
         return uasort($this->_nodes,function($node1, $node2){
             if($node1->get_degree() == $node2->get_degree()){
-                return ($node1->get_name() > $node2->get_name()) ? -1 : 1;
+                return ($node1->get_name() < $node2->get_name()) ? -1 : 1;
             }
             return ($node1->get_degree() > $node2->get_degree()) ? -1 : 1;
         });
@@ -129,13 +129,57 @@ class MyGraph {
     /**
      * Colors the vertices with minimum number of colors
      * such that no adjacent node have the same color
+     * 
+     * @return Array color matrix of the vertex coloring
      */
     public function vertex_coloring(){
-        $G = $this;
-        //Color list
-        $colors = array();
-        //Color matrix
-        $c_matrix = array();
-    }
+        //Color store
+        $c = array();
+        $highest_deg = array_values($this->get_nodes())[0]->get_degree();
+        for($i = 0; $i < $highest_deg; $i++){
+            $c[$i] = $i;
+        }
 
+        //Store showing available colors. At first all are available
+        $c_available = array_fill(0,count($c),true);
+        
+
+        //Color matrix [i] = color assigned to the node
+        $c_matrix = array();
+        
+        $node_names = array_keys($this->get_nodes());
+        
+        //Init the matrix with -1 for unassigned
+        foreach ($node_names as $name) {
+            $c_matrix[$name] = -1;
+        }
+
+        //Color the first node
+        $c_matrix[$node_names[0]] = $c[0];
+
+        //Color the remaining non-adjacent colors with the same color
+        foreach ($node_names as $current_node) {
+            //Set adjacent nodes available to false
+            $adj_list = $this->get_nodes()[$current_node]->get_adj_list();
+            foreach($adj_list as $adj_node){
+                if($c_matrix[$adj_node->get_name()] != -1){
+                    $c_available[$c_matrix[$adj_node->get_name()]] = false;
+                }
+            }
+
+            //Find lowest available color
+            $c_av;
+            for($c_av = 0; $c_av<count($c); ++$c_av){
+                if($c_available[$c_av]){
+                    break;
+                }
+            }
+            //Set the color
+            $c_matrix[$current_node] = $c_av;
+
+            //Reset for the next iteration
+            $c_available = array_fill(0,count($c),true); 
+        }
+        return $c_matrix;        
+    }
 }
