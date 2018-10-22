@@ -1,223 +1,368 @@
--- MySQL dump 10.16  Distrib 10.1.21-MariaDB, for Win32 (AMD64)
+-- phpMyAdmin SQL Dump
+-- version 4.8.3
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost    Database: localhost
--- ------------------------------------------------------
--- Server version	10.1.21-MariaDB
+-- Host: localhost
+-- Generation Time: Oct 22, 2018 at 01:46 PM
+-- Server version: 10.2.18-MariaDB
+-- PHP Version: 7.2.11
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- Table structure for table `class_group`
+-- Database: `exam_scheduler`
 --
 
-DROP TABLE IF EXISTS `class_group`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `class_group` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `course_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `course_id` (`course_id`),
-  CONSTRAINT `class_group_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `class_group`
+-- Table structure for table `building`
 --
 
-LOCK TABLES `class_group` WRITE;
-/*!40000 ALTER TABLE `class_group` DISABLE KEYS */;
-INSERT INTO `class_group` VALUES (1,'GROUP A',1);
-/*!40000 ALTER TABLE `class_group` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE `building` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `building`
+--
+
+INSERT INTO `building` (`id`, `name`) VALUES
+(1, 'STMB'),
+(2, 'MSB'),
+(3, 'Phase 1'),
+(4, 'SBS'),
+(5, 'SLS');
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `course`
 --
 
-DROP TABLE IF EXISTS `course`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `course` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `abbrev` varchar(255) DEFAULT NULL,
+  `course_code` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `faculty_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `faculty_id` (`faculty_id`),
-  CONSTRAINT `course_ibfk_1` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `faculty_code` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `course`
---
-
-LOCK TABLES `course` WRITE;
-/*!40000 ALTER TABLE `course` DISABLE KEYS */;
-INSERT INTO `course` VALUES (1,'BICS','Bachelor of Science In Informatics and Computer Science',1),(2,'BTC','Bachelor of Telecommunications',1),(3,'BBIT','Bachelor of Business Information Technology',1),(5,'DBIT','Diploma in Business Information and Technology',1);
-/*!40000 ALTER TABLE `course` ENABLE KEYS */;
-UNLOCK TABLES;
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `faculty`
 --
 
-DROP TABLE IF EXISTS `faculty`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `faculty` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `abbrev` varchar(25) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `faculty_code` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `faculty`
---
-
-LOCK TABLES `faculty` WRITE;
-/*!40000 ALTER TABLE `faculty` DISABLE KEYS */;
-INSERT INTO `faculty` VALUES (1,'Faculty of Information Technology','FIT'),(3,'School of Tourism and Hospitality','STH'),(4,'Strathmore Institute of Mathematical Sciences','SIMS'),(5,'School of Accountancy','SOA'),(6,'School of Humanities and Social Sciences','SHSS'),(7,'School of Management and Commerce','SMC'),(8,'Strathmore Law School','SLS'),(9,'School of Graduate Studies - Masters','SGS-Masters');
-/*!40000 ALTER TABLE `faculty` ENABLE KEYS */;
-UNLOCK TABLES;
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `faculty_rep`
 --
 
-DROP TABLE IF EXISTS `faculty_rep`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `faculty_rep` (
   `rep_id` int(11) NOT NULL,
-  `faculty_id` int(11) NOT NULL,
-  KEY `rep_id` (`rep_id`),
-  KEY `faculty_id` (`faculty_id`),
-  CONSTRAINT `faculty_rep_ibfk_1` FOREIGN KEY (`rep_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `faculty_rep_ibfk_2` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`id`)
+  `faculty_code` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `faculty_rep`
+-- Table structure for table `intake`
 --
 
-LOCK TABLES `faculty_rep` WRITE;
-/*!40000 ALTER TABLE `faculty_rep` DISABLE KEYS */;
-INSERT INTO `faculty_rep` VALUES (20,1),(21,8),(23,1);
-/*!40000 ALTER TABLE `faculty_rep` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE `intake` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `password_reset`
 --
 
-DROP TABLE IF EXISTS `password_reset`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `password_reset` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `reset_code` varchar(255) NOT NULL,
-  `sent_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `password_reset_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+  `sent_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `valid` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `password_reset`
+-- Table structure for table `room`
 --
 
-LOCK TABLES `password_reset` WRITE;
-/*!40000 ALTER TABLE `password_reset` DISABLE KEYS */;
-/*!40000 ALTER TABLE `password_reset` ENABLE KEYS */;
-UNLOCK TABLES;
+CREATE TABLE `room` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `building_id` int(11) NOT NULL,
+  `room_size` int(11) DEFAULT 0,
+  `status` varchar(255) DEFAULT 'Active'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `room`
+--
+
+INSERT INTO `room` (`id`, `name`, `building_id`, `room_size`, `status`) VALUES
+(1, 'STMB F1-02', 1, 0, 'active'),
+(2, 'MSB 1', 2, 0, 'inactive'),
+(3, 'Lecture Room 1', 3, 0, 'active'),
+(4, 'SBS 1', 4, 0, 'active'),
+(5, 'Shaba', 5, 0, 'active'),
+(6, 'Zumaridi', 5, 25, 'inactive'),
+(7, 'SBS 2', 4, 0, 'active'),
+(8, 'SBS 3', 4, 0, 'active'),
+(10, 'Lecture Room 4', 3, 0, 'active'),
+(11, 'Lecturer Room 5', 3, 0, 'active'),
+(12, 'Lecture Room 3', 3, 0, 'active'),
+(13, 'Room 2', 3, 0, 'active'),
+(14, 'Lecture Room 2', 3, 0, 'active'),
+(15, 'Room 1', 3, 0, 'active'),
+(16, 'Room 3', 3, 0, 'active'),
+(18, 'MSB 2', 2, 0, 'active'),
+(20, 'Room 4', 3, 0, 'active'),
+(21, 'MSB 3', 2, 0, 'active'),
+(22, 'MSB 4', 2, 0, 'active'),
+(23, 'MSB 5', 2, 0, 'active'),
+(24, 'STMB F1-04', 1, 40, 'active'),
+(25, 'STMB F1-03', 1, 0, 'active'),
+(32, 'MSB 6', 2, 0, 'active'),
+(33, 'MSB 7', 2, 40, 'inactive'),
+(60, 'STMB F1-01', 1, 0, 'active');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `student_group`
+--
+
+CREATE TABLE `student_group` (
+  `group_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `course_code` varchar(255) NOT NULL,
+  `year_group` int(11) NOT NULL,
+  `size` int(11) NOT NULL,
+  `intake_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `unit`
 --
 
-DROP TABLE IF EXISTS `unit`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `unit` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
   `unit_code` varchar(255) NOT NULL,
-  `course_id` int(11) NOT NULL,
-  `class_group` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `course_id` (`course_id`),
-  KEY `class_group` (`class_group`),
-  CONSTRAINT `unit_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`),
-  CONSTRAINT `unit_ibfk_2` FOREIGN KEY (`class_group`) REFERENCES `class_group` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `name` varchar(255) NOT NULL,
+  `course_code` varchar(255) NOT NULL,
+  `year_group` int(11) DEFAULT NULL,
+  `exam_duration` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `unit`
---
-
-LOCK TABLES `unit` WRITE;
-/*!40000 ALTER TABLE `unit` DISABLE KEYS */;
-INSERT INTO `unit` VALUES (4,'Computer Fundamentals','ICS2201',1,1);
-/*!40000 ALTER TABLE `unit` ENABLE KEYS */;
-UNLOCK TABLES;
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
   `role` varchar(255) NOT NULL,
-  `registered_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `activated` varchar(255) NOT NULL DEFAULT 'false',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+  `registered_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `activated` varchar(255) NOT NULL DEFAULT 'false'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (13,'SWanyee','waynewanyee@gmail.com','$2y$10$aRsG7wpHpxr7H5XJRVLZ8OqOcdBrwrZc.z1wdhMbYMQje6.xX/wai','Stephen','Wanyee','administrator','2018-09-11 19:31:42','true'),(20,'HMundui','hellen@gmail.com','$2y$10$TvmntuNdn20fe/lIHnJ/GOVyAITOAlJ49DKkfM9sx2nOEoOYYTEeS','Hellen','Mundui','faculty representative','2018-09-16 23:36:13','false'),(21,'MJordan','michael.jords@mail.com','$2y$10$zowI5sFKlIJbEbL0mDPLVOwjpGpT6gF8wMeExO.4xKxSon2NM8Q1u','Michael','Jordan','faculty representative','2018-09-16 23:36:57','false'),(22,'IMotanya','isaack.motanya@strathmore.edu','$2y$10$t8Rb8OweGnxCS.4mNdyMs.fH3Bvvp3e2wU5yqRjOQrV8G/EE1YO1q','Isaack','Motanya','administrator','2018-09-18 09:06:27','true'),(23,'RToor','isaackmotanya6@gmail.com','$2y$10$NwMCHlcqoB5v5o2D5zWF7.d7sgkd10b7cBxfZL3U1uiObUzSme/h2','Root','Toor','faculty representative','2018-09-20 17:28:54','true');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `first_name`, `last_name`, `role`, `registered_at`, `activated`) VALUES
+(13, 'SWanyee', 'waynewanyee@gmail.com', '$2y$10$aRsG7wpHpxr7H5XJRVLZ8OqOcdBrwrZc.z1wdhMbYMQje6.xX/wai', 'Stephen', 'Wanyee', 'administrator', '2018-09-11 19:31:42', 'true'),
+(20, 'HMundui', 'hellen@gmail.com', '$2y$10$TvmntuNdn20fe/lIHnJ/GOVyAITOAlJ49DKkfM9sx2nOEoOYYTEeS', 'Hellen', 'Mundui', 'faculty representative', '2018-09-16 23:36:13', 'false'),
+(21, 'MJordan', 'michael.jords@mail.com', '$2y$10$zowI5sFKlIJbEbL0mDPLVOwjpGpT6gF8wMeExO.4xKxSon2NM8Q1u', 'Michael', 'Jordan', 'faculty representative', '2018-09-16 23:36:57', 'false'),
+(22, 'IMotanya', 'isaack.motanya@strathmore.edu', '$2y$10$t8Rb8OweGnxCS.4mNdyMs.fH3Bvvp3e2wU5yqRjOQrV8G/EE1YO1q', 'Isaack', 'Motanya', 'administrator', '2018-09-18 09:06:27', 'true'),
+(23, 'RToor', 'isaackmotanya6@gmail.com', '$2y$10$NwMCHlcqoB5v5o2D5zWF7.d7sgkd10b7cBxfZL3U1uiObUzSme/h2', 'Root', 'Toor', 'faculty representative', '2018-09-20 17:28:54', 'true'),
+(25, 'fitrep', 'stephen.wanyee@strathmore.edu', '$2y$10$mH0jw8pQe9sLttK8m7UgXehwiYmdV2.i64vHJ2PrZqYYB0JxfkUDG', 'fit', 'rep', 'faculty representative', '2018-10-08 07:49:07', 'true'),
+(26, 'scheduler', 'stepwany8@gmail.com', '$2y$10$HSNZoEnH7DRHpckU0atEqe7xsnFFLwH5aUvJGsew1HbKFH./Q7YJK', 'Scheduler', 'Manager', 'scheduler manager', '2018-10-08 07:50:52', 'true');
 
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `building`
+--
+ALTER TABLE `building`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `course`
+--
+ALTER TABLE `course`
+  ADD PRIMARY KEY (`course_code`),
+  ADD KEY `faculty_code` (`faculty_code`);
+
+--
+-- Indexes for table `faculty`
+--
+ALTER TABLE `faculty`
+  ADD PRIMARY KEY (`faculty_code`);
+
+--
+-- Indexes for table `faculty_rep`
+--
+ALTER TABLE `faculty_rep`
+  ADD KEY `rep_id` (`rep_id`),
+  ADD KEY `faculty_code` (`faculty_code`);
+
+--
+-- Indexes for table `intake`
+--
+ALTER TABLE `intake`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `password_reset`
+--
+ALTER TABLE `password_reset`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `room`
+--
+ALTER TABLE `room`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`),
+  ADD KEY `room_ibfk_1` (`building_id`);
+
+--
+-- Indexes for table `student_group`
+--
+ALTER TABLE `student_group`
+  ADD PRIMARY KEY (`group_id`),
+  ADD KEY `course_code` (`course_code`),
+  ADD KEY `intake_id` (`intake_id`);
+
+--
+-- Indexes for table `unit`
+--
+ALTER TABLE `unit`
+  ADD PRIMARY KEY (`unit_code`),
+  ADD KEY `course_code` (`course_code`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `building`
+--
+ALTER TABLE `building`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+
+--
+-- AUTO_INCREMENT for table `intake`
+--
+ALTER TABLE `intake`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `password_reset`
+--
+ALTER TABLE `password_reset`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `room`
+--
+ALTER TABLE `room`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+
+--
+-- AUTO_INCREMENT for table `student_group`
+--
+ALTER TABLE `student_group`
+  MODIFY `group_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `course`
+--
+ALTER TABLE `course`
+  ADD CONSTRAINT `course_ibfk_1` FOREIGN KEY (`faculty_code`) REFERENCES `faculty` (`faculty_code`);
+
+--
+-- Constraints for table `faculty_rep`
+--
+ALTER TABLE `faculty_rep`
+  ADD CONSTRAINT `faculty_rep_ibfk_1` FOREIGN KEY (`rep_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `faculty_rep_ibfk_2` FOREIGN KEY (`faculty_code`) REFERENCES `faculty` (`faculty_code`);
+
+--
+-- Constraints for table `password_reset`
+--
+ALTER TABLE `password_reset`
+  ADD CONSTRAINT `password_reset_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `room`
+--
+ALTER TABLE `room`
+  ADD CONSTRAINT `room_ibfk_1` FOREIGN KEY (`building_id`) REFERENCES `building` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `student_group`
+--
+ALTER TABLE `student_group`
+  ADD CONSTRAINT `student_group_ibfk_1` FOREIGN KEY (`course_code`) REFERENCES `course` (`course_code`),
+  ADD CONSTRAINT `student_group_ibfk_2` FOREIGN KEY (`intake_id`) REFERENCES `intake` (`id`);
+
+--
+-- Constraints for table `unit`
+--
+ALTER TABLE `unit`
+  ADD CONSTRAINT `unit_ibfk_1` FOREIGN KEY (`course_code`) REFERENCES `course` (`course_code`);
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2018-10-07 16:03:24
