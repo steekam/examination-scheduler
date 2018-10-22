@@ -118,6 +118,16 @@ var schedulerJS = () => {
             $("#modalRoom .modal-title").html(`${building_name}: ADD ROOM`);      
             $('#modalRoom form button[type="submit"]').html("Submit details");        
         });
+
+        /**
+         * Room status toggle event
+         */
+        $(document).on('change','#room-status',event => {
+            let status = $(event.target).prop('checked');
+            let input = $(event.target).siblings('[name="room_status"]');
+            let value = status ? "active" : "inactive";
+            $(input).val(value);
+        });
     
         /*
         **Edit room event
@@ -128,10 +138,19 @@ var schedulerJS = () => {
             let _this = event.target;
             let room_id = $($(_this).closest('.room-actions')).data('room-id');
             let room_name = $($(_this).closest('.room-actions')).data('room-name');
+            let room_size = $($(_this).closest('.room-actions')).data('room-size');
+            let status = $($(_this).closest('.room-actions')).data('room-status') == "active" ? true : false;
+            let room_status = (status) ? "active" : "inactive";
+            
             let building = ($(_this).closest('.list-group')).find('.building-name').text();
+            let building_id = $($(_this).closest('.room-actions')).data('building-id');
     
             $('#modalRoom form input[name="room_name"]').val(room_name);
             $('#modalRoom form input[name="room_id"]').val(room_id);
+            $('#modalRoom form input[name="room_size"]').val(room_size);
+            $('#modalRoom form input[name="room_status"]').val(room_status);
+            $('#modalRoom form input[name="status"]').prop('checked',status);
+            $('#modalRoom form input[name="building_id"]').val(building_id);
             $('#modalRoom form button[type="submit"]').html("Save changes");
             $("#modalRoom .modal-title").html(`${building}: EDIT ROOM`);
             $('#modalRoom').modal('show');
@@ -149,6 +168,7 @@ var schedulerJS = () => {
     
             if(type=="add-action"){
                 dataTarget = $(_this).data('add-action');
+                console.log(dataSend); return;
             }else if(type=="edit-action"){
                 dataTarget = $(_this).data('edit-action');
             }

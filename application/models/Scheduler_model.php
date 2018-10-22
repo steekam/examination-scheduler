@@ -56,9 +56,21 @@
     public function add_room(){
         $data = array(
             "name" => $this->input->post('room_name'),
+            "room_size" => $this->input->post('room_size'),
+            "status" => $this->input->post('room_status'),
             "building_id" => $this->input->post('building_id')
         );
         return $this->db->insert('room',$data);
+    }
+
+    /**
+     * Query for room name check
+     */
+    public function check_room($name,$room_id){
+        $this->db->where('name',$name);
+        $this->db->where('id !=',$room_id);
+        $result = $this->db->get('room');
+        return ($result->num_rows() == 0);
     }
 
     /**
@@ -66,7 +78,9 @@
      */
     public function edit_room(){
         $data = array(
-            "name" => $this->input->post('room_name')
+            "name" => $this->input->post('room_name'),
+            "status" => $this->input->post('room_status'),
+            "room_size" => $this->input->post('room_size')
         );
         $this->db->where('id',$this->input->post('room_id'));
         return $this->db->update('room',$data);

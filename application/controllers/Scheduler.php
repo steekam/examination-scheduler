@@ -208,9 +208,7 @@
             }
 
             //Validation for the form
-            $this->form_validation->set_rules('room_name','Room name','trim|required|is_unique[room.name]',array(
-                'is_unique' => 'This %s already exists'
-            ));
+            $this->form_validation->set_rules('room_name','Room name','trim|required|callback_name_check');
 
             if ($this->form_validation->run() === FALSE) {
                 $validation = array(
@@ -236,6 +234,13 @@
                     echo json_encode($error);
                 }
             }
+        }
+
+        /**
+         * Checks where the new edited name is already present
+         */
+        public function name_check($name){
+            return $this->scheduler_model->check_room($name,$this->input->post('room_id'));
         }
 
         /**
