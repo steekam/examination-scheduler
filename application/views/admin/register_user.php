@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <section class="create-user-content" id="content">
 
     <?php if($this->session->flashdata('user_registered')): ?>
@@ -97,7 +98,7 @@
                 <div class="modal-body row">
                     <form method="post" action="<?= base_url('admin/add_faculty') ?>">
                         <div class="form-group">
-                             <label class="col-sm-2 control-label">Faculty Name</label>
+                            <label class="col-sm-2 control-label">Faculty Name</label>
                             <div class="col-sm-8">
                                 <div class="fg-line">
                                     <input type="text" id="facultyName" name="faculty" placeholder="Faculty name" class="form-control" required autofocus>

@@ -1,0 +1,810 @@
+{
+    "faculties": 
+    {
+        "FIT":
+        {
+            "Year 1":
+            {
+                "BICS":
+                {
+                    "ICS1101":
+                    {
+                        "size" : 20,
+                        "pref_invigilator": "Dickson Owour1",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": 2
+                    },
+                    "ICS1201":
+                    {
+                        "size" : 20,
+                        "pref_invigilator": "Dickson Owour2",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": 2
+                    },
+                    "ICS1301":
+                    {
+                        "size" : 20,
+                        "pref_invigilator": "Dickson Owour3",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": 2
+                    },
+                    "ICS1401":
+                    {
+                        "size" : 20,
+                        "pref_invigilator": "Dickson Owour4",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": 2
+                    },
+                    "ICS1501":
+                    {
+                        "size" : 20,
+                        "pref_invigilator": "Dickson Owour5",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": 2
+                    },
+                    "ICS1601":
+                    {
+                        "size" : 20,
+                        "pref_invigilator": "Dickson Owour6",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": 2
+                    },
+                    "ICS1701":
+                    {
+                        "size" : 20,
+                        "pref_invigilator": "Dickson Owour7",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": 2
+                    },
+                    "ICS1801":
+                    {
+                        "size" : 20,
+                        "pref_invigilator": "Dickson Owour8",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": 2
+                    }
+                },
+                "BBIT":
+                {
+                    "BIT1201":{
+                        "size" : 35,
+                        "pref_invigilator": "Humphrey Owour2",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": false,
+                        "max_split": 1
+                    },
+                    "BIT1202":{
+                        "size" : 35,
+                        "pref_invigilator": "Humphrey Owour2",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": false,
+                        "max_split": 1
+                    },
+                    "BIT1203":{
+                        "size" : 35,
+                        "pref_invigilator": "Humphrey Owour3",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": false,
+                        "max_split": 1
+                    },
+                    "BIT1204":{
+                        "size" : 35,
+                        "pref_invigilator": "Humphrey Owour4",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": false,
+                        "max_split": 1
+                    },
+                    "BIT1205":{
+                        "size" : 35,
+                        "pref_invigilator": "Humphrey Owour5",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": false,
+                        "max_split": 1
+                    },
+                    "BIT1206":{
+                        "size" : 35,
+                        "pref_invigilator": "Humphrey Owour6",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": false,
+                        "max_split": 1
+                    },
+                    "BIT1207":{
+                        "size" : 35,
+                        "pref_invigilator": "Humphrey Owour7",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": false,
+                        "max_split": 1
+                    },
+                    "BIT1208":{
+                        "size" : 35,
+                        "pref_invigilator": "Humphrey Owour8",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": false,
+                        "max_split": 1
+                    }
+
+                    
+                },
+                "BTC":
+                {
+                    "BTC1201":{
+                        "size" : 15,
+                        "pref_invigilator": "Fredrick Omondi",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BTC1202":{
+                        "size" : 15,
+                        "pref_invigilator": "Fredrick Omondi2",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BTC1203":{
+                        "size" : 15,
+                        "pref_invigilator": "Fredrick Omondi3",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BTC1204":{
+                        "size" : 15,
+                        "pref_invigilator": "Fredrick Omondi4",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BTC1205":{
+                        "size" : 15,
+                        "pref_invigilator": "Fredrick Omondi5",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BTC1206":{
+                        "size" : 15,
+                        "pref_invigilator": "Fredrick Omondi6",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BTC1207":{
+                        "size" : 15,
+                        "pref_invigilator": "Fredrick Omondi7",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BTC1208":{
+                        "size" : 15,
+                        "pref_invigilator": "Fredrick Omondi8",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    }
+                }
+            },
+            "Year 2":
+            {
+                "BICS":
+                {
+                    "ICS2101":
+                    {
+                        "size" : 42,
+                        "pref_invigilator": "Dickson Owour",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "ICS2102":
+                    {
+                        "size" : 42,
+                        "pref_invigilator": "Dickson Owour2",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "ICS2103":
+                    {
+                        "size" : 42,
+                        "pref_invigilator": "Dickson Owour3",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "ICS2104":
+                    {
+                        "size" : 42,
+                        "pref_invigilator": "Dickson Owour4",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "ICS2105":
+                    {
+                        "size" : 42,
+                        "pref_invigilator": "Dickson Owour5",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "ICS2106":
+                    {
+                        "size" : 42,
+                        "pref_invigilator": "Dickson Owour6",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "ICS2107":
+                    {
+                        "size" : 42,
+                        "pref_invigilator": "Dickson Owour7",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "ICS2108":
+                    {
+                        "size" : 42,
+                        "pref_invigilator": "Dickson Owour8",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    }
+                },
+                "BBIT":
+                {
+                    "BIT2101":{
+                        "size" : 25,
+                        "pref_invigilator": "Humphrey Owour",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BIT2102":{
+                        "size" : 25,
+                        "pref_invigilator": "Humphrey Owour2",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BIT2103":{
+                        "size" : 25,
+                        "pref_invigilator": "Humphrey Owour3",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BIT2104":{
+                        "size" : 25,
+                        "pref_invigilator": "Humphrey Owour4",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BIT2105":{
+                        "size" : 25,
+                        "pref_invigilator": "Humphrey Owour5",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BIT2106":{
+                        "size" : 25,
+                        "pref_invigilator": "Humphrey Owour6",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BIT2107":{
+                        "size" : 25,
+                        "pref_invigilator": "Humphrey Owour7",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    }
+                },
+                "BTC":
+                {
+                    "BTC2101":{
+                        "size" : 33,
+                        "pref_invigilator": "Fredrick Omondi",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BTC2102":{
+                        "size" : 33,
+                        "pref_invigilator": "Fredrick Omondi2",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BTC2103":{
+                        "size" : 33,
+                        "pref_invigilator": "Fredrick Omondi3",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BTC2104":{
+                        "size" : 33,
+                        "pref_invigilator": "Fredrick Omondi4",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BTC2105":{
+                        "size" : 33,
+                        "pref_invigilator": "Fredrick Omondi5",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BTC2106":{
+                        "size" : 33,
+                        "pref_invigilator": "Fredrick Omondi6",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BTC2107":{
+                        "size" : 33,
+                        "pref_invigilator": "Fredrick Omond7",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    }
+                }
+            },
+            "Year 3":
+            {
+                "BICS":
+                {
+                    "ICS3101":
+                    {
+                        "size" : 22,
+                        "pref_invigilator": "Dickson Owour",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "ICS3102":
+                    {
+                        "size" : 22,
+                        "pref_invigilator": "Dickson Owour2",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "ICS3103":
+                    {
+                        "size" : 22,
+                        "pref_invigilator": "Dickson Owour3",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "ICS3104":
+                    {
+                        "size" : 22,
+                        "pref_invigilator": "Dickson Owour4",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "ICS3105":
+                    {
+                        "size" : 22,
+                        "pref_invigilator": "Dickson Owour5",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "ICS3106":
+                    {
+                        "size" : 22,
+                        "pref_invigilator": "Dickson Owour6",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "ICS3107":
+                    {
+                        "size" : 22,
+                        "pref_invigilator": "Dickson Owour7",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "ICS3108":
+                    {
+                        "size" : 22,
+                        "pref_invigilator": "Dickson Owour8",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    }
+                },
+                "BBIT":
+                {
+                    "BIT3101":{
+                        "size" : 35,
+                        "pref_invigilator": "Humphrey Owour",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BIT3102":{
+                        "size" : 35,
+                        "pref_invigilator": "Humphrey Owour2",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BIT3103":{
+                        "size" : 35,
+                        "pref_invigilator": "Humphrey Owour3",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BIT3104":{
+                        "size" : 35,
+                        "pref_invigilator": "Humphrey Owour4",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BIT3105":{
+                        "size" : 35,
+                        "pref_invigilator": "Humphrey Owour5",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BIT3106":{
+                        "size" : 35,
+                        "pref_invigilator": "Humphrey Owour6",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BIT3107":{
+                        "size" : 35,
+                        "pref_invigilator": "Humphrey Owour7",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    }
+                },
+                "BTC":
+                {
+                    "BTC3101":{
+                        "size" : 105,
+                        "pref_invigilator": "Fredrick Omondi",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BTC3102":{
+                        "size" : 105,
+                        "pref_invigilator": "Fredrick Omondi2",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BTC3103":{
+                        "size" : 105,
+                        "pref_invigilator": "Fredrick Omondi3",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BTC3104":{
+                        "size" : 105,
+                        "pref_invigilator": "Fredrick Omondi4",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BTC3105":{
+                        "size" : 105,
+                        "pref_invigilator": "Fredrick Omondi5",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BTC3106":{
+                        "size" : 105,
+                        "pref_invigilator": "Fredrick Omondi6",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BTC3107":{
+                        "size" : 105,
+                        "pref_invigilator": "Fredrick Omondi7",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    }
+                }
+            },
+            "Year 4":
+            {
+                "BICS":
+                {
+                    "ICS4101":
+                    {
+                        "size" : 110,
+                        "pref_invigilator": "Dickson Owour",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "ICS4102":
+                    {
+                        "size" : 110,
+                        "pref_invigilator": "Dickson Owour2",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "ICS4103":
+                    {
+                        "size" : 110,
+                        "pref_invigilator": "Dickson Owour3",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "ICS4104":
+                    {
+                        "size" : 110,
+                        "pref_invigilator": "Dickson Owour4",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "ICS4105":
+                    {
+                        "size" : 110,
+                        "pref_invigilator": "Dickson Owour5",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "ICS4106":
+                    {
+                        "size" : 110,
+                        "pref_invigilator": "Dickson Owour6",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "ICS4107":
+                    {
+                        "size" : 110,
+                        "pref_invigilator": "Dickson Owour7",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "ICS4108":
+                    {
+                        "size" : 110,
+                        "pref_invigilator": "Dickson Owour8",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    }
+                },
+                "BBIT":
+                {
+                    "BIT4101":{
+                        "size" : 100,
+                        "pref_invigilator": "Humphrey Owour",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BIT4102":{
+                        "size" : 100,
+                        "pref_invigilator": "Humphrey Owour2",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BIT4103":{
+                        "size" : 100,
+                        "pref_invigilator": "Humphrey Owour3",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BIT4104":{
+                        "size" : 100,
+                        "pref_invigilator": "Humphrey Owour4",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BIT4105":{
+                        "size" : 100,
+                        "pref_invigilator": "Humphrey Owour5",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BIT4106":{
+                        "size" : 100,
+                        "pref_invigilator": "Humphrey Owour6",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BIT4107":{
+                        "size" : 100,
+                        "pref_invigilator": "Humphrey Owour7",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    }
+                },
+                "BTC":
+                {
+                    "BTC4101":{
+                        "size" : 80,
+                        "pref_invigilator": "Fredrick Omondi",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BTC4102":{
+                        "size" : 80,
+                        "pref_invigilator": "Fredrick Omondi2",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BTC4103":{
+                        "size" : 80,
+                        "pref_invigilator": "Fredrick Omondi3",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BTC4104":{
+                        "size" : 80,
+                        "pref_invigilator": "Fredrick Omondi4",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BTC4105":{
+                        "size" : 80,
+                        "pref_invigilator": "Fredrick Omondi5",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BTC4106":{
+                        "size" : 80,
+                        "pref_invigilator": "Fredrick Omondi6",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    },
+                    "BTC4107":{
+                        "size" : 80,
+                        "pref_invigilator": "Fredrick Omondi7",
+                        "pref_before": true,
+                        "pref_after": false,
+                        "split_rooms": true,
+                        "max_split": "2"
+                    }
+                }
+            }
+        }        
+    }
+}

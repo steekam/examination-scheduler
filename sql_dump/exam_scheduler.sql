@@ -44,6 +44,15 @@ INSERT INTO `building` (`id`, `name`) VALUES
 (4, 'SBS'),
 (5, 'SLS');
 
+-- Table structure for table `class_group`
+--
+
+CREATE TABLE `class_group` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `course_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 -- --------------------------------------------------------
 
 --
@@ -275,6 +284,14 @@ ALTER TABLE `unit`
   ADD KEY `course_code` (`course_code`);
 
 --
+-- Indexes for table `unit`
+--
+ALTER TABLE `unit`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `course_id` (`course_id`),
+  ADD KEY `class_group` (`class_group`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -313,6 +330,12 @@ ALTER TABLE `room`
 --
 ALTER TABLE `student_group`
   MODIFY `group_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `unit`
+--
+ALTER TABLE `unit`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`

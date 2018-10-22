@@ -1,8 +1,6 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <?php
     class Faculty_model extends CI_Model{
-        public function __construct(){
-            $this->load->database();
-        }
 
         /**
          * Updates the faculty table

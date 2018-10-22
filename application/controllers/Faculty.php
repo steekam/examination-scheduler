@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <?php
     class Faculty extends CI_Controller{
         /**

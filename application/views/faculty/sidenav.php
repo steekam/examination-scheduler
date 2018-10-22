@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <section id="main">
     <aside id="sidebar" class="sidebar c-overflow">
         <ul class="main-menu">

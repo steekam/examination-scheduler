@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <footer id="footer">
     Copyright &copy; 2018 Examination Scheduler
 
@@ -38,6 +39,10 @@
         <script src="<?php echo base_url() ?>vendors/dark/vendors/bower_components/simpleWeather/jquery.simpleWeather.min.js"></script>
         <script src="<?php echo base_url() ?>vendors/dark/vendors/bower_components/Waves/dist/waves.min.js"></script>
         <script src="<?php echo base_url() ?>vendors/dark/vendors/bootstrap-growl/bootstrap-growl.min.js"></script>
+
+        <!-- Bootstrap notify -->
+        <script src="<?= base_url('vendors/Codebase/bootstrap-notify/bootstrap-notify.min.js');?>"></script>
+
         <script src="<?php echo base_url() ?>vendors/dark/vendors/bower_components/sweetalert/dist/sweetalert.min.js"></script>
         <script src="<?php echo base_url() ?>vendors/dark/vendors/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
         
@@ -48,6 +53,8 @@
 
         <script src="<?php echo base_url() ?>assets/js/app.js"></script>
         <script src="<?php echo base_url() ?>assets/js/main.js"></script>
+        <script src="<?php echo base_url() ?>assets/js/admin.js"></script>
+        <script src="<?php echo base_url() ?>assets/js/scheduler.js"></script>
 
         <!-- Helper for the forgot password logic -->
         <?php if(isset($forgot_trigger)): ?>
@@ -59,13 +66,6 @@
                 });
             </script>
         <?php endif;?>
-        
-
-        
-        <script>
-            
-        </script>
-        
     </body>
 
 </html>

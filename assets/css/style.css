@@ -5,10 +5,7 @@ select option {
     background-color: #2b343a; 
 }
 
-#addFacultyModal .modal-content, 
-#new_course_modal .modal-content, 
-#new_unit_modal .modal-content,
-#edit_unit_modal .modal-content {
+#addFacultyModal .modal-content, .myModal .modal-content {
     background: #282E35;
     
 }
@@ -52,4 +49,19 @@ select option {
 }
 #feedback-result{
     /* margin-bottom: 10px; */
+.rooms-card {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.building-name{
+    font-size: 1.8em;
+}
+
+.building-icon{
+    font-size: 1.4em;
+}
+
+.room-name, .room-icon{
+    font-size: 1.1em;
 }

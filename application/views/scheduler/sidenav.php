@@ -24,19 +24,14 @@
                 </ul>
             </li>
 
-            <li class="<?php if($this->uri->uri_string() =='admin') echo 'active'; ?>">
-                <a href="<?php echo base_url('admin');?>"><i class="zmdi zmdi-home"></i> Home</a>
+            <li class="<?php if($this->uri->uri_string() =='scheduler') echo 'active'; ?>">
+                <a href="<?= base_url('scheduler'); ?>">Home</a>
             </li>
-            <li class="sub-menu <?php if($this->uri->uri_string() =='admin/register_user') echo 'active'; ?>">
-                <a href="#" data-ma-action="submenu-toggle"><i class="zmdi zmdi-male-female"></i>Users</a>
-                <ul>
-                    <li>
-                        <a href="#">View All</a>
-                    </li>
-                    <li class="<?php if($this->uri->uri_string() =='admin/register_user') echo 'active';?>">
-                        <a href="<?php echo base_url('admin/register_user'); ?>">Register User</a>
-                    </li>
-                </ul>
+            <li class="<?php if($this->uri->uri_string() =='scheduler/rooms') echo 'active'; ?>">
+                <a href="<?= base_url('scheduler/rooms'); ?>">Examination Rooms</a>
+            </li>
+            <li class="<?php if($this->uri->uri_string() =='scheduler/constraints') echo 'active'; ?>">
+                <a href="#">Constraints</a>
             </li>
         </ul>
     </aside>

@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <div class="login-content">
     <!-- Login -->
     <div class="lc-block toggled" id="l-login">
@@ -42,7 +43,7 @@
             </div>
 
             <div class="input-group m-b-20">
-                <span class="input-group-addon"><i class="zmdi zmdi-male"></i></span>
+                <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
                 <div class="fg-line">
                     <input type="password" name="password" class="form-control" placeholder="Password" required>
                 </div>

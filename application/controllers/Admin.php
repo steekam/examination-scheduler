@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <?php
     class Admin extends CI_Controller{
         
@@ -88,7 +89,7 @@
          * 
          * Checks if the email input is a valid strathmore.edu email.
          * 
-         * @param string $email Input passed in the form.
+         * @param string $email Input passeddeldel in the form.
          * 
          * @return boolean Indicates whether email is valid.
          */
