@@ -34,7 +34,7 @@ var coreJS = function(){
         const footerUl =  $('footer ul');
         const sideNav = $('aside');
         
-        if(!sideNav){
+        if(sideNav.length == 0){
             $(footerUl).parent().addClass('p-l-0');
             $(footerUl).hide();
         }
