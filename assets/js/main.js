@@ -25,7 +25,7 @@ var coreJS = function(){
             //Dispatch event
             element.dispatchEvent(event);
         });  
-    }();
+    };
 
     $('input').attr('autocomplete','off');
     
@@ -127,7 +127,12 @@ var coreJS = function(){
         $(icon).removeClass('zmdi-minus').addClass('zmdi-plus');
     });
     
-};
+    return {
+        init: ()=> {
+            initFormErrorCheck();
+        }
+    }
+}();
 
 /**
  *  Faculty representative registration helper

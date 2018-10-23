@@ -13,7 +13,7 @@
 
                 <ul>
                     <li>
-                        <a href="<?php echo base_url() ?>vendors/dark/profile-about.html">View Profile</a>
+                        <a href="<?php echo base_url(); ?>">View Profile</a>
                     </li>
                     <li>
                         <a href="#">Settings</a>
@@ -37,6 +37,9 @@
                         <a href="<?php echo base_url('admin/register_user'); ?>">Register User</a>
                     </li>
                 </ul>
+            </li>
+            <li>
+                <a href="<?= base_url('admin/institution');?>"><i class="zmdi zmdi-graduation-cap"></i> Institution</a>
             </li>
         </ul>
     </aside>

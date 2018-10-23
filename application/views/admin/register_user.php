@@ -46,7 +46,7 @@
                     <small class="help-block"><?php echo form_error('username'); ?></small>
                 </div>
             </div>
-             <div class="form-group">
+            <div class="form-group">
                 <label class="col-sm-2 control-label">Email</label>
                 <div class="col-sm-6">
                     <div class="fg-line">

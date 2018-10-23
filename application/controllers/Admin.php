@@ -107,4 +107,19 @@
                 return $this->faculty_model->add_faculty($_POST['name']);
             }
         }
+
+        /**
+         *  Deatails required by the institution
+         */
+        public function institution(){
+            if(!$this->session->userdata('logged_in')){
+                redirect(base_url());
+            }
+
+            $this->load->view('templates/header');
+            $this->load->view('templates/top_header');
+            $this->load->view('admin/sidenav');
+            $this->load->view('admin/institution');
+            $this->load->view('templates/footer');
+        }
     }
