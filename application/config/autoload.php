@@ -89,7 +89,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url','form','cookie','string','PHPMailer/PHPMailerAutoload','PHPMailer/email');
+$autoload['helper'] = array('url','form','cookie','string','PHPMailer/PHPMailerAutoload','PHPMailer/email','access_helper');
 
 /*
 | -------------------------------------------------------------------

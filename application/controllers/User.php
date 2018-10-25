@@ -43,7 +43,7 @@
                         'user_id' => $user->id,
                         'name' => $user->first_name.' '.$user->last_name,
                         'email' => $user->email,
-                        'role' => $user->role,
+                        'role' => $user->user_type,
                         'logged_in' => true
                     );
 
@@ -220,13 +220,13 @@
          */
         public function user_redirect($role){
             switch($role){
-                case 'administrator':
+                case 1:
                     redirect('admin');
                     break;
-                case 'faculty representative':
+                case 2:
                     redirect('faculty');
                     break;
-                case 'scheduler manager':
+                case 3:
                     redirect('scheduler');
                     break;
                 default:

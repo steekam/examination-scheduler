@@ -60,9 +60,9 @@
                 <div class="col-sm-6">
                     <div class="fg-line">
                         <select name="role" class="form-control">
-                            <option value="faculty representative" <?php echo  set_select('role', 'faculty representative', TRUE); ?> >Faculty Representative</option>
-                            <option value="scheduler manager" <?php echo  set_select('role', 'scheduler manager'); ?> >Scheduler Manager</option>
-                            <option value="administrator" <?php echo  set_select('role', 'administrator'); ?> >Administrator</option>
+                            <option value="2" <?php echo  set_select('role', '2', TRUE); ?> >Faculty Representative</option>
+                            <option value="3" <?php echo  set_select('role', '3'); ?> >Scheduler Manager</option>
+                            <option value="1" <?php echo  set_select('role', '1'); ?> >Administrator</option>
                         </select>
                     </div>
                 </div>
@@ -74,7 +74,6 @@
                         <select name="faculty" class="form-control" data-source="<?= base_url('faculty/get_faculties') ?>">
                         </select>
                     </div>
-                    <button id="addNewFaculty" class="btn bgm-teal m-t-5 btn-icon-text"><i class="zmdi zmdi-plus"></i> Add new faculty</button>
                 </div>
             </div>
             <div class="form-group">
@@ -83,36 +82,5 @@
                 </div>
             </div>
         </div>
-    </form>
-
-    <!-- Add faculty modal -->
-    <div class="modal fade" id="addFacultyModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content c-white">
-                <div class="modal-header">
-                    <h5 class="modal-title c-white">ADD NEW FACULTY</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body row">
-                    <form method="post" action="<?= base_url('admin/add_faculty') ?>">
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">Faculty Name</label>
-                            <div class="col-sm-8">
-                                <div class="fg-line">
-                                    <input type="text" id="facultyName" name="faculty" placeholder="Faculty name" class="form-control" required autofocus>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer row  p-b-20">
-                    <button type="button" class="btn btn-danger offset-3" data-dismiss="modal">Cancel</button>
-                    <button type="button" id="addFaculty" class="btn bgm-teal">Add faculty</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
+</form>
 </section>

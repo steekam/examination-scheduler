@@ -13,7 +13,10 @@
     <link href="<?php echo base_url() ?>vendors/dark/vendors/bower_components/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>vendors/dark/vendors/bower_components/sweetalert/dist/sweetalert.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>vendors/dark/vendors/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet">
-        
+    
+    <!-- Sweetalert CSS -->
+    <link rel="stylesheet" href="<?= base_url('vendors/Codebase/assets/js/plugins/sweetalert2/sweetalert2.min.css');?>">  
+
     <!-- CSS -->
     <link href="<?php echo base_url() ?>vendors/dark/css/app_1.min.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>vendors/dark/css/app_2.min.css" rel="stylesheet">

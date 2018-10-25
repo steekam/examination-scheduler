@@ -9,15 +9,15 @@
                 'last_name' => $this->input->post('last_name'),
                 'email' => $this->input->post('email'),
                 'username' => $this->input->post('username'),
-                'role' => $this->input->post('role'),
+                'user_type' => $this->input->post('role'),
                 'password' => $enc_password
             );
             $user_insert = $this->db->insert('users',$data);
             $user_id = $this->get_user(false,$this->input->post('email'))['id'];
-            if($data['role'] == "faculty representative"){
+            if($data['role'] == "2"){
                 $other_data = array(
                     'rep_id' => $user_id,
-                    'faculty_id' => $this->input->post('faculty')
+                    'faculty_code' => $this->input->post('faculty')
                 );
                 $this->db->insert('faculty_rep',$other_data);
             }

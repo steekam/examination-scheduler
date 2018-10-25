@@ -1,7 +1,9 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <?php
     class Admin extends CI_Controller{
-        
+
+        /**Accepted user type for this page (Administrator) */
+        var $user = 1;        
         /**
          * Loads default view of the admin dashboard
          */
@@ -100,15 +102,6 @@
         }
 
         /**
-         * Adds new faculty to the database
-         */
-        public function add_faculty(){
-            if(isset($_POST['name'])){
-                return $this->faculty_model->add_faculty($_POST['name']);
-            }
-        }
-
-        /**
          *  Deatails required by the institution
          */
         public function institution(){
@@ -116,10 +109,121 @@
                 redirect(base_url());
             }
 
+            $data = array(
+                'faculties' => $this->faculty_model->get_faculties()
+            );
+
             $this->load->view('templates/header');
             $this->load->view('templates/top_header');
             $this->load->view('admin/sidenav');
-            $this->load->view('admin/institution');
+            $this->load->view('admin/institution',$data);
             $this->load->view('templates/footer');
+        }
+
+        /**
+         * Call to add faculty
+         */
+        public function add_faculty(){
+            is_logged_in();
+
+            $res = array();
+            $code = $this->input->post('faculty_code');
+            $name = $this->input->post('faculty_name');
+            if($this->faculty_model->add_faculty($code,$name)){
+                $res = array(
+                    "icon" => "zmdi zmdi-badge-check",
+                    "type" => "success",
+                    "message" => "Faculty added successfully"
+                );
+            }else{
+                $res = array(
+                    "icon" => "zmdi zmdi-alert-circle-o",
+                    "type" => "danger",
+                    "message" => "Could not complete request"
+                );
+            }
+            echo json_encode($res);
+        }
+
+        /**
+         * Call to edit faculty
+         */
+        public function edit_faculty(){
+            is_logged_in();
+
+            $res = array();
+            $code = $this->input->post('faculty_code');
+            $name = $this->input->post('faculty_name');
+            if($this->faculty_model->edit_faculty($code,$name)){
+                $res = array(
+                    "icon" => "zmdi zmdi-badge-check",
+                    "type" => "success",
+                    "message" => "Faculty edited successfully"
+                );
+            }else{
+                $res = array(
+                    "icon" => "zmdi zmdi-alert-circle-o",
+                    "type" => "danger",
+                    "message" => "Could not complete request"
+                );
+            }
+            echo json_encode($res);
+        }
+
+        /**
+         * Call to delete faculty
+         */
+        public function delete_faculty(){
+            is_logged_in();
+
+            $res = array();
+            $code = $this->input->post('faculty_code');
+            if($this->faculty_model->delete_faculty($code)){
+                $res = array(
+                    "icon" => "zmdi zmdi-badge-check",
+                    "type" => "success",
+                    "message" => "Faculty deleted successfully"
+                );
+            }else{
+                $res = array(
+                    "icon" => "zmdi zmdi-alert-circle-o",
+                    "type" => "danger",
+                    "message" => "Could not complete request"
+                );
+            }
+            echo json_encode($res);
+        }
+
+        /**
+         * Check faculty code
+         */
+        public function check_faculty_code(){
+            $code = $this->input->post('code');
+            echo json_encode($this->faculty_model->validate_faculty($code));
+        }
+
+        /**
+         * Check faculty name
+         */
+        public function check_faculty_name(){
+            $name = $this->input->post('name');
+            echo json_encode($this->faculty_model->validate_faculty(false,$name));            
+        }
+
+        /**
+         * Checks faculty name on edit
+         */
+        public function check_faculty_name_edit(){
+            $name = $this->input->post('name');
+            $code = $this->input->post('code');
+            echo json_encode($this->faculty_model->validate_faculty($code,$name,true));
+        }
+
+        /**
+         * Checks faculty code on edit
+         */
+        public function check_faculty_code_edit(){
+            $code = $this->input->post('code');
+            echo json_encode($this->faculty_model->validate_faculty($code,false,true,true));
         }
     }
