@@ -68,7 +68,9 @@ var initRegisterUser = function (){
  * !Institution
  */
 var initInstitution = function(){
-    
+    $('form label').addClass('c-cyan');
+
+    //?Faculty
     var initFaculty = () => {
         //?Faculty Validator setup
         var facultyValidator = $('form.js-faculty').validate({
@@ -208,10 +210,331 @@ var initInstitution = function(){
         }
     }
 
+    //?Invigilators
+    var initInvigilators = () => {
+        //TODO: Validator setup
+        
+        //?Form submit
+        $('form.js-invigilator').on('submit',event=>{
+            event.preventDefault();
+            let _this = event.target;
+            let target;
+            let dataSend = $(_this).serializeArray();
+
+            if($(_this).hasClass('add-action')){
+                target = $(_this).data('add-action');                
+            }else if($(_this).hasClass('edit-action')){
+                target = $(_this).data('edit-action');                
+            }
+            
+            ajaxComm(target,dataSend,"json")
+            .done(data => {
+                notify(data.icon,data.type,data.message);
+                $('form.js-invigilator button[type="reset"]').trigger('click');
+                reloadInvigilators();
+            });
+        });
+
+        //?Edit event for invigilator
+        $('#invigilator-list').on('click','.edit-invigilator',event=>{
+            let _this = event.target;
+            let form = $('form.js-invigilator');
+            $(form).removeClass('add-action').addClass('edit-action');
+            $(form).closest('.card').find('.card-header>h2').text('EDIT INVIGILATOR DETAILS');
+            $(form).find('button[type="submit"]').text('SAVE CHANGES');
+
+            let fname = $(_this).closest('.dropdown-menu').data('fname');
+            let lname = $(_this).closest('.dropdown-menu').data('lname');
+            let faculty = $(_this).closest('.dropdown-menu').data('faculty-code');
+            let status = $(_this).closest('.dropdown-menu').data('status');
+            let id = $(_this).closest('.dropdown-menu').data('id');
+
+            $(form).find('[name="first_name"]').val(fname);
+            $(form).find('[name="last_name"]').val(lname);
+            $(form).find('[name="faculty_code"]').val(faculty);
+            $(form).find('[name="status"]').prop('checked',status);
+            $(form).find('[name="id"]').val(id);
+        });
+
+        //?Cancel editing
+        $(document).on('click','form.js-inigilator button[type="reset"]',event => {
+            let form = $('form.js-invigilator');
+            if($(form).hasClass('edit-action')){
+                $(form).removeClass('edit-action').addClass('add-action');
+                $(form).closest('.card').find('.card-header>h2').text('ADD INVIGILATOR');
+                $(form).find('button[type="submit"]').text('ADD INVIGILATOR');
+            }
+        });
+
+        //?Delete invigilator
+        $('#invigilator-list').on('click','.delete-invigilator',event=>{
+            let _this = event.target;
+            let id = $(_this).closest('.dropdown-menu').data('id');
+            let target = $(_this).closest('.dropdown-menu').data('delete-target');
+
+            const deleteSwal = mySwal();
+            deleteSwal({   
+                title: "Are you sure?",   
+                text: "This record will be deleted permanently",   
+                type: "warning",       
+                confirmButtonText: "Yes, delete!",
+            })
+            .then((result)=>{
+                if(result.value){
+                    ajaxComm(target,{id: id},"json")
+                    .done(data => {
+                        notify(data.icon,data.type,data.message);
+                        reloadInvigilators();
+                    });
+                }    
+            });
+        });
+
+        var reloadInvigilators = () => {
+            let target = window.location.pathname;
+            $('#invigilator-list').load(target+' #invigilator-list');
+        }
+        
+    }
+
+    //?Course types
+    var initCourseType = () => {
+        //?Validator setup
+        var courseTypeValidator = $('form.js-coursetype').validate({
+            rules:{
+                "type_name":{
+                    required: true,
+                    remote: {
+                        url: $('#check_typename_url').val(),
+                        type: "POST",
+                        data: { 
+                            type_name : () => { return $('form.js-coursetype input[name="type_name"]').val();},
+                        },
+                        dataType: 'json'
+                    }
+                }
+            },
+            messages:{
+                "type_name":{
+                    remote: "Name is already taken"
+                }
+
+            },
+            submitHandler: form => {
+                let target;
+                let dataSend = $(form).serializeArray();
+
+                if($(form).hasClass('add-action')){
+                    target = $(form).data('add-action');
+                }else if($(form).hasClass('edit-action')){
+                    target = $(form).data('edit-action');
+                }
+                ajaxComm(target,dataSend,"json")
+                .done(data => {
+                    notify(data.icon,data.type,data.message);
+                    $(form).find('button[type="reset"]').trigger('click');
+                    reloadCourseTypeList();
+                });
+            }
+        });
+
+        //?Editing
+        $('#coursetype-list').on('click','.edit-coursetype',event => {
+            let _this = event.target;
+            let form = $('form.js-coursetype');
+            $(form).removeClass('add-action').addClass('edit-action');
+            $(form).closest('.card').find('.card-header>h2').text('EDIT COURSE TYPE DETAILS');
+            $(form).find('button[type="submit"]').text('SAVE CHANGES');
+
+            let id = $(_this).closest('.dropdown-menu').data('id');
+            let name = $(_this).closest('.dropdown-menu').data('name');
+
+            $(form).find('[name="id"]').val(id);
+            $(form).find('[name="type_name"]').val(name);
+            
+            $(form).find('[name="type_name"]').rules('remove','remote');
+            $(form).find('[name="type_name"]').rules('add',{
+                required:true,
+                remote: {
+                    url: $('#check_typename_edit_url').val(),
+                    type: "POST",
+                    data: { 
+                        id: $('form.js-coursetype input[name="id"]').val(),
+                        type_name : () => { return $('form.js-coursetype input[name="type_name"]').val();}
+                    },
+                    dataType: 'json'
+                }
+            });
+        });
+
+        //?Cancel editing
+        $(document).on('click','form.js-coursetype button[type="reset"]',event => {
+            let form = $('form.js-coursetype');
+            if($(form).hasClass('edit-action')){
+                $(form).removeClass('edit-action').addClass('add-action');
+                $(form).closest('.card').find('.card-header>h2').text('ADD TYPE');
+                $(form).find('button[type="submit"]').text('ADD TYPE');
+            }
+
+            //Reset validator
+            courseTypeValidator.resetForm();
+            $(form).find('.help-block, .form-group').removeClass('has-error');
+        });
+
+        //?Deleting
+        $('#coursetype-list').on('click','.delete-coursetype',event => {
+            let _this = event.target;
+            let id = $(_this).closest('.dropdown-menu').data('id');
+            let target = $(_this).closest('.dropdown-menu').data('delete-target');
+
+            const deleteSwal = mySwal();
+            deleteSwal({   
+                title: "Are you sure?",   
+                text: "This record will be deleted permanently",   
+                type: "warning",       
+                confirmButtonText: "Yes, delete!",
+            })
+            .then((result)=>{
+                if(result.value){
+                    ajaxComm(target,{id: id},"json")
+                    .done(data => {
+                        notify(data.icon,data.type,data.message);
+                        reloadCourseTypeList();
+                    });
+                }    
+            });
+        });
+
+        var reloadCourseTypeList = () => {
+            let target = window.location.pathname;
+            $('#coursetype-list').load(target+' #coursetype-list');
+        }
+    }
+
+    //?Intakes
+    var initIntakes = () => {
+        //?Validator
+        var intakeValidator = $('form.js-intake').validate({
+            rules:{
+                "name" : {
+                    required:true,
+                    remote:{
+                        url: $('#check_intake_url').val(),
+                        type: "POST",
+                        data: { 
+                            name : () => { return $('form.js-intake input[name="name"]').val() },
+                            course_type :() => {return $('form.js-intake select[name="course_type"]').val() }
+                        },
+                        dataType: 'json'
+                    }
+                }
+            },
+            messages:{
+                "name": {
+                    remote: "Intake combination already exists"
+                }
+            },
+            submitHandler: form => {
+                let target;
+                let dataSend = $(form).serializeArray();
+
+                if($(form).hasClass('add-action')){
+                    target = $(form).data('add-action');
+                }else if($(form).hasClass('edit-action')){
+                    target = $(form).data('edit-action');
+                }
+                ajaxComm(target,dataSend,"json")
+                .done(data => {
+                    notify(data.icon,data.type,data.message);
+                    $(form).find('button[type="reset"]').trigger('click');
+                    reloadIntakeList();
+                });
+            }
+        });
+
+        //?Editing
+        $('#intake-list').on('click','.edit-intake',event => {
+            let _this = event.target;
+            let form = $('form.js-intake');
+            $(form).removeClass('add-action').addClass('edit-action');
+            $(form).closest('.card').find('.card-header>h2').text('EDIT INTAKE DETAILS');
+            $(form).find('button[type="submit"]').text('SAVE CHANGES');
+
+            let id = $(_this).closest('.dropdown-menu').data('id');
+            let name = $(_this).closest('.dropdown-menu').data('name');
+            let course_type = $(_this).closest('.dropdown-menu').data('coursetype');
+
+            $(form).find('[name="id"]').val(id);
+            $(form).find('[name="name"]').val(name);
+            $(form).find('[name="course_type"]').val(course_type);
+            
+            $(form).find('[name="name"]').rules('remove','remote');
+            $(form).find('[name="name"]').rules('add',{
+                required:true,
+                remote: {
+                    url: $('#check_intake_edit_url').val(),
+                    type: "POST",
+                    data: { 
+                        id: $('form.js-intake input[name="id"]').val(),
+                        name : () => {return $('form.js-intake input[name="name"]').val() },
+                        course_type: () => {return $('form.js-intake select[name="course_type"]').val() },
+                    },
+                    dataType: 'json'
+                }
+            });
+        });
+
+        //?Cancel editing
+        $(document).on('click','form.js-intake button[type="reset"]',event => {
+            let form = $('form.js-intake');
+            if($(form).hasClass('edit-action')){
+                $(form).removeClass('edit-action').addClass('add-action');
+                $(form).closest('.card').find('.card-header>h2').text('ADD INTAKE');
+                $(form).find('button[type="submit"]').text('ADD INTAKE');
+            }
+
+            //Reset validator
+            intakeValidator.resetForm();
+            $(form).find('.help-block, .form-group').removeClass('has-error');
+        });
+
+        //?Deleting
+        $('#intake-list').on('click','.delete-intake',event => {
+            let _this = event.target;
+            let id = $(_this).closest('.dropdown-menu').data('id');
+            let target = $(_this).closest('.dropdown-menu').data('delete-target');
+
+            const deleteSwal = mySwal();
+            deleteSwal({   
+                title: "Are you sure?",   
+                text: "This record will be deleted permanently",   
+                type: "warning",       
+                confirmButtonText: "Yes, delete!",
+            })
+            .then((result)=>{
+                if(result.value){
+                    ajaxComm(target,{id: id},"json")
+                    .done(data => {
+                        notify(data.icon,data.type,data.message);
+                        reloadIntakeList();
+                    });
+                }    
+            });
+        });
+
+        var reloadIntakeList = () => {
+            let target = window.location.pathname;
+            $('#intake-list').load(target+' #intake-list');
+        }
+    }
+
 
     return {
         init: () => {
             initFaculty();
+            initInvigilators();
+            initCourseType();
+            initIntakes();
         }
     }
 }();

@@ -2,7 +2,7 @@ select option {
     background-color: #2b343a; 
 }
 
-#addFacultyModal .modal-content, .myModal .modal-content {
+.myModal .modal-content {
     background: #282E35;
     
 }

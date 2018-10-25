@@ -110,7 +110,10 @@
             }
 
             $data = array(
-                'faculties' => $this->faculty_model->get_faculties()
+                'faculties' => $this->faculty_model->get_faculties(),
+                'invigilators' => $this->faculty_model->get_invigilators(),
+                'course_types' => $this->faculty_model->get_course_types(),
+                'intakes' => $this->faculty_model->get_intakes()
             );
 
             $this->load->view('templates/header');
@@ -121,6 +124,7 @@
         }
 
         /**
+         * !Faculty
          * Call to add faculty
          */
         public function add_faculty(){
@@ -225,5 +229,271 @@
         public function check_faculty_code_edit(){
             $code = $this->input->post('code');
             echo json_encode($this->faculty_model->validate_faculty($code,false,true,true));
+        }
+
+        //!Invigilators
+        /**
+         * Add invigilator
+         */
+        public function add_invigilator(){
+            is_logged_in();
+
+            $res = array();
+            $fname = $this->input->post('first_name');
+            $lname = $this->input->post('last_name');
+            $faculty_code = $this->input->post('faculty_code');
+            $status = $this->input->post('status');
+            if($this->faculty_model->add_invigilator($fname,$lname,$faculty_code,$status)){
+                $res = array(
+                    "icon" => "zmdi zmdi-badge-check",
+                    "type" => "success",
+                    "message" => "Invigilator added successfully"
+                );
+            }else{
+                $res = array(
+                    "icon" => "zmdi zmdi-alert-circle-o",
+                    "type" => "danger",
+                    "message" => "Could not complete request"
+                );
+            }
+            echo json_encode($res);
+        }
+
+        /**
+         * Edit invigilator
+         */
+        public function edit_invigilator(){
+            is_logged_in();
+
+            $res = array();
+            $fname = $this->input->post('first_name');
+            $lname = $this->input->post('last_name');
+            $faculty_code = $this->input->post('faculty_code');
+            $status = $this->input->post('status');
+            $id = $this->input->post('id');
+            if($this->faculty_model->edit_invigilator($fname,$lname,$faculty_code,$status,$id)){
+                $res = array(
+                    "icon" => "zmdi zmdi-badge-check",
+                    "type" => "success",
+                    "message" => "Record edited successfully"
+                );
+            }else{
+                $res = array(
+                    "icon" => "zmdi zmdi-alert-circle-o",
+                    "type" => "danger",
+                    "message" => "Could not complete request"
+                );
+            }
+            echo json_encode($res);
+        }
+
+        /**
+         * Delete invigilator
+         */
+        public function delete_invigilator(){
+            is_logged_in();
+
+            $res = array();
+            $id = $this->input->post('id');
+            if($this->faculty_model->delete_invigilator($id)){
+                $res = array(
+                    "icon" => "zmdi zmdi-badge-check",
+                    "type" => "success",
+                    "message" => "Record deleted successfully"
+                );
+            }else{
+                $res = array(
+                    "icon" => "zmdi zmdi-alert-circle-o",
+                    "type" => "danger",
+                    "message" => "Could not complete request"
+                );
+            }
+            echo json_encode($res);
+        }
+
+        //!Course types
+        /**
+         * Add course type
+         */
+        public function add_course_type(){
+            is_logged_in();
+
+            $name = $this->input->post('type_name');
+            if($this->faculty_model->add_course_type($name)){
+                $res = array(
+                    "icon" => "zmdi zmdi-badge-check",
+                    "type" => "success",
+                    "message" => "Course type added successfully"
+                );
+            }else{
+                $res = array(
+                    "icon" => "zmdi zmdi-alert-circle-o",
+                    "type" => "danger",
+                    "message" => "Could not complete request"
+                );
+            }
+            echo json_encode($res);
+        }
+
+        /**
+         * Edit course type
+         */
+        public function edit_course_type(){
+            is_logged_in();
+
+            $id = $this->input->post('id');
+            $name = $this->input->post('type_name');
+            if($this->faculty_model->edit_course_type($id,$name)){
+                $res = array(
+                    "icon" => "zmdi zmdi-badge-check",
+                    "type" => "success",
+                    "message" => "Course type edited successfully"
+                );
+            }else{
+                $res = array(
+                    "icon" => "zmdi zmdi-alert-circle-o",
+                    "type" => "danger",
+                    "message" => "Could not complete request"
+                );
+            }
+            echo json_encode($res);
+        }
+
+        /**
+         * Delete course type
+         */
+        public function delete_course_type(){
+            is_logged_in();
+
+            $id = $this->input->post('id');
+            if($this->faculty_model->delete_course_type($id)){
+                $res = array(
+                    "icon" => "zmdi zmdi-badge-check",
+                    "type" => "success",
+                    "message" => "Record deleted successfully"
+                );
+            }else{
+                $res = array(
+                    "icon" => "zmdi zmdi-alert-circle-o",
+                    "type" => "danger",
+                    "message" => "Could not complete request"
+                );
+            }
+            echo json_encode($res);
+        }
+
+        /**
+         * Validate course type name
+         */
+        public function validate_type_name(){
+            is_logged_in();
+
+            $name = $this->input->post('type_name');
+            echo json_encode($this->faculty_model->validate_course_type($name));
+        }
+
+        /**
+         * Validate  course type name edit 
+         */
+        public function validate_type_name_edit(){
+            is_logged_in();
+
+            $name = $this->input->post('type_name');
+            $id = $this->input->post('id');
+            echo json_encode($this->faculty_model->validate_course_type($name,true,$id));
+        }
+
+        //!Intakes
+        /**
+         * Add intake
+         */
+        public function add_intake(){
+            is_logged_in();
+            
+            $name = $this->input->post('name');
+            $course_type = $this->input->post('course_type');
+            if($this->faculty_model->add_intake($name,$course_type)){
+                $res = array(
+                    "icon" => "zmdi zmdi-badge-check",
+                    "type" => "success",
+                    "message" => "Intake added successfully"
+                );
+            }else{
+                $res = array(
+                    "icon" => "zmdi zmdi-alert-circle-o",
+                    "type" => "danger",
+                    "message" => "Could not complete request"
+                );
+            }
+            echo json_encode($res);
+        }
+
+        /**
+         * Edit intake
+         */
+        public function edit_intake(){
+            is_logged_in();
+
+            $name = $this->input->post('name');
+            $course_type = $this->input->post('course_type');
+            $id = $this->input->post('id');
+            if($this->faculty_model->edit_intake($id,$name,$course_type)){
+                $res = array(
+                    "icon" => "zmdi zmdi-badge-check",
+                    "type" => "success",
+                    "message" => "Intake edited successfully"
+                );
+            }else{
+                $res = array(
+                    "icon" => "zmdi zmdi-alert-circle-o",
+                    "type" => "danger",
+                    "message" => "Could not complete request"
+                );
+            }
+            echo json_encode($res);
+        }
+
+        /**
+         * Delete intake
+         */
+        public function delete_intake(){
+            is_logged_in();
+            $id = $this->input->post('id');
+            if($this->faculty_model->delete_intake($id)){
+                $res = array(
+                    "icon" => "zmdi zmdi-badge-check",
+                    "type" => "success",
+                    "message" => "Intake deleted successfully"
+                );
+            }else{
+                $res = array(
+                    "icon" => "zmdi zmdi-alert-circle-o",
+                    "type" => "danger",
+                    "message" => "Could not complete request"
+                );
+            }
+            echo json_encode($res);
+            
+        }
+
+        /**
+         * Validate intake name and course type
+         */
+        public function validate_intake(){
+            is_logged_in();
+            $name = $this->input->post('name');
+            $course_type = $this->input->post('course_type');
+            echo json_encode($this->faculty_model->validate_intake($name,$course_type));
+        }
+
+        /**
+         * Validate intake on edit
+         */
+        public function validate_intake_edit(){
+            is_logged_in();
+            $name = $this->input->post('name');
+            $course_type = $this->input->post('course_type');
+            $id = $this->input->post('id');
+            echo json_encode($this->faculty_model->validate_intake($name,$course_type,true,$id));
         }
     }
