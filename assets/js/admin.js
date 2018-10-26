@@ -40,24 +40,20 @@ var initRegisterUser = function (){
     var facultyRepHelper = () => {
         let role = $('select[name="role"]');
         let faculty = $('#faculty-select');
-    
-        if ($(role).value == "2") {
-            $(faculty).show();
-        } else {
-            $(faculty).hide();
-        }
-        role.addEventListener('change', function () {
-            var faculty = document.querySelector('#faculty-select');
-            if ($(role).value == "2") {
-                $(faculty).show();
+
+        $(role).on('change', function () {
+            if ($(role).val() == "2") {
+                $(faculty).fadeIn();
             } else {
-                $(faculty).hide();
+                $(faculty).fadeOut();
             }    
         });
     }
 
     return {
         init: () => {
+            $('form label').addClass('c-teal');
+            $('form input.form-control').attr('autocomplete','off');
             facultyRepHelper();
             errorHelper();
         }
@@ -68,8 +64,6 @@ var initRegisterUser = function (){
  * !Institution
  */
 var initInstitution = function(){
-    $('form label').addClass('c-cyan');
-
     //?Faculty
     var initFaculty = () => {
         //?Faculty Validator setup
@@ -531,6 +525,7 @@ var initInstitution = function(){
 
     return {
         init: () => {
+            $('form label').addClass('c-cyan');
             initFaculty();
             initInvigilators();
             initCourseType();

@@ -14,7 +14,7 @@
             );
             $user_insert = $this->db->insert('users',$data);
             $user_id = $this->get_user(false,$this->input->post('email'))['id'];
-            if($data['role'] == "2"){
+            if($data['user_type'] == "2"){
                 $other_data = array(
                     'rep_id' => $user_id,
                     'faculty_code' => $this->input->post('faculty')

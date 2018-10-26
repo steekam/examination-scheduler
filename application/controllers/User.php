@@ -13,7 +13,7 @@
                     'user_id' => $user['id'],
                     'name' => $user['first_name'].' '.$user['last_name'],
                     'email' => $user['email'],
-                    'role' => $user['role'],
+                    'role' => $user['user_type'],
                     'logged_in' => true
                 );
                 $this->session->set_userdata($user_data);

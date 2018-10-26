@@ -1,19 +1,18 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');?>
 <section id="content">
-    <div class="card">
-        
+    <div class="card">        
         <div class="card-body card-padding">
             <div role="tabpanel">
                 <ul class="tab-nav" role="tablist">
-                    <li ><a href="#faculties" role="tab" data-toggle="tab" class="f-18">Faculties</a></li>
+                    <li class="active"><a href="#faculties" role="tab" data-toggle="tab" class="f-18">Faculties</a></li>
                     <li ><a href="#invigilators" role="tab" data-toggle="tab" class="f-18">Invigilators</a></li>
                     <li ><a href="#course_type" role="tab" data-toggle="tab" class="f-18">Course Type</a></li>
-                    <li class="active"><a href="#intake" role="tab" data-toggle="tab" class="f-18">Intake</a></li>
+                    <li ><a href="#intake" role="tab" data-toggle="tab" class="f-18">Intake</a></li>
                 </ul>
 
                 <div class="tab-content">
                     <!-- Faculties tab -->
-                    <div role="tabpanel" class="tab-pane" id="faculties">
+                    <div role="tabpanel" class="tab-pane active" id="faculties">
                         <div class="row">
                             <!-- List view of faculties -->
                             <div class="card col-md-6 col-sm-12">
@@ -217,7 +216,7 @@
                     <!-- END Invigilators tab -->
 
                     <!-- Intake tab -->
-                    <div role="tabpanel" class="tab-pane active" id="intake">
+                    <div role="tabpanel" class="tab-pane" id="intake">
                         <div class="row">
                             <!-- List view of intakes -->
                             <div class="card col-md-6 col-sm-12">
@@ -394,9 +393,7 @@
                     <!-- END Course type -->
                     
                 </div>
-
             </div>
         </div>
-
     </div>
 </section>

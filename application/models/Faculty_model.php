@@ -1,5 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
-<?php
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
     class Faculty_model extends CI_Model{
         //!Faculty
        /**
@@ -60,6 +59,32 @@
             $result = $this->db->get('faculty');
             return $result->result_array();
         }
+
+        /**
+         * TODO: Requires more data
+         * Get faculty where rep is incharge
+         */
+        public function get_faculty($rep){
+            $res = array();
+            $this->db->from('faculty_rep');
+            $this->db->where('rep_id',$rep);
+            $this->db->join('faculty','faculty.faculty_code = faculty_rep.faculty_code');
+            $res['overview'] = $this->db->get()->result_array()[0];
+
+            //Courses
+            $this->db->where('faculty_code',$res['overview']['faculty_code']);
+            $res['courses'] = $this->db->get('course')->result_array();
+
+            //Units
+            $res['units'] = array();
+            foreach ($res['courses'] as $course) {
+                $this->db->where('course_code',$course['course_code']);
+                $res['units'][$course['course_code']] = $this->db->get('unit')->result_array();
+            }
+
+            return $res;
+        }
+
 
         //!Invigilator
         /**
@@ -197,5 +222,95 @@
             $this->db->select('intake.*, course_type.name AS type_name');
             $this->db->join('course_type','course_type.id = intake.course_type');
             return $this->db->get('intake')->result_array();
+        }
+
+        //!Courses
+        /**
+         * Add course
+         */
+        public function add_course($data){
+            return $this->db->insert('course',$data);
+        }
+
+        /**
+         * Edit course
+         */
+        public function edit_course($course_code,$data){
+            $this->db->where('course_code',$course_code);
+            return $this->db->update('course',$data);
+        }
+
+        /**
+         * Delete course
+         */
+        public function delete_course($course_code){
+            $this->db->where('course_code',$course_code);
+            return $this->db->delete('course');
+        }
+
+        /**
+         * Validate course entry
+         */
+        public function validate_course($course_code=false,$course_name=false,$course_type=false,$edit=false){
+            if($edit){
+                $this->db->where('course_code !=',$course_code);
+                $this->db->where('name',$course_name);
+                $this->db->where('course_type',$course_type);
+
+            }else{
+                if($course_code){
+                    $this->db->where('course_code',$course_code);
+                }else if($course_name){
+                    $this->db->where('name',$course_name);
+                }
+            }
+
+            $result = $this->db->get('course');
+            return $result->num_rows() == 0;
+        }
+
+        //!Units
+        /**
+         * Add unit
+         */
+        public function add_unit($data){
+            return $this->db->insert('unit',$data);
+        }
+
+         /**
+         * Edit unit
+         */
+        public function edit_unit($unit_code,$data){
+            $this->db->where('unit_code',$unit_code);
+            return $this->db->update('unit',$data);
+        }
+
+         /**
+         * Delete unit
+         */
+        public function delete_unit($unit_code){
+            $this->db->where('unit_code',$unit_code);
+            return $this->db->delete('unit');
+        }
+
+        /**
+         * Validate unit
+         */
+        public function validate_unit($unit_code=false,$name=false,$course=false,$edit=false){
+            if($edit){
+                $this->db->where('unit_code !=',$unit_code);
+                $this->db->where('name',$name);
+                $this->db->where('course_code',$course);
+            }else {
+                if($name && $course){
+                    $this->db->where('name',$name);
+                    $this->db->where('course_code',$course);
+                }else if($unit_code){
+                    $this->db->where('unit_code',$unit_code);
+                }
+            }            
+            
+            $result = $this->db->get('unit');
+            return $result->num_rows() === 0;
         }
     }

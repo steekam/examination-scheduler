@@ -53,9 +53,10 @@
         <![endif]-->
 
         <script src="<?= base_url('assets/js/core.js');?>"></script>
-        <script src="<?php echo base_url() ?>assets/js/app.js"></script>
-        <script src="<?php echo base_url() ?>assets/js/admin.js"></script>
-        <script src="<?php echo base_url() ?>assets/js/scheduler.js"></script>
+        <script src="<?php echo base_url('assets/js/app.js');?>"></script>
+        <script src="<?php echo base_url('assets/js/admin.js');?>"></script>
+        <script src="<?php echo base_url('assets/js/scheduler.js');?>"></script>
+        <script src="<?php echo base_url('assets/js/faculty.js');?>"></script>
 
         <!-- Helper for the forgot password logic -->
         <?php if(isset($forgot_trigger)): ?>

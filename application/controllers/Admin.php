@@ -1,5 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
-<?php
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
     class Admin extends CI_Controller{
 
         /**Accepted user type for this page (Administrator) */
@@ -8,9 +7,7 @@
          * Loads default view of the admin dashboard
          */
         public function index(){
-            if(!$this->session->userdata('logged_in')){
-                redirect(base_url());
-            }
+            is_logged_in($this->user);
 
             $this->load->view('templates/header');
             $this->load->view('templates/top_header');
@@ -23,9 +20,11 @@
          * Deals with registration of new users
          */
         public function register_user(){
-            if(!$this->session->userdata('logged_in')){
-                redirect(base_url());
-            }
+            is_logged_in($this->user);
+
+            $data = array(
+                'faculties' => $this->faculty_model->get_faculties()
+            );
 
             //Set form validations
             $this->form_validation->set_rules('first_name','First Name','trim|required');
@@ -42,7 +41,7 @@
                 $this->load->view('templates/header');
                 $this->load->view('templates/top_header');
                 $this->load->view('admin/sidenav');
-                $this->load->view('admin/register_user');
+                $this->load->view('admin/register_user',$data);
                 $this->load->view('templates/footer');
             } else {
                 //Encrypt password
@@ -53,7 +52,7 @@
                     'name' => $this->input->post('first_name').' '.$this->input->post('last_name'),
                     'username' => $this->input->post('username'),
                     'password' => $gen_password,
-                    'role' => $this->input->post('role')
+                    'role' => $this->getRole($this->input->post('role'))
                 );
                 $body = '
                 <p>Dear '.$data['name'].',</p>
@@ -88,6 +87,30 @@
         }
 
         /**
+         * Returns the role of the user depending on the id
+         */
+        public function getRole($id){
+            switch($id){
+                case 1:
+                {
+                    return 'Administrator';
+                    break;
+                }
+                case 2:
+                {
+                    return 'Faculty Representative';
+                    break;
+                }
+                case 3:
+                {
+                    return 'Scheduler manager';
+                    break;
+                }
+                default: break;
+            }
+        }
+
+        /**
          * 
          * Checks if the email input is a valid strathmore.edu email.
          * 
@@ -105,9 +128,7 @@
          *  Deatails required by the institution
          */
         public function institution(){
-            if(!$this->session->userdata('logged_in')){
-                redirect(base_url());
-            }
+            is_logged_in($this->user);
 
             $data = array(
                 'faculties' => $this->faculty_model->get_faculties(),
@@ -128,7 +149,7 @@
          * Call to add faculty
          */
         public function add_faculty(){
-            is_logged_in();
+            is_logged_in($this->user);
 
             $res = array();
             $code = $this->input->post('faculty_code');
@@ -153,7 +174,7 @@
          * Call to edit faculty
          */
         public function edit_faculty(){
-            is_logged_in();
+            is_logged_in($this->user);
 
             $res = array();
             $code = $this->input->post('faculty_code');
@@ -178,7 +199,7 @@
          * Call to delete faculty
          */
         public function delete_faculty(){
-            is_logged_in();
+            is_logged_in($this->user);
 
             $res = array();
             $code = $this->input->post('faculty_code');
@@ -236,7 +257,7 @@
          * Add invigilator
          */
         public function add_invigilator(){
-            is_logged_in();
+            is_logged_in($this->user);
 
             $res = array();
             $fname = $this->input->post('first_name');
@@ -263,7 +284,7 @@
          * Edit invigilator
          */
         public function edit_invigilator(){
-            is_logged_in();
+            is_logged_in($this->user);
 
             $res = array();
             $fname = $this->input->post('first_name');
@@ -291,7 +312,7 @@
          * Delete invigilator
          */
         public function delete_invigilator(){
-            is_logged_in();
+            is_logged_in($this->user);
 
             $res = array();
             $id = $this->input->post('id');
@@ -316,7 +337,7 @@
          * Add course type
          */
         public function add_course_type(){
-            is_logged_in();
+            is_logged_in($this->user);
 
             $name = $this->input->post('type_name');
             if($this->faculty_model->add_course_type($name)){
@@ -339,7 +360,7 @@
          * Edit course type
          */
         public function edit_course_type(){
-            is_logged_in();
+            is_logged_in($this->user);
 
             $id = $this->input->post('id');
             $name = $this->input->post('type_name');
@@ -363,7 +384,7 @@
          * Delete course type
          */
         public function delete_course_type(){
-            is_logged_in();
+            is_logged_in($this->user);
 
             $id = $this->input->post('id');
             if($this->faculty_model->delete_course_type($id)){
@@ -386,7 +407,7 @@
          * Validate course type name
          */
         public function validate_type_name(){
-            is_logged_in();
+            is_logged_in($this->user);
 
             $name = $this->input->post('type_name');
             echo json_encode($this->faculty_model->validate_course_type($name));
@@ -396,7 +417,7 @@
          * Validate  course type name edit 
          */
         public function validate_type_name_edit(){
-            is_logged_in();
+            is_logged_in($this->user);
 
             $name = $this->input->post('type_name');
             $id = $this->input->post('id');
@@ -408,7 +429,7 @@
          * Add intake
          */
         public function add_intake(){
-            is_logged_in();
+            is_logged_in($this->user);
             
             $name = $this->input->post('name');
             $course_type = $this->input->post('course_type');
@@ -432,7 +453,7 @@
          * Edit intake
          */
         public function edit_intake(){
-            is_logged_in();
+            is_logged_in($this->user);
 
             $name = $this->input->post('name');
             $course_type = $this->input->post('course_type');
@@ -457,7 +478,7 @@
          * Delete intake
          */
         public function delete_intake(){
-            is_logged_in();
+            is_logged_in($this->user);
             $id = $this->input->post('id');
             if($this->faculty_model->delete_intake($id)){
                 $res = array(
@@ -480,7 +501,7 @@
          * Validate intake name and course type
          */
         public function validate_intake(){
-            is_logged_in();
+            is_logged_in($this->user);
             $name = $this->input->post('name');
             $course_type = $this->input->post('course_type');
             echo json_encode($this->faculty_model->validate_intake($name,$course_type));
@@ -490,7 +511,7 @@
          * Validate intake on edit
          */
         public function validate_intake_edit(){
-            is_logged_in();
+            is_logged_in($this->user);
             $name = $this->input->post('name');
             $course_type = $this->input->post('course_type');
             $id = $this->input->post('id');
