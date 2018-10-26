@@ -132,7 +132,7 @@
          * Add unit
          */
         public function add_unit(){
-            is_logged_in();
+            is_logged_in($this->user);
             $res=array();
 
             $data = array(
@@ -140,7 +140,7 @@
                 'name' => $this->input->post('unit_name'),
                 'course_code' => $this->input->post('course_code'),
                 'year_group' => $this->input->post('year_group'),
-                'exam_duration' => $this->input->post('exam_duration')
+                'exam_duration' => $this->set_duration($this->input->post('exam_duration'))
             );
 
             if($this->faculty_model->add_unit($data)){
@@ -163,21 +163,21 @@
          * EDit unit
          */
         public function edit_unit(){
-            is_logged_in();
+            is_logged_in($this->user);
             $res=array();
 
             $data = array(
                 'name' => $this->input->post('unit_name'),
                 'course_code' => $this->input->post('course_code'),
                 'year_group' => $this->input->post('year_group'),
-                'exam_duration' => $this->input->post('exam_duration')
+                'exam_duration' => $this->set_duration($this->input->post('exam_duration'))
             );
 
-            if($this->faculty_model->edit_unit($this->input->post('unit_code'),$data)){
+            if($this->faculty_model->edit_unit($this->input->post('unit_code_edit'),$data)){
                 $res = array(
                     "icon" => "zmdi zmdi-badge-check",
                     "type" => "success",
-                    "message" => "Course edited successfully"
+                    "message" => "Unit edited successfully"
                 );
             }else{
                 $res = array(
@@ -194,7 +194,7 @@
          * Delete unit
          */
         public function delete_unit(){
-            is_logged_in();
+            is_logged_in($this->user);
             $res=array();
 
             $code = $this->input->post('unit_code');
@@ -217,14 +217,14 @@
         /**
          * Validate unit entry
          */
-        public function validate_unit($code,$name){
+        public function validate_unit($code){
             is_logged_in($this->user);
-            if($code){
-                $unit_code = $this->input>post('unit_code');
+            if($code=="true"){
+                $unit_code = $this->input->post('unit_code');
                 echo json_encode($this->faculty_model->validate_unit($unit_code));
 
-            }else if($name){
-                $unit_name = $this->input>post('unit_name');
+            }else{
+                $unit_name = $this->input->post('unit_name');
                 $course_code = $this->input->post('course_code');
                 echo json_encode($this->faculty_model->validate_unit(false,$unit_name,$course_code));
             }
@@ -236,8 +236,8 @@
         public function validate_edit_unit(){
             is_logged_in($this->user);
 
-            $unit_code = $this->input>post('unit_code');
-            $unit_name = $this->input>post('unit_name');
+            $unit_code = $this->input->post('unit_code');
+            $unit_name = $this->input->post('unit_name');
             $course_code = $this->input->post('course_code');
             echo json_encode($this->faculty_model->validate_unit($unit_code,$unit_name,$course_code,true));
 
@@ -249,6 +249,19 @@
         public function validate_duration(){
             $duration = $this->input->post('exam_duration');
             $dur = explode(":",$duration);
-            echo json_encode((int)$dur[0] <= 4 && (int)$dur[1] < 60);
+            if(sizeof($dur) > 1){
+                echo json_encode((int)$dur[0] <= 4 && (int)$dur[1] < 60);
+            }else{
+                echo json_encode(false);
+            }
+        }
+
+        /**
+         * Sets the time to double based on input
+         */
+        public function set_duration($duration){
+            $dur = explode(":",$duration);
+            $mins = ((int)$dur[0] * 60) + (int)$dur[1];
+            return (double)($mins/60);
         }
     }
