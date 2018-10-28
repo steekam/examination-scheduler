@@ -107,50 +107,80 @@
                             <!-- List view of invigilators -->
                             <div class="card col-md-6 col-sm-12">
                                 <div class="card-header">
-                                    <h2>INVIGILATORS</h2>
+                                    <div class="action-header clearfix">
+                                        <div class="ah-label hidden-xs"><h2>INVIGILATORS</h2></div>
+                                        
+                                        <div class="ah-search">
+                                            <input type="text" placeholder="Start typing..." class="ahs-input" id="search-invigilators">
+                        
+                                            <i class="ahs-close" data-ma-action="action-header-close">&times;</i>
+                                        </div>
+                                        
+                                        <ul class="actions">
+                                            <li>
+                                                <a href="#" data-ma-action="action-header-open">
+                                                    <i class="zmdi zmdi-search"></i>
+                                                </a>
+                                            </li>            
+                                        </ul>
+                                    </div>
                                 </div>
 
                                 <div class="card-body card-padding">
                                     <div class="list-group lg-odd-white" id="invigilator-list">
-                                        <?php foreach($invigilators as $invigilator): ?>
-                                            <div class="list-group-item media">
-                                                <div class="checkbox pull-left">
-                                                    <label>
-                                                        <input type="checkbox" value="">
-                                                        <i class="input-helper"></i>
-                                                    </label>
-                                                </div>
-
-                                                <div class="pull-right">
-                                                    <div class="actions dropdown">
-                                                        <a href="#" data-toggle="dropdown" aria-expanded="true">
-                                                            <i class="zmdi zmdi-more-vert"></i>
-                                                        </a>
-
-                                                        <ul class="dropdown-menu dropdown-menu-right" data-delete-target="<?= base_url('admin/delete_invigilator');?>" data-id="<?=$invigilator['id'];?>" data-fname="<?=$invigilator['first_name'];?>" data-lname="<?=$invigilator['last_name'];?>" data-status="<?=$invigilator['status'];?>" data-faculty="<?=$invigilator['faculty'];?>" data-faculty-code="<?=$invigilator['faculty_code'];?>">
-                                                            <li>
-                                                                <a href="#" class="edit-invigilator">Edit</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="delete-invigilator">Delete</a>
-                                                            </li>
-                                                        </ul>
+                                        <?php foreach($faculties as $faculty): ?>
+                                            <div class="list-group-item media invi-item">
+                                                <div class="media-body">
+                                                    <div class="card-header">
+                                                        <h2><?= $faculty['name']?></h2>
                                                     </div>
                                                 </div>
+                                                <!-- Invigilator list -->
+                                                <div class="list-group lg-odd-white">
+                                                    <?php foreach($invigilators[$faculty['faculty_code']] as $invigilator): ?>
+                                                        <div class="list-group-item media invi-item">
+                                                            <div class="checkbox pull-left">
+                                                                <label>
+                                                                    <input type="checkbox" value="">
+                                                                    <i class="input-helper"></i>
+                                                                </label>
+                                                            </div>
 
-                                                <div class="media-body" >
-                                                    <div style="white-space:initial;" class="lgi-heading f-17 c-cyan"><?= $invigilator['first_name'].' '.$invigilator['last_name'] ?></div>
-                                                    <ul class="lgi-attrs">
-                                                        <li class="c-teal"><?= $invigilator['faculty'];?></li>
-                                                        <?php if($invigilator['status']): ?>
-                                                            <li class="c-green">Available</li>
-                                                        <?php else: ?>
-                                                            <li class="c-red">Unavailable</li>
-                                                        <?php endif; ?>
-                                                    </ul>
+                                                            <div class="pull-right">
+                                                                <div class="actions dropdown">
+                                                                    <a href="#" data-toggle="dropdown" aria-expanded="true">
+                                                                        <i class="zmdi zmdi-more-vert"></i>
+                                                                    </a>
+
+                                                                    <ul class="dropdown-menu dropdown-menu-right" data-delete-target="<?= base_url('admin/delete_invigilator');?>" data-id="<?=$invigilator['id'];?>" data-fname="<?=$invigilator['first_name'];?>" data-lname="<?=$invigilator['last_name'];?>" data-status="<?=$invigilator['status'];?>" data-faculty="<?=$invigilator['faculty'];?>" data-faculty-code="<?=$invigilator['faculty_code'];?>">
+                                                                        <li>
+                                                                            <a href="#" class="edit-invigilator">Edit</a>
+                                                                        </li>
+                                                                        <li>
+                                                                            <a href="#" class="delete-invigilator">Delete</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="media-body" >
+                                                                <div style="white-space:initial;" class="lgi-heading f-17 c-cyan"><?= $invigilator['first_name'].' '.$invigilator['last_name'] ?></div>
+                                                                <ul class="lgi-attrs">
+                                                                    <li class="c-teal"><?= $invigilator['faculty'];?></li>
+                                                                    <?php if($invigilator['status']): ?>
+                                                                        <li class="c-green">Available</li>
+                                                                    <?php else: ?>
+                                                                        <li class="c-red">Unavailable</li>
+                                                                    <?php endif; ?>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    <?php endforeach; ?>
                                                 </div>
-                                            </div>
-                                        <?php endforeach; ?>
+                                                <!-- END invigilator list -->
+                                            </div>                                            
+                                        <?php  endforeach; ?>
+                                        
                                     </div>                                    
                                 </div>
                             </div>

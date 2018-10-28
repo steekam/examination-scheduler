@@ -150,6 +150,12 @@ var initHome = function (){
             allowClear: true
         });
 
+        //Select2 invigilators
+        $('.select2-invigilators').select2({
+            dropdownCssClass: 'select2-opt',
+            containerCssClass: 'form-control'
+        })
+
         //?Validator
         let unitValidator = $('form.js-unit').validate({
             rules: {
@@ -249,7 +255,7 @@ var initHome = function (){
             $(form).find('[name="unit_name"]').val(name);
             $(form).find('[name="course_code"]').val(course);
             $(form).find('[name="exam_duration"]').val(duration);
-            $(form).find('[name="pref_invigilator"]').val(pref_invigilator);
+            $(form).find('[name="pref_invigilator"]').val(pref_invigilator).trigger('change');
 
             if(tags.length !== 0){
                 $(form).find('[name="unit_tags[]"]').val([tags[0].tag_id,tags[1].tag_id]).trigger('change');
@@ -288,7 +294,7 @@ var initHome = function (){
             }
 
             //Reset select2
-            $('.js-select2-units').val(' ').trigger('change');
+            $('.js-select2-units, .select2-invigilators').val(' ').trigger('change');
 
             //Reset validator
             unitValidator.resetForm();

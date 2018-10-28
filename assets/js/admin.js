@@ -232,9 +232,10 @@ var initInstitution = function(){
         //?Edit event for invigilator
         $('#invigilator-list').on('click','.edit-invigilator',event=>{
             let _this = event.target;
+            $(_this).closest('.actions').removeClass('open');
             let form = $('form.js-invigilator');
             $(form).removeClass('add-action').addClass('edit-action');
-            $(form).closest('.card').find('.card-header>h2').text('EDIT INVIGILATOR DETAILS');
+            $(form).closest('.card').find('.card-header>h2').text('EDIT INVIGILATOR DETAILS').addClass('c-red');
             $(form).find('button[type="submit"]').text('SAVE CHANGES');
 
             let fname = $(_this).closest('.dropdown-menu').data('fname');
@@ -251,11 +252,11 @@ var initInstitution = function(){
         });
 
         //?Cancel editing
-        $(document).on('click','form.js-inigilator button[type="reset"]',event => {
+        $(document).on('click','form.js-invigilator button[type="reset"]',event => {
             let form = $('form.js-invigilator');
             if($(form).hasClass('edit-action')){
                 $(form).removeClass('edit-action').addClass('add-action');
-                $(form).closest('.card').find('.card-header>h2').text('ADD INVIGILATOR');
+                $(form).closest('.card').find('.card-header>h2').text('ADD INVIGILATOR').removeClass('c-red');
                 $(form).find('button[type="submit"]').text('ADD INVIGILATOR');
             }
         });
@@ -263,6 +264,7 @@ var initInstitution = function(){
         //?Delete invigilator
         $('#invigilator-list').on('click','.delete-invigilator',event=>{
             let _this = event.target;
+            $(_this).closest('.actions').removeClass('open');
             let id = $(_this).closest('.dropdown-menu').data('id');
             let target = $(_this).closest('.dropdown-menu').data('delete-target');
 
@@ -288,6 +290,14 @@ var initInstitution = function(){
             let target = window.location.pathname;
             $('#invigilator-list').load(target+' #invigilator-list');
         }
+
+        //?Search
+        $("#search-invigilators").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#invigilator-list .invi-item ").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
         
     }
 
@@ -335,6 +345,7 @@ var initInstitution = function(){
         //?Editing
         $('#coursetype-list').on('click','.edit-coursetype',event => {
             let _this = event.target;
+            $(_this).closest('.actions').removeClass('open');
             let form = $('form.js-coursetype');
             $(form).removeClass('add-action').addClass('edit-action');
             $(form).closest('.card').find('.card-header>h2').text('EDIT COURSE TYPE DETAILS');
@@ -378,6 +389,7 @@ var initInstitution = function(){
         //?Deleting
         $('#coursetype-list').on('click','.delete-coursetype',event => {
             let _this = event.target;
+            $(_this).closest('.actions').removeClass('open');
             let id = $(_this).closest('.dropdown-menu').data('id');
             let target = $(_this).closest('.dropdown-menu').data('delete-target');
 
@@ -449,6 +461,7 @@ var initInstitution = function(){
         //?Editing
         $('#intake-list').on('click','.edit-intake',event => {
             let _this = event.target;
+            $(_this).closest('.actions').removeClass('open');
             let form = $('form.js-intake');
             $(form).removeClass('add-action').addClass('edit-action');
             $(form).closest('.card').find('.card-header>h2').text('EDIT INTAKE DETAILS');
@@ -495,6 +508,7 @@ var initInstitution = function(){
         //?Deleting
         $('#intake-list').on('click','.delete-intake',event => {
             let _this = event.target;
+            $(_this).closest('.actions').removeClass('open');
             let id = $(_this).closest('.dropdown-menu').data('id');
             let target = $(_this).closest('.dropdown-menu').data('delete-target');
 

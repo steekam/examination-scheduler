@@ -10,6 +10,8 @@
 
             $data = array(
                 'faculty' => $this->faculty_model->get_faculty($this->session->userdata('user_id')),
+                'faculties' => $this->faculty_model->get_faculties(),
+                'invigilators' => $this->faculty_model->get_invigilators(),
                 'options' => array(
                     'course_types' => $this->faculty_model->get_course_types()
                 ),

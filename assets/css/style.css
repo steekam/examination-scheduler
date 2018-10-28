@@ -24,6 +24,10 @@ select option ,.select2-opt {
     color: teal;
 }
 
+.select2-container--default .select2-search--dropdown .select2-search__field{
+    background:  #2b343a;
+}
+
 .myModal .modal-content {
     background: #282E35;
     

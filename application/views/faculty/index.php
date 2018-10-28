@@ -3,14 +3,14 @@
         <div class="card-body card-padding">
             <div role="tabpanel">
                 <ul class="tab-nav" role="tablist">
-                    <li ><a href="#overview" role="tab" data-toggle="tab" class="f-18">Overview</a></li>
+                    <li class="active"><a href="#overview" role="tab" data-toggle="tab" class="f-18">Overview</a></li>
                     <li ><a href="#c-u" role="tab" data-toggle="tab" class="f-18">Courses & Units</a></li>
-                    <li class="active"><a href="#students" role="tab" data-toggle="tab" class="f-18">Students</a></li>
+                    <li ><a href="#students" role="tab" data-toggle="tab" class="f-18">Students</a></li>
                 </ul>
 
                 <div class="tab-content">
                     <!-- Overview -->
-                    <div class="tab-pane" id="overview" role="tabpanel">
+                    <div class="tab-pane active" id="overview" role="tabpanel">
                         <div class="row container">
                             <div class="card">
                                 <div class="card-header">
@@ -250,7 +250,7 @@
                                                     </div>
 
                                                     <div class="row">
-                                                        <div class="form-group col-md-6 col-xs-6">
+                                                        <div class="form-group col-md-4 col-xs-4">
                                                             <label>Exam Duration</label>
                                                             <div class="fg-line">
                                                                 <input type="text" class="form-control input-mask input-lg" name="exam_duration" data-mask="00:00" placeholder="eg: HH:MIN(01:30)" maxlength="5" autocomplete="off">
@@ -259,13 +259,16 @@
                                                             <div class="help-block"></div>
                                                         </div>
 
-                                                        <div class="form-group col-md-6 col-xs-6">
+                                                        <div class="form-group col-md-8 col-xs-8">
                                                             <label>Preferred Invigilator</label>
                                                             <div class="fg-line">
-                                                                <select name="pref_invigilator" class="form-control input-lg">
-                                                                    <?php foreach($faculty['invigilators'] as $invigilator): ?>
-                                                                        <option value="<?= $invigilator['id']?>"><?= $invigilator['first_name'].' '.$invigilator['last_name'] ?></option>
-                                                                    <?php endforeach;?>
+                                                                <select name="pref_invigilator" class="form-control input-lg select2-invigilators" style="width:100%">
+                                                                    <?php foreach($faculties as $_faculty): ?>
+                                                                        <optgroup label="<?= $_faculty['name']?>"></optgroup>
+                                                                        <?php foreach($invigilators[$_faculty['faculty_code']] as $invigilator): ?>
+                                                                            <option value="<?= $invigilator['id']?>"><?= $invigilator['first_name'].' '.$invigilator['last_name'] ?></option>
+                                                                        <?php endforeach;?>
+                                                                    <?php endforeach; ?>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -311,7 +314,7 @@
                     <!-- END c&u -->
 
                     <!-- Students -->
-                    <div class="tab-pane active" role="tabpanel" id="students">
+                    <div class="tab-pane" role="tabpanel" id="students">
                         <div class="row">
                             <!-- List view -->
                             <div class="col-md-6 col-xs-12">

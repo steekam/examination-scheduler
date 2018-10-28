@@ -76,6 +76,7 @@
             //Courses and Invigilators
             $this->db->where('faculty_code',$res['overview']['faculty_code']);
             $res['courses'] = $this->db->get('course')->result_array();
+            $this->db->where('faculty_code',$res['overview']['faculty_code']);
             $res['stats']['invigilators'] = $this->db->get('invigilators')->num_rows();
             $res['invigilators'] = $this->db->get('invigilators')->result_array();
 
@@ -99,6 +100,7 @@
                 $this->db->where('course_code',$course['course_code']);
                 $this->db->join('intake','intake.id = student_group.intake_id');
                 $this->db->join('course_type','intake.course_type = course_type.id');
+                $this->db->order_by('student_group.name','ASC');
                 $res['student_groups'][$course['course_code']] = $this->db->get('student_group')->result_array();
 
                 //Group tags
@@ -106,7 +108,7 @@
                     $this->db->where('group_id',$group['group_id']);
                     $res['student_tags'][$group['name']] = $this->db->get('student_tagmap')->result_array();
                 }
-        }
+            }
 
 
             //Stats
@@ -156,10 +158,15 @@
          * Invigilator get all
          */
         public function get_invigilators(){
-            $this->db->select('invigilators.*, faculty.name AS faculty');
-            $this->db->join('faculty','faculty.faculty_code = invigilators.faculty_code');
-            $result = $this->db->get('invigilators');
-            return $result->result_array();
+            $res = array();
+            $faculties= $this->db->get('faculty')->result_array();            
+            foreach($faculties as $faculty){
+                $this->db->select('invigilators.*, faculty.name AS faculty');
+                $this->db->join('faculty','faculty.faculty_code = invigilators.faculty_code');
+                $this->db->where('faculty.faculty_code',$faculty['faculty_code']);
+                $res[$faculty['faculty_code']] = $this->db->get('invigilators')->result_array();
+            }
+            return $res;
         }
 
         //!Course type
