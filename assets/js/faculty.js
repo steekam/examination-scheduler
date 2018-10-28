@@ -217,7 +217,7 @@ var initHome = function (){
             }
         });
 
-        //?Edit event for faculty details
+        //?Edit
         $('#course-list').on('click','.edit-unit',event => {
             let _this = event.target;
             $(_this).closest('.actions').removeClass('open');
@@ -323,11 +323,143 @@ var initHome = function (){
 
     }
 
+    //?Student groups
+    var initStudentGroups = () => {
+        //?Validator
+        let studentsValidator = $('form.js-students').validate({
+            rules: {
+                'group_name':{
+                    required: true,
+                    remote: {
+                        url: $('#check_group_name').val(),
+                        type: "POST",
+                        data: { 
+                            group_name : () => { return $('form.js-students input[name="group_name"]').val();},
+                            course_code : () => { return $('form.js-students [name="course_code"]').val();},
+                            intake_id : () => { return $('form.js-students [name="intake_id"]').val();},
+                        },
+                        dataType: 'json'
+                    }
+                }
+            },
+            messages: {
+                'group_name': {
+                    remote: "Group already exists"
+                }
+            },
+            submitHandler: form => {
+                let target;
+                let dataSend = $(form).serializeArray();
+
+                if($(form).hasClass('add-action')){
+                    target = $(form).data('add-action');
+                }else if($(form).hasClass('edit-action')){
+                    target = $(form).data('edit-action');
+                }
+                ajaxComm(target,dataSend,"json")
+                .done(data => {
+                    notify(data.icon,data.type,data.message);
+                    $(form).find('button[type="reset"]').trigger('click');
+                    reloadGroupsList();
+                });
+            }
+        });
+
+        var reloadGroupsList = () => {
+            let target = window.location.pathname;
+            $('#student-group-list').load(target+' #student-group-list');
+        }
+
+        //?Edit event for faculty details
+        $('#student-group-list').on('click','.edit-group',event => {
+            let _this = event.target;
+            $(_this).closest('.actions').removeClass('open');
+            let form = $('form.js-students');
+            $(form).removeClass('add-action').addClass('edit-action');
+            $(form).closest('.card').find('.card-header#right>h2').text('EDIT GROUP DETAILS').addClass('c-red').removeClass('c-teal');
+            $(form).find('button[type="submit"]').text('SAVE CHANGES');
+
+            let group = $(_this).closest('.dropdown-menu').data('group');
+            let group_id = group.group_id;
+            let group_name = group.name;
+            let group_size = group.size;
+            let course_code = group.course_code;
+            let intake_id = group.intake_id;
+            
+            let tag = $(_this).closest('.dropdown-menu').data('tag');
+            let student_tag = tag[0].tag_id;
+            
+            $(form).find('[name="group_id"]').val(group_id);
+            $(form).find('[name="group_name"]').val(group_name);
+            $(form).find('[name="group_size"]').val(group_size);
+            $(form).find('[name="course_code"]').val(course_code);
+            $(form).find('[name="intake_id"]').val(intake_id);
+            $(form).find('[name="student_tag"]').val(student_tag);
+
+            $(form).find('[name="group_name"]').rules('remove','remote');
+            $(form).find('[name="group_name"]').rules('add',{
+                required:true,
+                remote: {
+                    url: $('#check_group_name_edit').val(),
+                    type: "POST",
+                    data: { 
+                        group_id : () => { return $('form.js-students input[name="group_id"]').val();},
+                        group_name : () => { return $('form.js-students input[name="group_name"]').val();},
+                        course_code : () => { return $('form.js-students [name="course_code"]').val();},
+                        intake_id : () => { return $('form.js-students [name="intake_id"]').val();},
+                    },
+                    dataType: 'json'
+                }
+            });
+        });
+
+        //?Cancel editing
+        $(document).on('click','form.js-students button[type="reset"]',event => {
+            let form = $('form.js-students');
+            if($(form).hasClass('edit-action')){
+                $(form).removeClass('edit-action').addClass('add-action');
+                $(form).closest('.card').find('.card-header#right>h2').text('ADD COURSE').addClass('c-teal').removeClass('c-red');
+                $(form).find('button[type="submit"]').text('ADD GROUP');
+            }
+
+            //Reset validator
+            studentsValidator.resetForm();
+            $(form).find('.help-block, .form-group').removeClass('has-error');     
+        });
+
+        //?Delete
+        $('#student-group-list').on('click','.delete-group',event => {
+            let _this = event.target;
+            $(_this).closest('.actions').removeClass('open');
+
+            let group_id = $(_this).closest('.dropdown-menu').data('group').group_id;
+            let target = $(_this).closest('.dropdown-menu').data('delete-target');
+
+            const deleteSwal = mySwal();
+            deleteSwal({   
+                title: "Are you sure?",   
+                text: "This and associated records will be deleted permanently.",   
+                type: "warning",       
+                confirmButtonText: "Yes, delete!",
+            })
+            .then((result)=>{
+                if(result.value){
+                    ajaxComm(target,{group_id: group_id},"json")
+                    .done(data => {
+                        notify(data.icon,data.type,data.message);
+                        reloadGroupsList();
+                    });
+                }    
+            });
+        });
+    }
+
     return{
         init: () => {
             $('form label').addClass('c-cyan').addClass('f-15');
             initCourse();
             initUnit();
+            initStudentGroups();
         }
     }
 }();

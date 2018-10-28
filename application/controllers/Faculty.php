@@ -13,7 +13,8 @@
                 'options' => array(
                     'course_types' => $this->faculty_model->get_course_types()
                 ),
-                'tags' => $this->faculty_model->get_tags()
+                'tags' => $this->faculty_model->get_tags(),
+                'intakes' => $this->faculty_model->get_intakes()
             );
             $this->load->view('templates/header');
             $this->load->view('templates/top_header');
@@ -22,7 +23,7 @@
             $this->load->view('templates/footer');
         }
 
-        //?Courses
+        //!Courses
         /**
          * Add course
          */
@@ -128,7 +129,7 @@
             echo json_encode($this->faculty_model->validate_course($course_code,$course_name,$course_type,true));
         }
 
-        //?Units
+        //!Units
         /**
          * Add unit
          */
@@ -266,5 +267,113 @@
             $dur = explode(":",$duration);
             $mins = ((int)$dur[0] * 60) + (int)$dur[1];
             return (double)($mins/60);
+        }
+
+        //!Student groups
+        /**
+         * Add student group
+         */
+        public function add_student_group(){
+            is_logged_in($this->user);
+            $res=array();
+            $data = array(
+                'name' => $this->input->post('group_name'),
+                'size' => $this->input->post('group_size'),
+                'course_code' => $this->input->post('course_code'),
+                'intake_id' => $this->input->post('intake_id'),
+            );
+            $tag = $this->input->post('student_tag');
+
+            if($this->faculty_model->add_student_group($data,$tag)){
+                $res = array(
+                    "icon" => "zmdi zmdi-badge-check",
+                    "type" => "success",
+                    "message" => "Group added successfully"
+                );
+            }else{
+                $res = array(
+                    "icon" => "zmdi zmdi-alert-circle-o",
+                    "type" => "danger",
+                    "message" => "Could not complete request"
+                );
+            }
+            echo json_encode($res);
+        }
+
+        /**
+         * Edit student group
+         */
+        public function edit_student_group(){
+            is_logged_in($this->user);
+            $res=array();
+            $data = array(
+                'name' => $this->input->post('group_name'),
+                'size' => $this->input->post('group_size'),
+                'course_code' => $this->input->post('course_code'),
+                'intake_id' => $this->input->post('intake_id'),
+            );
+            $tag = $this->input->post('student_tag');
+            $group_id = $this->input->post('group_id');
+
+            if($this->faculty_model->edit_student_group($group_id,$data,$tag)){
+                $res = array(
+                    "icon" => "zmdi zmdi-badge-check",
+                    "type" => "success",
+                    "message" => "Group edited successfully"
+                );
+            }else{
+                $res = array(
+                    "icon" => "zmdi zmdi-alert-circle-o",
+                    "type" => "danger",
+                    "message" => "Could not complete request"
+                );
+            }
+            echo json_encode($res);
+        }
+
+        /**
+         * Delete student group
+         */
+        public function delete_student_group(){
+            is_logged_in($this->user);
+            $res=array();
+
+            $group_id = $this->input->post('group_id');
+            if($this->faculty_model->delete_student_group($group_id)){
+                $res = array(
+                    "icon" => "zmdi zmdi-badge-check",
+                    "type" => "success",
+                    "message" => "Group deleted successfully"
+                );
+            }else{
+                $res = array(
+                    "icon" => "zmdi zmdi-alert-circle-o",
+                    "type" => "danger",
+                    "message" => "Could not complete request"
+                );
+            }
+            echo json_encode($res);
+            
+        }
+
+        /**
+         * Validate group name
+         */
+        public function validate_group(){
+            $group_name = $this->input->post('group_name');
+            $intake_id = $this->input->post('intake_id');
+            $course_code = $this->input->post('course_code');
+            echo json_encode($this->faculty_model->validate_group($group_name,$course_code,$intake_id));
+        }
+
+        /**
+         * Validate group name on edit
+         */
+        public function validate_edit_group(){
+            $group_name = $this->input->post('group_name');
+            $intake_id = $this->input->post('intake_id');
+            $course_code = $this->input->post('course_code');
+            $group_id = $this->input->post('group_id');
+            echo json_encode($this->faculty_model->validate_group($group_name,$course_code,$intake_id,true,$group_id));
         }
     }

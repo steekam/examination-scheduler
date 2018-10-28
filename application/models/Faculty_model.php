@@ -82,6 +82,8 @@
             //Units
             $res['units'] = array();
             $res['unit_tags'] = array();
+            $res['student_groups'] = array();
+            $res['student_tags'] = array();
             $total_units = 0;
             foreach ($res['courses'] as $course) {
                 $this->db->where('course_code',$course['course_code']);
@@ -92,7 +94,20 @@
                     $this->db->where('unit_code',$unit['unit_code']);
                     $res['unit_tags'][$unit['unit_code']] = $this->db->get('tagmap')->result_array();
                 }
-            }
+                //Groups
+                $this->db->select('student_group.*, intake.name as intake_name, course_type.name as course_type');
+                $this->db->where('course_code',$course['course_code']);
+                $this->db->join('intake','intake.id = student_group.intake_id');
+                $this->db->join('course_type','intake.course_type = course_type.id');
+                $res['student_groups'][$course['course_code']] = $this->db->get('student_group')->result_array();
+
+                //Group tags
+                foreach($res['student_groups'][$course['course_code']] as $group){
+                    $this->db->where('group_id',$group['group_id']);
+                    $res['student_tags'][$group['name']] = $this->db->get('student_tagmap')->result_array();
+                }
+        }
+
 
             //Stats
             $res['stats']['courses'] = sizeof($res['courses']);
@@ -364,5 +379,54 @@
             $this->db->where('tag_group','semester');
             $res['semester'] = $this->db->get('tag')->result_array();
             return $res;
+        }
+
+        //!Student groups
+        /**
+         * Add student group
+         */
+        public function add_student_group($data,$tag){
+            $this->db->insert('student_group',$data);
+            $this->db->where('name',$data['name']);
+            $this->db->where('course_code',$data['course_code']);
+            $this->db->where('intake_id',$data['intake_id']);
+            $group = $this->db->get('student_group')->row_array();
+            $tag_data = array(
+                'group_id' => $group['group_id'],
+                'tag_id' => $tag
+            );
+
+            return $this->db->insert('student_tagmap',$tag_data);
+        }
+
+        /**
+         * Edit student group
+         */
+        public function edit_student_group($group_id,$data,$tag){
+            $this->db->where('group_id',$group_id);
+            $this->db->update('student_tagmap',array('tag_id'=>$tag));
+            $this->db->where('group_id',$group_id);
+            return $this->db->update('student_group',$data);
+        }
+
+        /**
+         * Delete student group
+         */
+        public function delete_student_group($group_id){
+            $this->db->where('group_id',$group_id);
+            return $this->db->delete('student_group');
+        }
+
+        /**
+         * Validate group
+         */
+        public function validate_group($group_name=false,$course_code=false,$intake_id=false,$edit=false,$group_id=false){
+            if($edit){
+                $this->db->where('group_id !=',$group_id);
+            }
+            $this->db->where('name',$group_name);
+            $this->db->where('course_code',$course_code);
+            $this->db->where('intake_id',$intake_id);
+            return $this->db->get('student_group')->num_rows() === 0;
         }
     }

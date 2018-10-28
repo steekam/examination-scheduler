@@ -147,7 +147,7 @@
                             <!-- END list view -->
 
                             <!-- Forms -->
-                            <div class="col-md-6 col-xs-12">                               
+                            <div class="col-md-6 col-xs-12">
                                 <div class="card-body">
                                     <div role="tabpanel">
                                         <ul class="tab-nav config" role="tablist">
@@ -313,7 +313,149 @@
                     <!-- Students -->
                     <div class="tab-pane active" role="tabpanel" id="students">
                         <div class="row">
-                            
+                            <!-- List view -->
+                            <div class="col-md-6 col-xs-12">
+                                <div class="card-header">
+                                    <h2 class="c-teal text-uppercase"><?= $faculty['overview']['name'];?></h2>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="list-group" id="student-group-list">
+
+                                        <?php foreach($faculty['courses'] as $course):?>
+                                            <div class="list-group-item media">
+                                                <div class="media-body">
+                                                    <div style="white-space:initial;" class="card-header f-18"><?= $course['name'] ?></div>
+                
+                                                    <div class="list-group lg-odd-white">
+                                                        <?php foreach($faculty['student_groups'][$course['course_code']] as $group):?>
+                                                            <div class="list-group-item media">
+                                                                <div class="checkbox pull-left">
+                                                                    <label>
+                                                                        <input type="checkbox" value="">
+                                                                        <i class="input-helper"></i>
+                                                                    </label>
+                                                                </div>
+
+                                                                <div class="pull-right">
+                                                                    <div class="actions dropdown">
+                                                                        <a href="#" data-toggle="dropdown" aria-expanded="true">
+                                                                            <i class="zmdi zmdi-more-vert"></i>
+                                                                        </a>
+
+                                                                        <ul class="dropdown-menu dropdown-menu-right" data-delete-target="<?= base_url('faculty/delete_student_group'); ?>" data-group="<?= htmlspecialchars(json_encode($group));?>" data-tag="<?= htmlspecialchars(json_encode($faculty['student_tags'][$group['name']]));?>">
+                                                                            <li>
+                                                                                <a href="#" class="edit-group">Edit</a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <a href="#" class="delete-group">Delete</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="media-body">
+                                                                    <div style="white-space:initial;" class="lgi-heading f-17 c-cyan">
+                                                                        <?= $group['name']?>
+                                                                        <ul class="lgi-attrs">
+                                                                            <li>Intake: <?= $group['intake_name'].' ( '.$group['course_type'].' )'?></li>
+                                                                            <li>Size: <?= $group['size']?></li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        <?php endforeach; ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END List view -->
+
+                            <!-- Form -->
+                            <div class="col-md-6 col-xs-12">
+                                <div class="card-header" id="right">
+                                    <h2 class="c-teal text-uppercase">New Group</h2>
+                                </div>
+
+                                <div class="card-body card-padding">
+                                    <form class="js-students add-action" data-add-action="<?= base_url('faculty/add_student_group');?>" data-edit-action="<?= base_url('faculty/edit_student_group');?>" method="post">
+                                        <div class="row">
+                                            <div class="form-group col-md-6 col-xs-6">
+                                                <label>Group Name</label>
+                                                <div class="fg-line">
+                                                    <input type="text" name="group_name" class="form-control input-lg" placeholder="Group name">
+                                                    <input type="hidden" name="group_id">
+                                                    <input type="hidden" id="check_group_name" value="<?= base_url('faculty/validate_group');?>">
+                                                    <input type="hidden" id="check_group_name_edit" value="<?= base_url('faculty/validate_edit_group');?>">
+                                                </div>
+                                                <div class="help-block"></div>
+                                            </div>
+
+                                            <div class="form-group col-md-6 col-xs-6">
+                                            <label>Group Size</label>
+                                                <div class="fg-line">
+                                                    <input minlength="0" type="number" name="group_size" class="form-control input-lg" placeholder="Group size">                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-md-12 col-xs-12">
+                                                <label>Course</label>
+                                                <div class="fg-line">
+                                                    <select name="course_code" class="form-control input-lg" required>
+                                                        <option disabled>-- Choose course --</option>
+                                                        <?php foreach($faculty['courses'] as $course): ?>
+                                                            <option value="<?= $course['course_code']?>"><?= $course['name']?></option>
+                                                        <?php endforeach;?>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-12 col-xs-12">
+                                                <label>Intake</label>
+                                                <div class="fg-line">
+                                                    <select name="intake_id" class="form-control input-lg" required>
+                                                        <option disabled>-- Choose intake --</option>
+                                                        <?php foreach($intakes as $intake): ?>
+                                                            <option value="<?= $intake['id']?>">
+                                                                <?= $intake['name'].' ( '.$intake['type_name'].' )'?>
+                                                            </option>
+                                                        <?php  endforeach;?>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-12 col-xs-12">
+                                                <label>Tag</label>
+                                                <div class="fg-line">
+                                                    <select name="student_tag" class="form-control input-lg" required>
+                                                        <option disabled>-- Choose year --</option>
+                                                        <?php foreach($tags['year'] as $tag): ?>
+                                                            <option value="<?= $tag['tag_id']?>">
+                                                                <?= $tag['tag_name']?>
+                                                            </option>
+                                                        <?php  endforeach;?>
+                                                    </select>
+                                                </div>
+                                                <div class="help-block"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <button type="submit" class="btn btn-success waves-effect">ADD GROUP</button>
+                                                <button type="reset" class="btn btn-default waves-effect">CANCEL</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- END Form -->
                         </div>
                     </div>
                     <!-- END Students -->
