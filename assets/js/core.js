@@ -101,7 +101,7 @@ var initDefaultValidator = () => {
     
     $.validator.setDefaults({
         debug: true,
-        ignore: ':hidden',
+        ignore: ':hidden,.select2-search__field',
         errorClass: 'has-error animated fadeInDown',
         errorElement: 'span',
         errorPlacement: function(error, e) {

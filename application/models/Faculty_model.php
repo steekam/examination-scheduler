@@ -66,21 +66,37 @@
          */
         public function get_faculty($rep){
             $res = array();
+            $res['stats'] = array();
+
             $this->db->from('faculty_rep');
             $this->db->where('rep_id',$rep);
             $this->db->join('faculty','faculty.faculty_code = faculty_rep.faculty_code');
             $res['overview'] = $this->db->get()->result_array()[0];
 
-            //Courses
+            //Courses and Invigilators
             $this->db->where('faculty_code',$res['overview']['faculty_code']);
             $res['courses'] = $this->db->get('course')->result_array();
+            $res['stats']['invigilators'] = $this->db->get('invigilators')->num_rows();
+            $res['invigilators'] = $this->db->get('invigilators')->result_array();
 
             //Units
             $res['units'] = array();
+            $res['unit_tags'] = array();
+            $total_units = 0;
             foreach ($res['courses'] as $course) {
                 $this->db->where('course_code',$course['course_code']);
                 $res['units'][$course['course_code']] = $this->db->get('unit')->result_array();
+                $total_units += sizeof($res['units'][$course['course_code']]);
+
+                foreach($res['units'][$course['course_code']] as $unit){
+                    $this->db->where('unit_code',$unit['unit_code']);
+                    $res['unit_tags'][$unit['unit_code']] = $this->db->get('tagmap')->result_array();
+                }
             }
+
+            //Stats
+            $res['stats']['courses'] = sizeof($res['courses']);
+            $res['stats']['units'] = $total_units;
 
             return $res;
         }
@@ -269,18 +285,40 @@
             return $result->num_rows() == 0;
         }
 
+
         //!Units
         /**
          * Add unit
          */
-        public function add_unit($data){
-            return $this->db->insert('unit',$data);
+        public function add_unit($data,$tags){
+            $insert_tags = array();
+            foreach ($tags as $tag) {
+                $insert_tags[] = array(
+                    'unit_code' => $data['unit_code'],
+                    'tag_id' => $tag
+                );
+            }
+            return $this->db->insert('unit',$data) && $this->db->insert_batch('tagmap',$insert_tags);
         }
 
          /**
          * Edit unit
          */
-        public function edit_unit($unit_code,$data){
+        public function edit_unit($unit_code,$data,$tags){
+            $insert_tags = array();
+            if(!empty($tags)){
+                foreach ($tags as $tag) {
+                    $insert_tags[] = array(
+                        'unit_code' => $unit_code,
+                        'tag_id' => $tag
+                    );
+                }
+            }
+            //Remove unit tags first then update
+            $this->db->where('unit_code',$unit_code);
+            $this->db->delete('tagmap');
+            $this->db->insert_batch('tagmap',$insert_tags);       
+
             $this->db->where('unit_code',$unit_code);
             return $this->db->update('unit',$data);
         }
@@ -312,5 +350,19 @@
             
             $result = $this->db->get('unit');
             return $result->num_rows() === 0;
+        }
+
+        //!Tags
+        /**
+         * Get all tags
+         */
+        public function get_tags(){
+            $res = array();
+            $this->db->where('tag_group','year');
+            $res['year'] = $this->db->get('tag')->result_array();
+
+            $this->db->where('tag_group','semester');
+            $res['semester'] = $this->db->get('tag')->result_array();
+            return $res;
         }
     }

@@ -141,6 +141,15 @@ var initHome = function (){
 
     //?Unit
     var initUnit = () => {
+        //Select 2 for the tags
+        $('.js-select2-units').select2({
+            placeholder: 'Select 2 tags',
+            dropdownCssClass: 'select2-opt',
+            containerCssClass: 'form-control',
+            maximumSelectionLength: 2,
+            allowClear: true
+        });
+
         //?Validator
         let unitValidator = $('form.js-unit').validate({
             rules: {
@@ -217,11 +226,14 @@ var initHome = function (){
             $(form).closest('.card').find('.card-header#unit>h4').text('EDIT UNIT DETAILS').addClass('c-red').removeClass('c-cyan');
             $(form).find('button[type="submit"]').text('SAVE CHANGES');
 
-            let code = $(_this).closest('.dropdown-menu').data('code');
-            let name = $(_this).closest('.dropdown-menu').data('name');
-            let course = $(_this).closest('.dropdown-menu').data('course');
+            let unit = $(_this).closest('.dropdown-menu').data('unit');
+            let tags = $(_this).closest('.dropdown-menu').data('tags');
+
+            let code = unit.unit_code;
+            let name = unit.name;
+            let course = unit.course_code;
             let duration = () => {
-                let dur_str = $(_this).closest('.dropdown-menu').data('duration');
+                let dur_str = unit.exam_duration;
                 let mins = dur_str*60;
                 let h = Math.floor(mins/60);
                 let m = mins%60;
@@ -230,14 +242,20 @@ var initHome = function (){
                 }
                 return h+":"+m;
             };
-            let year_group = $(_this).closest('.dropdown-menu').data('year');
+            let pref_invigilator = unit.pref_invigilator;
 
             $(form).find('[name="unit_code"]').val(code).prop('disabled',true);
             $(form).find('[name="unit_code_edit"]').val(code);
             $(form).find('[name="unit_name"]').val(name);
             $(form).find('[name="course_code"]').val(course);
             $(form).find('[name="exam_duration"]').val(duration);
-            $(form).find('[name="year_group"]').val(year_group);
+            $(form).find('[name="pref_invigilator"]').val(pref_invigilator);
+
+            if(tags.length !== 0){
+                $(form).find('[name="unit_tags[]"]').val([tags[0].tag_id,tags[1].tag_id]).trigger('change');
+            }else{
+                $('.js-select2-units').val(' ').trigger('change');
+            }
 
             $(form).find('[name="unit_code"]').rules('remove','remote');
             $(form).find('[name="unit_name"]').rules('remove','remote');
@@ -269,6 +287,9 @@ var initHome = function (){
                 $(form).find('button[type="submit"]').text('ADD UNIT');
             }
 
+            //Reset select2
+            $('.js-select2-units').val(' ').trigger('change');
+
             //Reset validator
             unitValidator.resetForm();
             $(form).find('.help-block, .form-group').removeClass('has-error');     
@@ -279,7 +300,7 @@ var initHome = function (){
             let _this = event.target;
             $(_this).closest('.actions').removeClass('open');
 
-            let code = $(_this).closest('.dropdown-menu').data('code');
+            let code = $(_this).closest('.dropdown-menu').data('unit').unit_code;
             let target = $(_this).closest('.dropdown-menu').data('delete-target');
 
             const deleteSwal = mySwal();

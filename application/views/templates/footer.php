@@ -45,6 +45,10 @@
         <!-- Sweetalert js -->
         <script src="<?= base_url('vendors/Codebase/assets/js/plugins/sweetalert2/sweetalert2.min.js');?>"></script>
 
+        <!-- Select2-->
+        <script src="<?= base_url('bower_components/select2/dist/js/select2.full.min.js');?>"></script>
+
+
         <script src="<?php echo base_url() ?>vendors/dark/vendors/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
         
         <!-- Placeholder for IE9 -->

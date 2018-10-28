@@ -4,17 +4,27 @@
             <div role="tabpanel">
                 <ul class="tab-nav" role="tablist">
                     <li ><a href="#overview" role="tab" data-toggle="tab" class="f-18">Overview</a></li>
-                    <li class="active"><a href="#c-u" role="tab" data-toggle="tab" class="f-18">Courses & Units</a></li>
+                    <li ><a href="#c-u" role="tab" data-toggle="tab" class="f-18">Courses & Units</a></li>
+                    <li class="active"><a href="#students" role="tab" data-toggle="tab" class="f-18">Students</a></li>
                 </ul>
 
                 <div class="tab-content">
                     <!-- Overview -->
                     <div class="tab-pane" id="overview" role="tabpanel">
                         <div class="row container">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h2 class="c-teal text-uppercase"><?= $faculty['overview']['name']?></h2>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row container">
                             <div class="col-sm-4 col-xs-6 details-card p-l-0">
                                 <div class="bs-item z-depth-2 card-header">
                                     <span class="number">
                                         <i class="zmdi zmdi-library c-bluegray"></i>
+                                        <?= $faculty['stats']['courses'];?>
                                     </span> 
                                     <span class="text">Courses</span>  
                                 </div>
@@ -24,6 +34,7 @@
                                 <div class="bs-item z-depth-2 card-header">
                                     <span class="number">
                                         <i class="zmdi zmdi-book c-bluegray"></i>
+                                        <?= $faculty['stats']['units'];?>
                                     </span> 
                                     <span class="text">Units</span>
                                 </div>
@@ -33,7 +44,7 @@
                                 <div class="bs-item z-depth-2 card-header">
                                     <span class="number">
                                         <i class="zmdi zmdi-account c-bluegray"></i>
-                                        5 
+                                        <?= $faculty['stats']['invigilators'];?> 
                                     </span> <span class="text">Invigilators</span>
                                 </div>                   
                             </div>
@@ -42,7 +53,7 @@
                     <!-- END Overview -->
 
                     <!-- c&u -->
-                    <div class="tab-pane active" id="c-u" role="tabpanel">
+                    <div class="tab-pane" id="c-u" role="tabpanel">
                         <div class="row">
                             <!-- List view -->
                             <div class="col-md-6 col-xs-12">
@@ -102,7 +113,7 @@
                                                                                 <i class="zmdi zmdi-more-vert"></i>
                                                                             </a>
 
-                                                                            <ul class="dropdown-menu dropdown-menu-right" data-delete-target="<?= base_url('faculty/delete_unit');?>" data-code="<?= $unit['unit_code'];?>" data-name="<?= $unit['name']?>" data-course="<?= $course['course_code'];?>" data-duration="<?= $unit['exam_duration'];?>" data-year="<?= $unit['year_group'];?>">
+                                                                            <ul class="dropdown-menu dropdown-menu-right" data-delete-target="<?= base_url('faculty/delete_unit');?>" data-tags="<?= htmlspecialchars(json_encode($faculty['unit_tags'][$unit['unit_code']]));?>" data-unit="<?= htmlspecialchars(json_encode($unit));?>" data-code="<?= $unit['unit_code'];?>">
                                                                                 <li>
                                                                                     <a href="#" class="edit-unit">Edit</a>
                                                                                 </li>
@@ -115,6 +126,12 @@
 
                                                                     <div class="media-body" >
                                                                         <div style="white-space:initial;" class="lgi-heading f-17 c-cyan"><?= $unit['name']?></div>
+
+                                                                        <ul class="lgi-attrs">
+                                                                            <li>Code: <?= $unit['unit_code']?></li>
+                                                                            <li>Exam Duration: <?= $unit['exam_duration']?> HRS</li>
+
+                                                                        </ul>
                                                                     </div>
                                                                 </div>
                                                             <?php endforeach; ?>
@@ -243,13 +260,32 @@
                                                         </div>
 
                                                         <div class="form-group col-md-6 col-xs-6">
-                                                            <label>Year Group</label>
+                                                            <label>Preferred Invigilator</label>
                                                             <div class="fg-line">
-                                                                <select name="year_group" class="form-control input-lg">
-                                                                    <option value="1">YEAR 1</option>
-                                                                    <option value="2">YEAR 2</option>
-                                                                    <option value="3">YEAR 3</option>
-                                                                    <option value="4">YEAR 4</option>
+                                                                <select name="pref_invigilator" class="form-control input-lg">
+                                                                    <?php foreach($faculty['invigilators'] as $invigilator): ?>
+                                                                        <option value="<?= $invigilator['id']?>"><?= $invigilator['first_name'].' '.$invigilator['last_name'] ?></option>
+                                                                    <?php endforeach;?>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="form-group col-md-12 col-xs-12">
+                                                            <label>Tags</label>
+                                                            <div class="fg-line">
+                                                                <select style="width:100%" name="unit_tags[]" class="form-control js-select2-units input-lg" multiple="multiple">
+                                                                    <optgroup label="YEAR">
+                                                                        <?php foreach($tags['year'] as $tag): ?>
+                                                                            <option value="<?= $tag['tag_id']?>"><?= $tag['tag_name']?></option>
+                                                                        <?php endforeach;?>
+                                                                    </optgroup>
+                                                                    <optgroup label="SEMESTER">
+                                                                        <?php foreach($tags['semester'] as $tag): ?>
+                                                                            <option value="<?= $tag['tag_id']?>"><?= $tag['tag_name']?></option>
+                                                                        <?php endforeach;?>                                                                        
+                                                                    </optgroup>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -273,6 +309,14 @@
                         </div>
                     </div>
                     <!-- END c&u -->
+
+                    <!-- Students -->
+                    <div class="tab-pane active" role="tabpanel" id="students">
+                        <div class="row">
+                            
+                        </div>
+                    </div>
+                    <!-- END Students -->
                 </div>
 
             </div>

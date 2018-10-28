@@ -12,7 +12,8 @@
                 'faculty' => $this->faculty_model->get_faculty($this->session->userdata('user_id')),
                 'options' => array(
                     'course_types' => $this->faculty_model->get_course_types()
-                )
+                ),
+                'tags' => $this->faculty_model->get_tags()
             );
             $this->load->view('templates/header');
             $this->load->view('templates/top_header');
@@ -139,11 +140,12 @@
                 'unit_code' => $this->input->post('unit_code'),
                 'name' => $this->input->post('unit_name'),
                 'course_code' => $this->input->post('course_code'),
-                'year_group' => $this->input->post('year_group'),
+                'pref_invigilator' => $this->input->post('pref_invigilator'),
                 'exam_duration' => $this->set_duration($this->input->post('exam_duration'))
             );
+            $tags = $this->input->post('unit_tags[]');
 
-            if($this->faculty_model->add_unit($data)){
+            if($this->faculty_model->add_unit($data,$tags)){
                 $res = array(
                     "icon" => "zmdi zmdi-badge-check",
                     "type" => "success",
@@ -160,7 +162,7 @@
         }
 
         /**
-         * EDit unit
+         * Edit unit
          */
         public function edit_unit(){
             is_logged_in($this->user);
@@ -169,11 +171,12 @@
             $data = array(
                 'name' => $this->input->post('unit_name'),
                 'course_code' => $this->input->post('course_code'),
-                'year_group' => $this->input->post('year_group'),
+                'pref_invigilator' => $this->input->post('pref_invigilator'),
                 'exam_duration' => $this->set_duration($this->input->post('exam_duration'))
             );
+            $tags = $this->input->post('unit_tags[]');
 
-            if($this->faculty_model->edit_unit($this->input->post('unit_code_edit'),$data)){
+            if($this->faculty_model->edit_unit($this->input->post('unit_code_edit'),$data,$tags)){
                 $res = array(
                     "icon" => "zmdi zmdi-badge-check",
                     "type" => "success",

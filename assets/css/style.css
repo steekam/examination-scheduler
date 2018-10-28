@@ -1,5 +1,27 @@
-select option {
+select option ,.select2-opt {
     background-color: #2b343a; 
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    height: 30px;
+    line-height: 30px;
+    color: #fff;
+    font-size: 15px;
+    background-color: #3f9ce8;
+    border: none;
+    border-radius: 3px;
+}
+
+.select2-container--default .select2-selection--multiple {
+    background-color: #2b343a;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+    border: none;
+}
+
+.select2-container--default .select2-results__group{
+    color: teal;
 }
 
 .myModal .modal-content {
