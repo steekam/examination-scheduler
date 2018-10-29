@@ -1,4 +1,4 @@
-<?php 
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
     class User extends CI_Controller {
         
         /**
@@ -13,7 +13,7 @@
                     'user_id' => $user['id'],
                     'name' => $user['first_name'].' '.$user['last_name'],
                     'email' => $user['email'],
-                    'role' => $user['role'],
+                    'role' => $user['user_type'],
                     'logged_in' => true
                 );
                 $this->session->set_userdata($user_data);
@@ -43,7 +43,7 @@
                         'user_id' => $user->id,
                         'name' => $user->first_name.' '.$user->last_name,
                         'email' => $user->email,
-                        'role' => $user->role,
+                        'role' => $user->user_type,
                         'logged_in' => true
                     );
 
@@ -220,18 +220,20 @@
          */
         public function user_redirect($role){
             switch($role){
-                case 'administrator':
+                case 1:
                     redirect('admin');
                     break;
-                case 'faculty representative':
+                case 2:
                     redirect('faculty');
                     break;
-                case 'scheduler manager':
-                    redirect();
+                case 3:
+                    redirect('scheduler');
                     break;
                 default:
                     redirect(base_url());
                     break;
             }
         }
+
+        
     }

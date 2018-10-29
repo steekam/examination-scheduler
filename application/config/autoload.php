@@ -58,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array('form_validation','session','email');
+$autoload['libraries'] = array('database','form_validation','session','email','MyGraph','Unit');
 
 /*
 | -------------------------------------------------------------------
@@ -89,7 +89,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('url','form','cookie','string','PHPMailer/PHPMailerAutoload','PHPMailer/email');
+$autoload['helper'] = array('url','form','cookie','string','PHPMailer/PHPMailerAutoload','PHPMailer/email','access_helper');
 
 /*
 | -------------------------------------------------------------------
@@ -132,4 +132,4 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array('user_model','faculty_model');
+$autoload['model'] = array('user_model','faculty_model','scheduler_model');

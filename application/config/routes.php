@@ -57,6 +57,8 @@ $route['password_reset_activation'] = 'user/password_reset_activation';
 
 $route['faculty'] = 'faculty/index';
 
+$route['scheduler'] = 'scheduler/index';
+
 $route['default_controller'] = 'user/login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

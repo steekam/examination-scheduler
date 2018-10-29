@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <div class="login-content">
     <!-- Login -->
     <div class="lc-block toggled" id="l-login">
@@ -37,14 +38,14 @@
             <div class="input-group m-b-20">
                 <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
                 <div class="fg-line">
-                    <input type="text" name="username" class="form-control" placeholder="Username" required autofocus>
+                    <input type="text" name="username" class="form-control input-lg" placeholder="Username" required autofocus>
                 </div>
             </div>
 
             <div class="input-group m-b-20">
-                <span class="input-group-addon"><i class="zmdi zmdi-male"></i></span>
+                <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
                 <div class="fg-line">
-                    <input type="password" name="password" class="form-control" placeholder="Password" required>
+                    <input type="password" name="password" class="form-control input-lg" placeholder="Password" required>
                 </div>
             </div>
 
@@ -89,7 +90,7 @@
             <div class="input-group m-b-20">
                 <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
                 <div class="fg-line">
-                    <input type="text" name="email" class="form-control" value="<?php echo set_value('email') ?>" placeholder="Email Address" required autofocus>
+                    <input type="text" name="email" class="form-control input-lg" value="<?php echo set_value('email') ?>" placeholder="Email Address" required autofocus>
                 </div>
             </div>
             <button type="submit" class="btn btn-login btn-default btn-float"><i class="zmdi zmdi-check"></i></button>
