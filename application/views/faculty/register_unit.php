@@ -43,18 +43,14 @@
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">Course</label>
-                <?php
-                                // echo $courses['name'];
-                                // foreach ($courses as $course) {
-                                //     # code...
-                                //     echo $course;
-                                // }
-                            ?>
                 <div class="col-sm-6">
                     <div class="fg-line">
                         <div class="select">
-                            
-                            
+                            <select class="form-control" name="course" id="">
+                                <?php foreach ($courses as $course): ?>
+                                    <option value="<?= $course['id'];?>"><?= $course['name'];?></option>
+                                <?php endforeach; ?>                            
+                            </select>
                         </div>
                     </div>
                 </div>

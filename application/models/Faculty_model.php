@@ -77,8 +77,22 @@
         public function get_total_course($faculty_id){
             $sql = "SELECT * FROM course WHERE faculty_id = ?";
             $result = $this->db->query($sql, array($faculty_id));
-            return $result->row_array();
+            return $result->result_array();
             // $get_total_course = $this->db->get_where('course', array('faculty_id' => $faculty_id));
             // return $get_total_course->row_array();
+        }
+        /**
+         *  Updates the units table
+        */
+        public function add_unit(){
+            $data = array(
+                'name' => $this->input->post('name'),
+                'unit_code' => $this->input->post('unit_code'),
+                'course_id' => $this->input->post('course_id'),
+                'class_group' => $this->input->post('class_group')
+            );
+            $course_insert = $this->db->insert('unit',$data);
+
+            return $course_insert;
         }
     }

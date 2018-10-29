@@ -73,21 +73,18 @@
             $this->form_validation->set_rules('name','Name','trim|required|is_unique[course.name]',array(
                 'is_unique' => 'This %s already exists'
             ));
-
+            $response = array();
             if ($this->form_validation->run() === FALSE) {
-                $this->load->view('templates/header');
-                $this->load->view('templates/top_header');
-                $this->load->view('faculty/sidenav');
-                $this->load->view('faculty/register_course',$data);
-                $this->load->view('templates/footer');
-            } else {
-                $data = array(
-                    'abbrev' => $this->input->post('abbrev'),
-                    'name' => $this->input->post('name'),
-                    'faculty_id' => $faculty_id
+                $response['errors'] = array(
+                    'name' => form_error('name'),
+                    'abbrev' => form_error('abbrev')
                 );
-                echo $this->faculty_model->add_course($faculty_id);
+            } else {
+                $response['success'] = array(
+                    'success' => $this->faculty_model->add_course($faculty_id)
+                ); 
             }
+            echo json_encode($response);
         }
         // Stores the course details to be passed to the database
         

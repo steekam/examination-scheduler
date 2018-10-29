@@ -287,24 +287,39 @@ $('#register-course').on('click', function(event){
         url: action,
         type: "POST",
         data: formdata,
+        dataType: 'json',
         //Function that interacts with the success interaction of the php file
         success: function(data){
-            $('#feedback-result').addClass('alert-success');
-            $('#feedback-result').val('Course inserted succesfully');
-            $('#feedback-result').attr('style','visibility:visible');
-            $('#name').val('');
-            $('#name').focuout();
-            $('#abbrev').val('');
-            $('#abbrev').focuout();
+            console.log(data.errors);
+            if(data.success){
+                console.log("Succesful");
+                $('#feedback-result').addClass('alert-success');
+                $('#feedback-result').val('Course inserted succesfully');
+                $('#feedback-result').attr('style','visibility:visible');
+                $('.form-group').removeClass('fg-float');
+                $('#register-course')[0].reset();
+                // $('#name').val('');
+                // $('#name').focusout();
+                // $('#abbrev').val('');
+                // $('#abbrev').focusout();
+            }else if(data.errors){
+                console.log(data.errors.name);
+                // $('#name').val('');
+                // $('#abbrev').val('');
+                $('#feedback-result').addClass('alert-danger');
+                $('#feedback-result').html(data.errors.name + data.errors.abbrev);
+                $('#feedback-result').attr('style','visibility:visible');
+                $('#register-course')[0].reset();
+                
+            }          
         },
         error: function(jqXHR,textStatus){
+            $('#name').val('');
+            $('#abbrev').val('');
             $('#feedback-result').addClass('alert-danger');
             $('#feedback-result').val('Course not inserted succesfully');
             $('#feedback-result').attr('style','visibility:visible');
-            $('#name').val('');
-            $('#name').focuout();
-            $('#abbrev').val('');
-            $('#abbrev').focuout();
+            
         }
     });
 });
