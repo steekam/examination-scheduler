@@ -267,4 +267,14 @@
                 echo json_encode($error);
             }
         }
+        /*
+         *  Display the exam timetable
+         */
+        public function timetable(){
+            $this->load->view('templates/header');
+            $this->load->view('templates/top_header.php');
+            $this->load->view('scheduler/sidenav');
+            $this->load->view('scheduler/timetable');
+            $this->load->view('templates/footer');
+        }
     }
