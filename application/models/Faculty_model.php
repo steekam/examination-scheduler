@@ -436,18 +436,4 @@
             $this->db->where('intake_id',$intake_id);
             return $this->db->get('student_group')->num_rows() === 0;
         }
-        /**
-         *  Updates the units table
-        */
-        public function add_unit(){
-            $data = array(
-                'name' => $this->input->post('name'),
-                'unit_code' => $this->input->post('unit_code'),
-                'course_id' => $this->input->post('course_id'),
-                'class_group' => $this->input->post('class_group')
-            );
-            $course_insert = $this->db->insert('unit',$data);
-
-            return $course_insert;
-        }
     }
