@@ -94,6 +94,14 @@
         return $this->db->delete('room');
     }
 
+    /**
+     * Get active rooms
+     */
+    public function get_active_rooms(){
+        $this->db->where('status',"active");
+        return $this->db->get('room')->result_object();
+    }
+
     //!Sessions
     /**
      * Create session

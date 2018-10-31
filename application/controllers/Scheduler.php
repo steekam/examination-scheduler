@@ -438,19 +438,51 @@
                         'max_days' => date_diff(new DateTime($details['end_date']), new DateTime($details['start_date']))->d
                     );
 
-                    $this->create_schedule($settings,$unit_graph->get_nodes(),$c_matrix);
-            }          
+                    $period_schedule = $this->create_period_schedule($settings,$unit_graph->get_nodes(),$c_matrix);
+                    $active_rooms = $this->scheduler_model->get_active_rooms();
+                    $p_room_schedule = $this->set_rooms($period_schedule,$active_rooms,$student_groups);
+                    $active_invigilators = $this->faculty_model->get_active_invigilators();
+                    $final_schedule = $this->set_invigilators($p_room_schedule,$unit_graph->get_nodes(),$active_invigilators);
+
+                    $schedule_config = array(
+                        'dates' => array(
+                            'start_date' => $details['start_date'],
+                            'end_date' => $details['end_date']
+                        ),
+                        'timetable' => $final_schedule
+                    );
+
+                    $final_contents = json_encode($schedule_config);
+                    $final_file_name = FCPATH.'assets/config/schedules/sess_'.date('d-m-Y').'#'.$details['id'].'.json';
+                    if ( !file_put_contents($final_file_name, $final_contents)){
+                        $res = array(
+                            "icon" => "zmdi zmdi-alert-circle-o",
+                            "type" => "danger",
+                            "message" => "Could not load session config file",
+                            "check" => false
+                        );
+                    }else{
+                        $res = array(
+                            "icon" => "zmdi zmdi-badge-check",
+                            "type" => "success",
+                            "message" => "Active sessioin stopped",
+                            "check" => true
+                        );
+                        echo "Woe";
+                    }
+                }
+                return $res;
         }
 
         /**
-         * Create schedule
+         * Create period schedule
+         * Set the units into time slots
          */
-        public function create_schedule($settings,$nodes,$c_matrix){
+        public function create_period_schedule($settings,$nodes,$c_matrix){
             /**
              * define X as no. of days of the exam
              * */
             $X = 0;
-            
             /**
              * number of colors
              * */
@@ -517,13 +549,13 @@
 
                             $curr_unit = $unit_domain[$u];
                             $curr_adj_list = $this->get_adj_list_names($nodes[$curr_unit]->get_adj_list());
-                            // if(!empty($e_period)){
-                            //     $curr_period_keys = array_keys($e_period);
-                            //     $intersect = count(array_intersect($curr_period_keys,$curr_adj_list));
-                            //     if($intersect > 0){
-                            //         continue;
-                            //     }
-                            // }
+                            if(!empty($e_period)){
+                                $curr_period_keys = array_keys($e_period);
+                                $intersect = count(array_intersect($curr_period_keys,$curr_adj_list));
+                                if($intersect > 0){
+                                    break;
+                                }
+                            }
 
                             //Check 2nd periods
                             if($Y == 1 ){
@@ -533,7 +565,6 @@
                                     continue;
                                 }
                             }else if($Y == 2){
-                                // $first_keys = array_keys($p_day[0]);
                                 $second_keys = array_keys($last_period);
                                 $intersect = count(array_intersect($second_keys,$curr_adj_list));
                                 if($intersect > 0){
@@ -542,7 +573,9 @@
                             }
 
                             $e_period[$curr_unit] = array(
-                                'exam_id' => $exam_id
+                                'exam_id' => $exam_id,
+                                'year' => $nodes[$curr_unit]->get_specs()->year,
+                                'course_code' => $nodes[$curr_unit]->get_specs()->course_code
                             );
                             $exam_id++;
                             $s_matrix[$curr_unit] = 1;                            
@@ -558,6 +591,13 @@
                     }else if(!in_array(-1,$s_matrix)){
                         $p_day[$Y] = $e_period;
                         break;
+                    }else if($this->remaining_exams($s_matrix) < $consec){
+                        if(!empty($e_period)){
+                            $p_day[$Y] = $e_period;
+                            $last_period = $e_period;
+                            $e_period = array();
+                        }
+                        ++$Y;
                     }
                     
                 }
@@ -570,7 +610,6 @@
                 }
                 ++$X;
             }
-            print_r($schedule);
             return $schedule;
         }
 
@@ -589,6 +628,19 @@
         }
 
         /**
+         * Returns the remaining exams
+         */
+        public function remaining_exams($s_matrix){
+            $domain = array();
+            foreach ($s_matrix as $key => $value) {
+                if($value === -1 ){
+                    $domain[] = $key;
+                }
+            }
+            return count($domain);
+        }
+
+        /**
          * Gets the names of the objects in the adjacency list
          */
         public function get_adj_list_names($adj_list){
@@ -597,5 +649,151 @@
                 $names[] = $unit->get_name();
             }
             return $names;
+        }
+
+        /**
+         * Give the the time slots into rooms
+         */
+        public function set_rooms($period_schedule,$rooms,$groups){
+            $rooms_sorted = $this->sort_rooms($rooms);
+            $ugs_matrix = $this->create_unit_size_matrix($groups);
+
+            /**
+             * Room availability matrix
+             * Init with -1 for unavailable
+             */
+            $r_available = array_fill(0,count($rooms_sorted),-1);
+            foreach($period_schedule as $d => $day){
+                foreach($day as $p => $period){
+                    foreach($period as $u => $unit){
+                        $size = $ugs_matrix[$unit['course_code']][$unit['year']]['total_size'];
+                        $room_id = $this->find_whole_room($r_available,$rooms_sorted,$size);
+                        if($room_id){
+                            $r_available[$room_id] = 1;
+                            $unit['room'] = $rooms_sorted[$room_id]->name;
+                            $unit['groups'] = $ugs_matrix[$unit['course_code']][$unit['year']]['groups'];
+                        }else{
+                            $u_groups = $ugs_matrix[$unit['course_code']][$unit['year']]['groups'];
+                            $rooms_split = $this->find_split_rooms($r_available,$rooms_sorted,$size,$u_groups);
+                            foreach($rooms_split as $room_split){
+                                $r_available[$room_split] = 1;
+                                $unit['room'][] = $rooms_sorted[$room_split]->name;
+                                $unit['groups'] = $u_groups;
+                            }
+                        }
+                        $period_schedule[$d][$p][$u] = $unit;
+                    }
+                    //reset availability
+                    $r_available = array_fill(0,count($rooms_sorted),-1);
+                }
+            }
+            return $period_schedule;
+        }
+
+        /**
+         * Sort the rooms in terms of size
+         */
+        public function sort_rooms($rooms){
+            uasort($rooms,function($node1, $node2){
+                if($node1->room_size == $node2->room_size){
+                    return ($node1->name > $node2->name) ? -1 : 1;
+                }
+                return ($node1->room_size < $node2->room_size) ? -1 : 1;
+            });
+            return $rooms;
+        }
+
+        /**
+         * Creates a matrix of units, their groups and sizes
+         */
+        public function create_unit_size_matrix($groups){
+            /**
+             * Stores the unit group size matrix
+             */
+            $us_matrix = array();
+
+            foreach($groups as $key => $course){
+                $us_matrix[$key] = array();
+                foreach($course as $key_y => $year){
+                    $us_matrix[$key][$key_y] = array();
+                    if(count($year) > 1){
+                        $us_matrix[$key][$key_y]['total_size'] = 0;
+                        foreach($year as $grp){
+                            $us_matrix[$key][$key_y]['total_size'] += $grp['size'];
+                            $us_matrix[$key][$key_y]['groups'][$grp['name']] = array('size'=> $grp['size']);
+                        }
+                    }else{
+                        $us_matrix[$key][$key_y]['total_size'] = $year[0]['size'];
+                        $us_matrix[$key][$key_y]['groups'][$year[0]['name']] = array('size'=> $year[0]['size']);
+                    }
+                }
+            }
+            return $us_matrix;
+        }
+
+        /**
+         * Find suitable room
+         */
+        public function find_whole_room($r_available,$rooms_sorted,$exam_size){
+            $good_room;
+            for($r = 0; $r < count($rooms_sorted); $r++){
+                if($r_available[$r] == -1 && $rooms_sorted[$r]->room_size >= $exam_size){
+                    $good_room = $r;
+                    break;
+                }
+            }
+            return isset($good_room) ? $good_room : false;
+        }
+
+        /**
+         * Find suitable split rooms
+         */
+        public function find_split_rooms($r_available,$rooms_sorted,$exam_size,$groups){
+            $good_rooms = array();
+            foreach($groups as $grp){
+                $g_size = $grp['size'];
+                for($r = 0; $r < count($rooms_sorted); $r++){
+                    if($r_available[$r] == -1 && $rooms_sorted[$r]->room_size >= $g_size){
+                        $good_rooms[] = $r;
+                        $r_available[$r] = 1;
+                        break;
+                    }
+                }
+            }
+            return $good_rooms;
+        }
+
+        /**
+         * Sets invigilators for the exam
+         */
+        public function set_invigilators($schedule,$nodes,$invigilators){
+            /**
+             * Invigilator availability matrix
+             * Init with -1 for unavailable
+             */
+            $invi_available = array_fill(0,count($invigilators),-1);
+            foreach($schedule as $d => $day){
+                foreach($day as $p => $period){
+                    foreach($period as $u => $unit){
+                        $pref = $nodes[$u]->get_specs()->pref_invigilator;
+                        if(isset($invi_available[$pref]) && $invi_available[$pref] == -1){
+                            $unit['invigilator'] = $invigilators[$pref]['full_name'];
+                            $invi_available[$pref] = 1;
+                        }else{
+                            for($i = 0; $i < count($invigilators); $i++){
+                                if($invi_available[$i]== -1){
+                                    $unit['invigilator'] = $invigilators[$i]['full_name'];
+                                    $invi_available[$i] = 1;
+                                    break;
+                                }
+                            }
+                        }
+                        $schedule[$d][$p][$u] = $unit;
+                    }
+                }
+                //reset for each day
+                $invi_available = array_fill(0,count($invigilators),-1);
+            }
+            return $schedule;
         }
     }

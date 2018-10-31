@@ -169,6 +169,15 @@
             return $res;
         }
 
+        /**
+         * Get available invigilators
+         */
+        public function get_active_invigilators(){
+            $this->db->select('id, concat(first_name," ",last_name) as full_name, faculty_code');
+            $this->db->where('status',1);
+            return $this->db->get('invigilators')->result_array();
+        }
+
         //!Course type
         /**
          * Add course type
@@ -389,7 +398,7 @@
             $tags = $this->get_tags();
             $res = array();
             foreach($tags['year'] as $year){
-                $this->db->select('unit.*');
+                $this->db->select('unit.*,tag.tag_id as year');
                 $this->db->join('tagmap','tagmap.unit_code = unit.unit_code');
                 $this->db->join('tag','tagmap.tag_id = tag.tag_id');
                 $this->db->where('unit.course_code',$course_code);
