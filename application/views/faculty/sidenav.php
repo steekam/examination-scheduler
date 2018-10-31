@@ -26,7 +26,7 @@
                 <a href="<?= base_url('faculty') ?>"><i class="zmdi zmdi-home"></i>Home</a>
             </li>
             <li class="<?php if($this->uri->uri_string() =='faculty/examinations') echo 'active'; ?>">
-                <a href="#"><i class="zmdi zmdi-book-image"></i>Examinations</a>
+                <a href="<?= base_url('faculty/examinations')?>"><i class="zmdi zmdi-book-image"></i>Examinations</a>
             </li>
         </ul>
     </aside>

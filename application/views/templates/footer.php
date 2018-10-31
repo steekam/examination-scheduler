@@ -48,6 +48,8 @@
         <!-- Select2-->
         <script src="<?= base_url('bower_components/select2/dist/js/select2.full.min.js');?>"></script>
 
+        <!-- Bootstrap Datepicker -->
+        <script src="<?= base_url('vendors/bootstrap-datepicker/bootstrap-datepicker.min.js');?>"></script>
 
         <script src="<?php echo base_url() ?>vendors/dark/vendors/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
         

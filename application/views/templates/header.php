@@ -19,6 +19,8 @@
     <!-- Select 2 & tags input -->
     <link rel="stylesheet" href="<?= base_url('bower_components/select2/dist/css/select2.min.css');?>">
 
+    <!-- Datepicker Css -->
+    <link rel="stylesheet" href="<?= base_url('vendors/bootstrap-datepicker/bootstrap-datepicker.css');?>">
 
     <!-- CSS -->
     <link href="<?php echo base_url() ?>vendors/dark/css/app_1.min.css" rel="stylesheet">

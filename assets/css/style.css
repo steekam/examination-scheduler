@@ -87,3 +87,7 @@ select option ,.select2-opt {
 .room-name, .room-icon{
     font-size: 1.1em;
 }
+
+.datepicker-days thead tr th {
+    color: black !important;
+}

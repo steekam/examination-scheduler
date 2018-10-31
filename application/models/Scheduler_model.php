@@ -93,4 +93,64 @@
         $this->db->where('id',$this->input->post('room_id'));
         return $this->db->delete('room');
     }
- }
+
+    //!Sessions
+    /**
+     * Create session
+     */
+    public function create_session($data){
+        return $this->db->insert('exam_session',$data);
+    }
+
+    /**
+     * Validate session name
+     */
+    public function validate_session_name($name){
+        $this->db->where('name',$name);
+        return $this->db->get('exam_session')->num_rows() === 0;
+    }
+
+    /**
+     * Get sessions
+     */
+    public function get_sessions(){
+        $this->db->select('exam_session.* , intake.name as intake_name, course_type.name as intake_type, tag.tag_name');
+        $this->db->join('intake','intake.id = exam_session.intake_id');
+        $this->db->join('course_type','intake.course_type = course_type.id');
+        $this->db->join('tag','tag.tag_id = exam_session.semester_tag');
+        return $this->db->get('exam_session')->result_array();
+    }
+
+    /**
+     * Get session
+     */
+    public function get_session($id){
+        $this->db->where('id',$id);
+        return $this->db->get('exam_session')->result_array();
+    }
+
+    /**
+     * Validate session run
+     */
+    public function validate_session_run($id){
+        $this->db->where('active',1);
+        return $this->db->get('exam_session')->num_rows() === 0; 
+    }
+
+    /**
+     * Activate session
+     * 
+     */
+    public function activate_session($id){
+        $this->db->where('id',$id);
+        return $this->db->update('exam_session',array('active'=>1));
+    }
+
+    /**
+     * Stop session
+     */
+    public function stop_session($id){
+        $this->db->where('id',$id);
+        return $this->db->update('exam_session',array('active'=>0));
+    }
+}
