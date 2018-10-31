@@ -91,3 +91,14 @@ select option ,.select2-opt {
 .datepicker-days thead tr th {
     color: black !important;
 }
+/* STYLES FOR THE TTABLE */
+.ttable-header{
+    text-align: center;
+}
+.ttable-header-content{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.exam{
+    font-size:20px;
+}

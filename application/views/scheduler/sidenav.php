@@ -16,9 +16,6 @@
                         <a href="<?php echo base_url() ?>vendors/dark/profile-about.html">View Profile</a>
                     </li>
                     <li>
-                        <a href="#">Settings</a>
-                    </li>
-                    <li>
                         <a href="#">Logout</a>
                     </li>
                 </ul>
@@ -32,6 +29,9 @@
             </li>
             <li class="<?php if($this->uri->uri_string() =='scheduler/constraints') echo 'active'; ?>">
                 <a href="#">Constraints</a>
+            </li>
+            <li class="<?php if($this->uri->uri_string() =='scheduler/timetable') echo 'active'; ?>">
+                <a href="<?= base_url('scheduler/timetable'); ?>">Exam Timetables</a>
             </li>
         </ul>
     </aside>
