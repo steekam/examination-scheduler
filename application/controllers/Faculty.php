@@ -16,7 +16,8 @@
                     'course_types' => $this->faculty_model->get_course_types()
                 ),
                 'tags' => $this->faculty_model->get_tags(),
-                'intakes' => $this->faculty_model->get_intakes()
+                'intakes' => $this->faculty_model->get_intakes(),
+                'sessions' => $this->scheduler_model->get_sessions(),
             );
             $this->load->view('templates/header');
             $this->load->view('templates/top_header');
@@ -380,13 +381,24 @@
         }
 
         //!Examinations
-        public function examinations(){
+        public function timetable($sess_id){
             is_logged_in($this->user);
+
+            $this->load->helper('simplify_schedule_helper');
+            $data = array(
+                '_session' => $this->scheduler_model->get_schedule($sess_id)
+            );
+            $metadata_schedule = file_get_contents(FCPATH.'assets/config/schedules/'.$data['_session']['schedule_path']);
+            $data['schedule'] = json_decode($metadata_schedule);
+            $data['simple_schedule'] = array(
+                'dates' => $data['schedule']->dates,
+                'timetable' => simplify_schedule($data['schedule'])
+            );
 
             $this->load->view('templates/header');
             $this->load->view('templates/top_header');
             $this->load->view('faculty/sidenav');
-            $this->load->view('faculty/examinations');
+            $this->load->view('scheduler/timetable',$data);
             $this->load->view('templates/footer');
         }
     }

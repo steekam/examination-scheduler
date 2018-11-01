@@ -6,11 +6,12 @@
                     <li class="active"><a href="#overview" role="tab" data-toggle="tab" class="f-18">Overview</a></li>
                     <li ><a href="#c-u" role="tab" data-toggle="tab" class="f-18">Courses & Units</a></li>
                     <li ><a href="#students" role="tab" data-toggle="tab" class="f-18">Students</a></li>
+                    <li ><a href="#timetables" role="tab" data-toggle="tab" class="f-18">Timetables</a></li>
                 </ul>
 
                 <div class="tab-content">
                     <!-- Overview -->
-                    <div class="tab-pane active" id="overview" role="tabpanel">
+                    <div class="tab-pane " id="overview" role="tabpanel">
                         <div class="row container">
                             <div class="card">
                                 <div class="card-header">
@@ -462,6 +463,61 @@
                         </div>
                     </div>
                     <!-- END Students -->
+
+                    <!-- Timetables -->
+                    <div class="tab-pane active" role="tabpanel" id="timetables">
+                        <div class="row container">
+                            <!-- Left -->
+                            <div class="col-md-6 col-xs-12">
+                                <div class="card-header">
+                                    <h2 class="text-uppercase c-cyan">Sessions</h2>
+                                </div>
+                                <div class="card-body">
+                                    <div class="preloader pl-sm hidden scheduler-loader">
+                                        <svg class="pl-circular" viewBox="25 25 50 50">
+                                            <circle class="plc-path" cx="50" cy="50" r="20"/>
+                                        </svg>                                        
+                                    </div>
+    
+                                    <div class="list-group" id="session-list">
+                                        <?php foreach($sessions as $session): ?>
+                                            <div class="list-group-item media">    
+                                                <div class="media-body">
+                                                    <div class="lgi-heading" style="white-space:initial;">
+                                                        <?= $session['name']?>
+                                                        <ul class="lgi-attrs">                                                            
+                                                            <li>                                                                
+                                                                <?php if($session['active']): ?>
+                                                                    <span class="c-green">Active</span>
+                                                                <?php else: ?>
+                                                                    <span class="c-red">Inactive</span>
+                                                                <?php endif;?>
+                                                            </li>
+                                                            <li>
+                                                                <?= $session['intake_name'].' ('.$session['intake_type'].')'?>
+                                                            </li>
+                                                            <li>
+                                                                <?= $session['tag_name']?>
+                                                            </li>                                                            
+                                                            <?php if($session['schedule_path']): ?>
+                                                            <li>
+                                                                <a href="<?= base_url('faculty/timetable/'.$session["id"]);?>">
+                                                                    <button class="btn btn-primary view_schedule"  data-path="<?= base_url('assets/config/schedules/{$session["schedule_path"]}');?>">VIEW SCHEDULE</button>                            
+                                                                </a>
+                                                            </li>
+                                                                <?php endif; ?>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END Left -->
+                        </div>
+                    </div>
+                    <!-- END Timetables -->
                 </div>
 
             </div>
