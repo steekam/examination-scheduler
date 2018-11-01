@@ -553,7 +553,7 @@ $(document).ready( () => {
     let page = window.location.pathname;
     if(page.includes('admin/register_user')){
         initRegisterUser.init();
-    }else if(page.includes('admin/institution')){
+    }else if(page.includes('admin/institution') || page.includes('admin') ){
         initInstitution.init();
     }
 } );
