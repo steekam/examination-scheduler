@@ -30,6 +30,13 @@
         $result = $this->db->get('room');
         return $result->result_array();
     }
+    
+    /**
+     * Get all rooms
+     */
+    public function get_all_rooms(){
+        return $this->db->get('room')->result_array();
+    }
 
     /**
      * Edit a a building record
@@ -93,4 +100,88 @@
         $this->db->where('id',$this->input->post('room_id'));
         return $this->db->delete('room');
     }
- }
+
+    /**
+     * Get active rooms
+     */
+    public function get_active_rooms(){
+        $this->db->where('status',"active");
+        return $this->db->get('room')->result_object();
+    }
+
+    //!Sessions
+    /**
+     * Create session
+     */
+    public function create_session($data){
+        return $this->db->insert('exam_session',$data);
+    }
+
+    /**
+     * Validate session name
+     */
+    public function validate_session_name($name){
+        $this->db->where('name',$name);
+        return $this->db->get('exam_session')->num_rows() === 0;
+    }
+
+    /**
+     * Get sessions
+     */
+    public function get_sessions(){
+        $this->db->select('exam_session.* , intake.name as intake_name, course_type.name as intake_type, tag.tag_name');
+        $this->db->join('intake','intake.id = exam_session.intake_id');
+        $this->db->join('course_type','intake.course_type = course_type.id');
+        $this->db->join('tag','tag.tag_id = exam_session.semester_tag');
+        return $this->db->get('exam_session')->result_array();
+    }
+
+    /**
+     * Get session
+     */
+    public function get_session($id){
+        $this->db->where('id',$id);
+        return $this->db->get('exam_session')->result_array();
+    }
+
+    /**
+     * Validate session run
+     */
+    public function validate_session_run($id){
+        $this->db->where('active',1);
+        return $this->db->get('exam_session')->num_rows() === 0; 
+    }
+
+    /**
+     * Activate session
+     * 
+     */
+    public function activate_session($id){
+        $this->db->where('id',$id);
+        return $this->db->update('exam_session',array('active'=>1));
+    }
+
+    /**
+     * Stop session
+     */
+    public function stop_session($id){
+        $this->db->where('id',$id);
+        return $this->db->update('exam_session',array('active'=>0));
+    }
+
+    /**
+     * Set schedule location on server
+     */
+    public function set_schedule_file($session_id,$final_file_name){
+        $this->db->where('id',$session_id);
+        return $this->db->update('exam_session',array('schedule_path' => $final_file_name));
+    }
+
+    /**
+     * Get the schedule for a specified session in json format
+     */
+    public function get_schedule($id){
+        $this->db->where('id',$id);
+        return $this->db->get('exam_session')->row_array();
+    }
+}

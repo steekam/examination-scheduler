@@ -38,8 +38,8 @@
                     </li>
                 </ul>
             </li>
-            <li>
+            <!-- <li>
                 <a href="<?= base_url('admin/institution');?>"><i class="zmdi zmdi-graduation-cap"></i> Institution</a>
-            </li>
+            </li> -->
         </ul>
     </aside>

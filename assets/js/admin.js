@@ -129,7 +129,8 @@ var initInstitution = function(){
 
             let code = $(_this).closest('.dropdown-menu').data('code');
             let name = $(_this).closest('.dropdown-menu').data('name');
-            $(form).find('[name="faculty_code"]').val(code).prop('disabled',true)
+            $(form).find('[name="faculty_code"]').val(code).prop('disabled',true);
+            $(form).find('[name="faculty_code_edit"]').val(code);
             $(form).find('[name="faculty_code"]').rules('remove','remote');
             $(form).find('[name="faculty_code"]').rules('add',{
                 required:true,
@@ -552,7 +553,7 @@ $(document).ready( () => {
     let page = window.location.pathname;
     if(page.includes('admin/register_user')){
         initRegisterUser.init();
-    }else if(page.includes('admin/institution')){
+    }else if(page.includes('admin/institution') || page.includes('admin') ){
         initInstitution.init();
     }
 } );

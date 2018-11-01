@@ -378,4 +378,15 @@
             $group_id = $this->input->post('group_id');
             echo json_encode($this->faculty_model->validate_group($group_name,$course_code,$intake_id,true,$group_id));
         }
+
+        //!Examinations
+        public function examinations(){
+            is_logged_in($this->user);
+
+            $this->load->view('templates/header');
+            $this->load->view('templates/top_header');
+            $this->load->view('faculty/sidenav');
+            $this->load->view('faculty/examinations');
+            $this->load->view('templates/footer');
+        }
     }

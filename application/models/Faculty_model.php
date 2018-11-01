@@ -169,6 +169,15 @@
             return $res;
         }
 
+        /**
+         * Get available invigilators
+         */
+        public function get_active_invigilators(){
+            $this->db->select('id, concat(first_name," ",last_name) as full_name, faculty_code');
+            $this->db->where('status',1);
+            return $this->db->get('invigilators')->result_array();
+        }
+
         //!Course type
         /**
          * Add course type
@@ -307,6 +316,14 @@
             return $result->num_rows() == 0;
         }
 
+        /**
+         * Get courses for specific faculty
+         */
+        public function get_courses($faculty_code){
+            $this->db->where('faculty_code',$faculty_code);
+            return $this->db->get('course')->result_array();
+        }
+
 
         //!Units
         /**
@@ -374,6 +391,42 @@
             return $result->num_rows() === 0;
         }
 
+        /**
+         * Get units in a course in a certain semester
+         */
+        public function get_semester_units($course_code,$semester_tag){
+            $tags = $this->get_tags();
+            $res = array();
+            foreach($tags['year'] as $year){
+                $this->db->select('unit.*,tag.tag_id as year');
+                $this->db->join('tagmap','tagmap.unit_code = unit.unit_code');
+                $this->db->join('tag','tagmap.tag_id = tag.tag_id');
+                $this->db->where('unit.course_code',$course_code);
+                $this->db->where_in('tag.tag_id',array($year['tag_id'],$semester_tag));
+                $this->db->group_by('unit.unit_code');
+                $this->db->having('COUNT(unit.unit_code) = 2');
+                $result = $this->db->get('unit')->result_array();
+                $subarr = array();
+                foreach($result as $unit){
+                    $subarr[$unit['unit_code']] = $unit;
+                }
+                $res[$year['tag_id']] = $subarr;
+            }
+            return $res;
+            $this->db->where('course_code',$course_code);
+            $this->db->where('tagmap.tag_id',$semester_tag);
+            $this->db->get('unit')->result_array();
+        }
+
+        /**
+         * Get the unit name
+         */
+        public function get_unit_name($code){
+            $this->db->select('name');
+            $this->db->where('unit_code',$code);
+            return $this->db->get('unit')->row_array()['name'];
+        }
+
         //!Tags
         /**
          * Get all tags
@@ -436,18 +489,21 @@
             $this->db->where('intake_id',$intake_id);
             return $this->db->get('student_group')->num_rows() === 0;
         }
-        /**
-         *  Updates the units table
-        */
-        // public function add_unit(){
-        //     $data = array(
-        //         'name' => $this->input->post('name'),
-        //         'unit_code' => $this->input->post('unit_code'),
-        //         'course_id' => $this->input->post('course_id'),
-        //         'class_group' => $this->input->post('class_group')
-        //     );
-        //     $course_insert = $this->db->insert('unit',$data);
 
-        //     return $course_insert;
-        // }
+        /**
+         * Get student groups for course
+         * grouped by years
+         */
+        public function get_student_groups($course_code,$intake_id){
+            $tags = $this->get_tags();
+            $res = array();
+            foreach($tags['year'] as $year){
+                $this->db->join('student_tagmap','student_group.group_id = student_tagmap.group_id');
+                $this->db->where('student_group.course_code',$course_code);
+                $this->db->where('student_group.intake_id',$intake_id);
+                $this->db->where('student_tagmap.tag_id',$year['tag_id']);
+                $res[$year['tag_id']] = $this->db->get('student_group')->result_array();
+            }
+            return $res;
+        }
     }
