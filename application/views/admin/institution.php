@@ -70,6 +70,7 @@
                                             <div class="col-sm-10">
                                                 <div class="fg-line">
                                                     <input type="text" class="form-control input-lg" name="faculty_code" placeholder="Faculty Code" autocomplete="off" required>
+                                                    <input type="hidden" name="faculty_code_edit">
                                                     <input type="hidden" id="check_code_url" value="<?= base_url('admin/check_faculty_code');?>">
                                                     <input type="hidden" id="check_code_edit_url" value="<?= base_url('admin/check_faculty_code_edit');?>">
                                                 </div>

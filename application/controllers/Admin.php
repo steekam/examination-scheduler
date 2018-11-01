@@ -177,7 +177,7 @@
             is_logged_in($this->user);
 
             $res = array();
-            $code = $this->input->post('faculty_code');
+            $code = $this->input->post('faculty_code_edit');
             $name = $this->input->post('faculty_name');
             if($this->faculty_model->edit_faculty($code,$name)){
                 $res = array(

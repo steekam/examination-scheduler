@@ -30,6 +30,13 @@
         $result = $this->db->get('room');
         return $result->result_array();
     }
+    
+    /**
+     * Get all rooms
+     */
+    public function get_all_rooms(){
+        return $this->db->get('room')->result_array();
+    }
 
     /**
      * Edit a a building record
@@ -160,5 +167,21 @@
     public function stop_session($id){
         $this->db->where('id',$id);
         return $this->db->update('exam_session',array('active'=>0));
+    }
+
+    /**
+     * Set schedule location on server
+     */
+    public function set_schedule_file($session_id,$final_file_name){
+        $this->db->where('id',$session_id);
+        return $this->db->update('exam_session',array('schedule_path' => $final_file_name));
+    }
+
+    /**
+     * Get the schedule for a specified session in json format
+     */
+    public function get_schedule($id){
+        $this->db->where('id',$id);
+        return $this->db->get('exam_session')->row_array();
     }
 }

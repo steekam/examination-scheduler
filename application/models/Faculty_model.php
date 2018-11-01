@@ -418,6 +418,15 @@
             $this->db->get('unit')->result_array();
         }
 
+        /**
+         * Get the unit name
+         */
+        public function get_unit_name($code){
+            $this->db->select('name');
+            $this->db->where('unit_code',$code);
+            return $this->db->get('unit')->row_array()['name'];
+        }
+
         //!Tags
         /**
          * Get all tags

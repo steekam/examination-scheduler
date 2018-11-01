@@ -129,7 +129,8 @@ var initInstitution = function(){
 
             let code = $(_this).closest('.dropdown-menu').data('code');
             let name = $(_this).closest('.dropdown-menu').data('name');
-            $(form).find('[name="faculty_code"]').val(code).prop('disabled',true)
+            $(form).find('[name="faculty_code"]').val(code).prop('disabled',true);
+            $(form).find('[name="faculty_code_edit"]').val(code);
             $(form).find('[name="faculty_code"]').rules('remove','remote');
             $(form).find('[name="faculty_code"]').rules('add',{
                 required:true,

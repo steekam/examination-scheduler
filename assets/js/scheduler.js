@@ -248,7 +248,7 @@ var initHomeScheduler = function (){
                 .done(data => {
                     notify(data.icon,data.type,data.message);
                     $(form).find('button[type="reset"]').trigger('click');
-                    //TODO: Reload list function
+                    reloadSessionList();
                 });
             }
         });
@@ -268,11 +268,10 @@ var initHomeScheduler = function (){
         $('#session-list').on('click','.scheduler-toggle',event => {
             let _this = event.target;
             let run_target = $(_this).data('run-target');
+            let load_target = $(_this).data('load-target');
+            var ajaxCall = Array();
 
-            $(_this).toggleClass('run-scheduler stop-scheduler');
-            $(_this).toggleClass('btn-info btn-warning');
-
-            if($(_this).hasClass('stop-scheduler')){
+            if($(_this).hasClass('run-scheduler')){
                 let validate_target = $(_this).data('validate-target');
                 
                 //?Check active sessions
@@ -289,19 +288,43 @@ var initHomeScheduler = function (){
                         ajaxComm(run_target,false,"json")
                         .done(data => {
                             $(_this).text('STOP');
+                            $(_this).toggleClass('run-scheduler stop-scheduler');
+                            $(_this).toggleClass('btn-info btn-warning');
                             notify(data.icon,data.type,data.message);
                             reloadSessionList();
                         });
                     }
+                    return data;
+                })
+                .then( data => {
+                    console.log(data);
+                    
+                    if(data.check){
+                        $('.scheduler-loader').removeClass('hidden');
+                        let loader =  ajaxComm(load_target,false,"json");
+                        ajaxCall.loader = loader;
+                        loader.done(data => {
+                            notify(data.icon,data.type,data.message);
+                            reloadSessionList();
+                            $('.scheduler-loader').addClass('hidden');
+                        });
+                        
+                    }
                 });
                 
-            }else if($(_this).hasClass('run-scheduler')){
+            }else if($(_this).hasClass('stop-scheduler')){
+                if(ajaxCall.loader){
+                    ajaxCall.loader.abort();
+                }
                 let stop_target = $(_this).data('stop-target');
 
                 ajaxComm(stop_target,false,'json')
                 .done(data => {
                     if(data.check){
-                        $(_this).text('RUN');                       
+                        $(_this).text('RUN');
+                        $(_this).toggleClass('run-scheduler stop-scheduler');
+                        $(_this).toggleClass('btn-info btn-warning'); 
+                        $('.scheduler-loader').addClass('hidden');
                     }
                     notify(data.icon,data.type,data.message);
                     reloadSessionList();

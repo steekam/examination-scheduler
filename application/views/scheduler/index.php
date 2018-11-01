@@ -4,18 +4,20 @@
         <div class="card-body card-padding">
             <div role="tabpanel">
                 <ul class="tab-nav" role="tablist">
-                    <li ><a href="#overview" role="tab" data-toggle="tab" class="f-18">Overview</a></li>
-                    <li class="active"><a href="#sessions" role="tab" data-toggle="tab" class="f-18">Exam Sessions</a></li>
+                    <li class="active"><a href="#overview" role="tab" data-toggle="tab" class="f-18">Overview</a></li>
+                    <li ><a href="#sessions" role="tab" data-toggle="tab" class="f-18">Exam Sessions</a></li>
+                    <li ><a href="#constraints" role="tab" data-toggle="tab" class="f-18">Constraints</a></li>
                 </ul>
 
                 <div class="tab-content">
                     <!-- Overview -->
-                    <div class="tab-pane" id="overview" role="tabpanel">
+                    <div class="tab-pane active" id="overview" role="tabpanel">
                         <div class="row container">
                             <div class="col-sm-4 col-xs-6 details-card p-l-0">
                                 <div class="bs-item z-depth-2 card-header">
                                     <span class="number">
                                         <i class="zmdi zmdi-library c-bluegray"></i>
+                                        <?= $rooms;?>
                                     </span> 
                                     <span class="text">Rooms</span>  
                                 </div>
@@ -25,6 +27,7 @@
                                 <div class="bs-item z-depth-2 card-header">
                                     <span class="number">
                                         <i class="zmdi zmdi-book c-bluegray"></i>
+                                        <?= $faculties?>
                                     </span> 
                                     <span class="text">Faculties</span>
                                 </div>
@@ -34,6 +37,7 @@
                                 <div class="bs-item z-depth-2 card-header">
                                     <span class="number">
                                         <i class="zmdi zmdi-account c-bluegray"></i>
+                                        <?= count($sessions)?>
                                     </span> <span class="text">Sessions</span>
                                 </div>                   
                             </div>
@@ -42,15 +46,21 @@
                     <!-- END Overview -->
 
                     <!-- sessions -->
-                    <div class="tab-pane active" id="sessions" role="tabpanel">
+                    <div class="tab-pane" id="sessions" role="tabpanel">
                         <div class="row container">
                             <!-- Left -->
                             <div class="col-md-6 col-xs-12">
                                 <div class="card-header">
-                                    <h2 class="text-uppercase c-cyan">Session History</h2>
+                                    <h2 class="text-uppercase c-cyan">Sessions</h2>
                                 </div>
                                 <div class="card-body">
-                                    <div class="list-group lg-odd-white" id="session-list">
+                                    <div class="preloader pl-sm hidden scheduler-loader">
+                                        <svg class="pl-circular" viewBox="25 25 50 50">
+                                            <circle class="plc-path" cx="50" cy="50" r="20"/>
+                                        </svg>                                        
+                                    </div>
+
+                                    <div class="list-group" id="session-list">
                                         <?php foreach($sessions as $session): ?>
                                             <div class="list-group-item media">
                                                 <div class="checkbox pull-left">
@@ -78,7 +88,7 @@
                                                 </div>
 
                                                 <div class="media-body">
-                                                    <div class="lgi-heading">
+                                                    <div class="lgi-heading" style="white-space:initial;">
                                                         <?= $session['name']?>
                                                         <ul class="lgi-attrs">                                                            
                                                             <li>                                                                
@@ -105,6 +115,14 @@
                                                                     </button>
                                                                 <?php endif;?>
                                                             </li>
+                                                            <?php if($session['schedule_path']): ?>
+                                                            <li>
+                                                                <a href="<?= base_url('scheduler/timetable/'.$session["id"]);?>">
+                                                                    <button class="btn btn-primary view_schedule"  data-path="<?= base_url('assets/config/schedules/{$session["schedule_path"]}');?>">VIEW SCHEDULE</button>
+                            
+                                                                </a>
+                                                            </li>
+                                                                <?php endif; ?>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -211,6 +229,90 @@
                         </div>
                     </div>
                     <!--END sessions -->
+
+                    <!-- Constraints -->
+                    <div class="tab-pane" id="constraints" role="tabpanel">
+                        <div class="row container">
+                            <div class="list-group lg-odd-white">
+                                <div class="card-header">
+                                    <h2 class="text-uppercase c-teal">Hard constraints</h2>
+                                </div>
+                                <div class="list-group-item">
+                                    <div class="pull-left">
+                                        <i class="zmdi zmdi-8tracks  c-cyan "></i>
+                                    </div>
+                                    <div classs="lgi-heading media-body m-r-2">
+                                        A student/lecturer cannot have more than one examination in the same period
+                                    </div>
+                                </div>
+
+                                <div class="list-group-item">
+                                    <div class="pull-left">
+                                        <i class="zmdi zmdi-8tracks  c-cyan "></i>
+                                    </div>
+                                    <div classs="lgi-heading media-body m-r-2">
+                                        A student may have at most three exams in the same day
+                                    </div>
+                                </div>
+                                
+                                <div class="list-group-item">
+                                    <div class="pull-left">
+                                        <i class="zmdi zmdi-8tracks  c-cyan "></i>
+                                    </div>
+                                    <div classs="lgi-heading media-body m-r-2">
+                                        The number of students attending to exams should
+                                        not be more than the available halls' capacity in the same
+                                        period
+                                    </div>
+                                </div>
+
+                                <div class="list-group-item">
+                                    <div class="pull-left">
+                                        <i class="zmdi zmdi-8tracks  c-cyan "></i>
+                                    </div>
+                                    <div classs="lgi-heading media-body m-r-2">
+                                        Exams that are taking place in the same time
+                                        period should have equal durations
+                                    </div>
+                                </div>
+
+                                <div class="card-header">
+                                    <h2 class="text-uppercase c-teal">Soft constraints</h2>
+                                </div>
+                                <div class="list-group-item">
+                                    <div class="pull-left">
+                                        <i class="zmdi zmdi-8tracks c-cyan"></i>
+                                    </div>
+                                    <div classs="lgi-heading media-body">
+                                        Exams that are most crowded should be placed in
+                                        timetable primarily
+                                    </div>
+                                </div>
+
+                                <div class="list-group-item">
+                                    <div class="pull-left">
+                                        <i class="zmdi zmdi-8tracks c-cyan"></i>
+                                    </div>
+                                    <div classs="lgi-heading media-body">
+                                        Student is expected to have one exam in one day
+                                        depending on the given ratio
+                                    </div>
+                                </div>
+
+                                <div class="list-group-item">
+                                    <div class="pull-left">
+                                        <i class="zmdi zmdi-8tracks c-cyan"></i>
+                                    </div>
+                                    <div classs="lgi-heading media-body">
+                                        At most five exams should be held in the same
+                                        period
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END Constraints -->
                 </div>
             </div>
         </div>

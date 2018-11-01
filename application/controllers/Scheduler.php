@@ -3,16 +3,6 @@
     class Scheduler extends CI_Controller{
         //?Scheduler managers only only
         var $user = 3;
-        public function test_graph(){
-            $file_path = base_url('assets/config/test_sess.json');
-            $config_data = json_decode(file_get_contents($file_path));
-            $unit_graph =  new MyGraph();
-            $unit_graph->create_graph($config_data);
-            $unit_graph->sort_graph();
-            $c_matrix = $unit_graph->vertex_coloring();
-            print_r($c_matrix);
-        }
-
         /**
          * Load the index view
          * 
@@ -23,7 +13,9 @@
             $data = array(
                 'tags' => $this->faculty_model->get_tags(),
                 'intakes' => $this->faculty_model->get_intakes(),
-                'sessions' => $this->scheduler_model->get_sessions()
+                'sessions' => $this->scheduler_model->get_sessions(),
+                'faculties' => count($this->faculty_model->get_faculties()),
+                'rooms' => count($this->scheduler_model->get_all_rooms())
             );
 
             $this->load->view('templates/header');
@@ -360,7 +352,7 @@
                 $res = array(
                     "icon" => "zmdi zmdi-badge-check",
                     "type" => "success",
-                    "message" => "Active sessioin stopped",
+                    "message" => "Active session stopped",
                     "check" => true
                 );
             }else{
@@ -378,7 +370,7 @@
          * Load session data
          */
         public function load_session($id){
-            // is_logged_in($this->user);
+            is_logged_in($this->user);
             $res =array();
             
             $details = $this->scheduler_model->get_session($id)[0];
@@ -447,14 +439,16 @@
                     $schedule_config = array(
                         'dates' => array(
                             'start_date' => $details['start_date'],
-                            'end_date' => $details['end_date']
+                            'end_date' => $details['end_date'],
+                            'skip_dates' => unserialize($details['skip_dates']),
                         ),
                         'timetable' => $final_schedule
                     );
 
                     $final_contents = json_encode($schedule_config);
-                    $final_file_name = FCPATH.'assets/config/schedules/sess_'.date('d-m-Y').'#'.$details['id'].'.json';
-                    if ( !file_put_contents($final_file_name, $final_contents)){
+                    $final_file_name = 'sess_'.date('d-m-Y').'#'.$details['id'].'.json';
+                    $final_file_path = FCPATH.'assets/config/schedules/'.$final_file_name;
+                    if ( !file_put_contents($final_file_path, $final_contents)){
                         $res = array(
                             "icon" => "zmdi zmdi-alert-circle-o",
                             "type" => "danger",
@@ -462,16 +456,17 @@
                             "check" => false
                         );
                     }else{
-                        $res = array(
-                            "icon" => "zmdi zmdi-badge-check",
-                            "type" => "success",
-                            "message" => "Active sessioin stopped",
-                            "check" => true
-                        );
-                        echo "Woe";
+                        if($this->scheduler_model->set_schedule_file($id,$final_file_name)){
+                            $res = array(
+                                "icon" => "zmdi zmdi-badge-check",
+                                "type" => "success",
+                                "message" => "Timetable created",
+                                "check" => true
+                            );
+                        }
                     }
                 }
-                return $res;
+                echo json_encode($res);
         }
 
         /**
@@ -797,14 +792,49 @@
             return $schedule;
         }
     
-        /*
+        /**
          *  Display the exam timetable
          */
-        public function timetable(){
+        public function timetable($sess_id){
+            is_logged_in($this->user);
+
+            $data = array(
+                '_session' => $this->scheduler_model->get_schedule($sess_id)
+            );
+            $metadata_schedule = file_get_contents(FCPATH.'assets/config/schedules/'.$data['_session']['schedule_path']);
+            $data['schedule'] = json_decode($metadata_schedule);
+            $data['simple_schedule'] = array(
+                'dates' => $data['schedule']->dates,
+                'timetable' => $this->simplify_schedule($data['schedule'])
+            );
+
             $this->load->view('templates/header');
             $this->load->view('templates/top_header.php');
             $this->load->view('scheduler/sidenav');
-            $this->load->view('scheduler/timetable');
+            $this->load->view('scheduler/timetable',$data);
             $this->load->view('templates/footer');
+        }
+
+        /**
+         * Create a better json format
+         */
+        public function simplify_schedule($schedule){
+
+            $simple_timetable = array();
+
+            foreach ($schedule->timetable as $d => $day) {
+                $this_day = array();
+                foreach ($day as $p => $period) {
+                    foreach ($period as $u => $unit) {
+                        $unit->name = $this->faculty_model->get_unit_name($u);
+                        $unit->code = $u;
+                        $unit->period = $p;
+                        $this_day[] = $unit;
+                    }
+                }
+                $simple_timetable[] = $this_day;
+            }
+
+            return $simple_timetable;
         }
     }

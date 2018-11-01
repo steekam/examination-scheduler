@@ -15,18 +15,15 @@
                         <a href="<?php echo base_url() ?>vendors/dark/profile-about.html">View Profile</a>
                     </li>
                     <li>
-                        <a href="#">Settings</a>
-                    </li>
-                    <li>
-                        <a href="#">Logout</a>
+                        <a href="<?=base_url('user/logout');?>">Logout</a>
                     </li>
                 </ul>
             </li>
             <li class="<?php if($this->uri->uri_string() =='faculty') echo 'active'; ?>">
                 <a href="<?= base_url('faculty') ?>"><i class="zmdi zmdi-home"></i>Home</a>
             </li>
-            <li class="<?php if($this->uri->uri_string() =='faculty/examinations') echo 'active'; ?>">
+            <!-- <li class="<?php if($this->uri->uri_string() =='faculty/examinations') echo 'active'; ?>">
                 <a href="<?= base_url('faculty/examinations')?>"><i class="zmdi zmdi-book-image"></i>Examinations</a>
-            </li>
+            </li> -->
         </ul>
     </aside>

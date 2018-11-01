@@ -27,11 +27,5 @@
             <li class="<?php if($this->uri->uri_string() =='scheduler/rooms') echo 'active'; ?>">
                 <a href="<?= base_url('scheduler/rooms'); ?>">Examination Rooms</a>
             </li>
-            <li class="<?php if($this->uri->uri_string() =='scheduler/constraints') echo 'active'; ?>">
-                <a href="#">Constraints</a>
-            </li>
-            <li class="<?php if($this->uri->uri_string() =='scheduler/timetable') echo 'active'; ?>">
-                <a href="<?= base_url('scheduler/timetable'); ?>">Exam Timetables</a>
-            </li>
         </ul>
     </aside>
