@@ -15,7 +15,7 @@
 
         <li class="pull-right">
             <ul class="hi-menu">
-                <li class="dropdown">
+                <!-- <li class="dropdown">
                     <a data-toggle="dropdown" href="#">
                         <i class="him-icon zmdi zmdi-notifications"></i>
                         <i class="him-counts">1</i>
@@ -48,8 +48,8 @@
                             <a class="view-more view-more-light" href="#">View Previous</a>
                         </div>
                     </div>
-                </li>
-                <li class="dropdown">
+                </li> -->
+                <!-- <li class="dropdown">
                     <a data-toggle="dropdown" href="#"><i class="him-icon zmdi zmdi-more-vert"></i></a>
                     <ul class="dropdown-menu dm-icon pull-right">
                         <li class="hidden-xs">
@@ -59,7 +59,7 @@
                             <a href="#"><i class="zmdi zmdi-settings"></i>Settings</a>
                         </li>
                     </ul>
-                </li>
+                </li> -->
                 <li>
                     <a href="<?php echo base_url('user/logout'); ?>" class="btn btn-primary">LOGOUT</a>
                 </li>

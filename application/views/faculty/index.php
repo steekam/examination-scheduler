@@ -11,7 +11,7 @@
 
                 <div class="tab-content">
                     <!-- Overview -->
-                    <div class="tab-pane " id="overview" role="tabpanel">
+                    <div class="tab-pane active " id="overview" role="tabpanel">
                         <div class="row container">
                             <div class="card">
                                 <div class="card-header">
@@ -465,7 +465,7 @@
                     <!-- END Students -->
 
                     <!-- Timetables -->
-                    <div class="tab-pane active" role="tabpanel" id="timetables">
+                    <div class="tab-pane" role="tabpanel" id="timetables">
                         <div class="row container">
                             <!-- Left -->
                             <div class="col-md-6 col-xs-12">
