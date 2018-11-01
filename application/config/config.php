@@ -23,7 +23,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = '';
+if(is_cli()){
+    $config['base_url'] = '';
+}else{
+    $root = "http://".$_SERVER['HTTP_HOST'];
+    $root .= dirname($_SERVER['SCRIPT_NAME']);
+    $config['base_url'] = $root;
+}
 
 ///Time zone
 date_default_timezone_set('Africa/Nairobi');

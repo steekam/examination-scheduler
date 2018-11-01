@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <footer id="footer">
     Copyright &copy; 2018 Examination Scheduler
 
@@ -27,18 +28,29 @@
         
         <script src="<?php echo base_url('vendors/dark/vendors/bower_components/Waves/dist/waves.min.js')?>"></script>
 
-        <script src="<?php echo base_url() ?>vendors/dark/vendors/bower_components/flot/jquery.flot.js"></script>
-        <script src="<?php echo base_url() ?>vendors/dark/vendors/bower_components/flot/jquery.flot.resize.js"></script>
-        <script src="<?php echo base_url() ?>vendors/dark/vendors/bower_components/flot.curvedlines/curvedLines.js"></script>
-        <script src="<?php echo base_url() ?>vendors/dark/vendors/sparklines/jquery.sparkline.min.js"></script>
-        <script src="<?php echo base_url() ?>vendors/dark/vendors/bower_components/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js"></script>
 
         <script src="<?php echo base_url() ?>vendors/dark/vendors/bower_components/moment/min/moment.min.js"></script>
         <script src="<?php echo base_url() ?>vendors/dark/vendors/bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
         <script src="<?php echo base_url() ?>vendors/dark/vendors/bower_components/simpleWeather/jquery.simpleWeather.min.js"></script>
         <script src="<?php echo base_url() ?>vendors/dark/vendors/bower_components/Waves/dist/waves.min.js"></script>
         <script src="<?php echo base_url() ?>vendors/dark/vendors/bootstrap-growl/bootstrap-growl.min.js"></script>
-        <script src="<?php echo base_url() ?>vendors/dark/vendors/bower_components/sweetalert/dist/sweetalert.min.js"></script>
+
+        <!-- Bootstrap notify -->
+        <script src="<?= base_url('vendors/Codebase/bootstrap-notify/bootstrap-notify.min.js');?>"></script>
+
+        <!-- Form validation plugin -->
+        <script src="<?= base_url('vendors/Codebase/assets/js/plugins/jquery-validation/jquery.validate.min.js');?>"></script>
+        <script src="<?= base_url('vendors/Codebase/assets/js/plugins/jquery-validation/additional-methods.js');?>"></script>
+
+        <!-- Sweetalert js -->
+        <script src="<?= base_url('vendors/Codebase/assets/js/plugins/sweetalert2/sweetalert2.min.js');?>"></script>
+
+        <!-- Select2-->
+        <script src="<?= base_url('bower_components/select2/dist/js/select2.full.min.js');?>"></script>
+
+        <!-- Bootstrap Datepicker -->
+        <script src="<?= base_url('vendors/bootstrap-datepicker/bootstrap-datepicker.min.js');?>"></script>
+
         <script src="<?php echo base_url() ?>vendors/dark/vendors/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
         
         <!-- Placeholder for IE9 -->
@@ -46,8 +58,11 @@
             <script src="<?php echo base_url('vendors/dark/vendors/bower_components/jquery-placeholder/jquery.placeholder.min.js')?>"></script>
         <![endif]-->
 
-        <script src="<?php echo base_url() ?>assets/js/app.js"></script>
-        <script src="<?php echo base_url() ?>assets/js/main.js"></script>
+        <script src="<?= base_url('assets/js/core.js');?>"></script>
+        <script src="<?php echo base_url('assets/js/app.js');?>"></script>
+        <script src="<?php echo base_url('assets/js/admin.js');?>"></script>
+        <script src="<?php echo base_url('assets/js/scheduler.js');?>"></script>
+        <script src="<?php echo base_url('assets/js/faculty.js');?>"></script>
 
         <!-- Helper for the forgot password logic -->
         <?php if(isset($forgot_trigger)): ?>
@@ -59,12 +74,6 @@
                 });
             </script>
         <?php endif;?>
-
-        
-        <script>
-            
-        </script>
-        
     </body>
 
 </html>

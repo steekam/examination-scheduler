@@ -1,8 +1,34 @@
-select option {
+select option ,.select2-opt {
     background-color: #2b343a; 
 }
 
-#addFacultyModal .modal-content {
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    height: 30px;
+    line-height: 30px;
+    color: #fff;
+    font-size: 15px;
+    background-color: #3f9ce8;
+    border: none;
+    border-radius: 3px;
+}
+
+.select2-container--default .select2-selection--multiple {
+    background-color: #2b343a;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+    border: none;
+}
+
+.select2-container--default .select2-results__group{
+    color: teal;
+}
+
+.select2-container--default .select2-search--dropdown .select2-search__field{
+    background:  #2b343a;
+}
+
+.myModal .modal-content {
     background: #282E35;
     
 }
@@ -12,4 +38,67 @@ select option {
     justify-content: flex-end;
     padding-right: 20px;
 
+}
+
+.details-card > .bs-item{
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.details-card > .bs-item > .number{
+    font-size: 3.8em;
+}
+
+.details-card > .bs-item > .text{
+    font-size: 1.5em;
+    padding-left: 10px;
+}
+
+.registered-courses {
+    width: 85%;
+    margin: 0 auto;
+}
+
+/* Add course styles */
+.register-course{
+    width: 50%;
+    margin: 0 auto;
+}
+.btn-register-course{
+    margin: 0 auto;
+    margin-left: 25%;
+}
+
+.rooms-card {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.building-name{
+    font-size: 1.8em;
+}
+
+.building-icon{
+    font-size: 1.4em;
+}
+
+.room-name, .room-icon{
+    font-size: 1.1em;
+}
+
+.datepicker-days thead tr th {
+    color: black !important;
+}
+/* STYLES FOR THE TTABLE */
+.ttable-header{
+    text-align: center;
+}
+.ttable-header-content{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.exam{
+    font-size:20px;
 }

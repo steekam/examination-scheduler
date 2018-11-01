@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <section id="main">
     <aside id="sidebar" class="sidebar c-overflow">
         <ul class="main-menu">
@@ -12,7 +13,7 @@
 
                 <ul>
                     <li>
-                        <a href="<?php echo base_url() ?>vendors/dark/profile-about.html">View Profile</a>
+                        <a href="<?php echo base_url(); ?>">View Profile</a>
                     </li>
                     <li>
                         <a href="#">Settings</a>
@@ -37,5 +38,8 @@
                     </li>
                 </ul>
             </li>
+            <!-- <li>
+                <a href="<?= base_url('admin/institution');?>"><i class="zmdi zmdi-graduation-cap"></i> Institution</a>
+            </li> -->
         </ul>
     </aside>

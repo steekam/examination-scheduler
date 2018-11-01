@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <?php 
     $action_url = "";
     if($this->uri->segment(3) == null && $this->uri->segment(4) == null ){

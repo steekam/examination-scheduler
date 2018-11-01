@@ -1,3 +1,4 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
@@ -11,7 +12,16 @@
     <link href="<?php echo base_url() ?>vendors/dark/vendors/bower_components/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>vendors/dark/vendors/bower_components/sweetalert/dist/sweetalert.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>vendors/dark/vendors/bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css" rel="stylesheet">
-        
+    
+    <!-- Sweetalert CSS -->
+    <link rel="stylesheet" href="<?= base_url('vendors/Codebase/assets/js/plugins/sweetalert2/sweetalert2.min.css');?>">
+
+    <!-- Select 2 & tags input -->
+    <link rel="stylesheet" href="<?= base_url('bower_components/select2/dist/css/select2.min.css');?>">
+
+    <!-- Datepicker Css -->
+    <link rel="stylesheet" href="<?= base_url('vendors/bootstrap-datepicker/bootstrap-datepicker.css');?>">
+
     <!-- CSS -->
     <link href="<?php echo base_url() ?>vendors/dark/css/app_1.min.css" rel="stylesheet">
     <link href="<?php echo base_url() ?>vendors/dark/css/app_2.min.css" rel="stylesheet">
