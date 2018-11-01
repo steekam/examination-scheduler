@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 29, 2018 at 06:08 AM
+-- Generation Time: Oct 31, 2018 at 12:59 PM
 -- Server version: 10.2.18-MariaDB
 -- PHP Version: 7.2.11
 
@@ -87,6 +87,34 @@ INSERT INTO `course_type` (`id`, `name`) VALUES
 (3, 'Certificate'),
 (4, 'Masters'),
 (5, 'Phd');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exam_session`
+--
+
+CREATE TABLE `exam_session` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `skip_dates` text NOT NULL,
+  `intake_id` int(11) NOT NULL,
+  `semester_tag` int(11) NOT NULL,
+  `max_consec_exams` int(11) NOT NULL,
+  `max_exams_astudent` int(11) NOT NULL DEFAULT 1,
+  `periods_a_day` int(11) NOT NULL DEFAULT 3,
+  `active` tinyint(1) DEFAULT 0,
+  `schedule_path` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `exam_session`
+--
+
+INSERT INTO `exam_session` (`id`, `name`, `start_date`, `end_date`, `skip_dates`, `intake_id`, `semester_tag`, `max_consec_exams`, `max_exams_astudent`, `periods_a_day`, `active`, `schedule_path`) VALUES
+(1, 'November end of semester 2018', '2018-11-12', '2018-11-23', 'a:1:{i:0;s:0:\"\";}', 1, 6, 5, 2, 3, 0, 'sess_31-10-2018#1.json');
 
 -- --------------------------------------------------------
 
@@ -245,31 +273,33 @@ CREATE TABLE `room` (
 --
 
 INSERT INTO `room` (`id`, `name`, `building_id`, `room_size`, `status`) VALUES
-(1, 'STMB F1-02', 1, 0, 'active'),
+(1, 'STMB F1-02', 1, 45, 'active'),
 (2, 'MSB 1', 2, 80, 'active'),
-(3, 'Lecture Room 1', 3, 0, 'active'),
-(4, 'SBS 1', 4, 0, 'active'),
-(5, 'Shaba', 5, 0, 'active'),
-(6, 'Zumaridi', 5, 25, 'active'),
-(7, 'SBS 2', 4, 0, 'active'),
-(8, 'SBS 3', 4, 0, 'active'),
-(10, 'Lecture Room 4', 3, 0, 'active'),
-(11, 'Lecturer Room 5', 3, 0, 'active'),
-(12, 'Lecture Room 3', 3, 0, 'active'),
-(13, 'Room 2', 3, 0, 'active'),
-(14, 'Lecture Room 2', 3, 0, 'active'),
-(15, 'Room 1', 3, 0, 'active'),
-(16, 'Room 3', 3, 0, 'active'),
+(3, 'Lecture Room 1', 3, 100, 'active'),
+(4, 'SBS 1', 4, 40, 'active'),
+(5, 'Shaba', 5, 40, 'active'),
+(6, 'Zumaridi', 5, 40, 'active'),
+(7, 'SBS 2', 4, 40, 'active'),
+(8, 'SBS 3', 4, 40, 'active'),
+(10, 'Lecture Room 4', 3, 100, 'active'),
+(11, 'Lecturer Room 5', 3, 100, 'active'),
+(12, 'Lecture Room 3', 3, 100, 'active'),
+(13, 'Room 2', 3, 30, 'active'),
+(14, 'Lecture Room 2', 3, 100, 'active'),
+(15, 'Room 1', 3, 40, 'active'),
+(16, 'Room 3', 3, 40, 'active'),
 (18, 'MSB 2', 2, 80, 'active'),
-(20, 'Room 4', 3, 0, 'active'),
+(20, 'Room 4', 3, 30, 'active'),
 (21, 'MSB 3', 2, 40, 'active'),
 (22, 'MSB 4', 2, 40, 'active'),
-(23, 'MSB 5', 2, 0, 'active'),
+(23, 'MSB 5', 2, 40, 'active'),
 (24, 'STMB F1-04', 1, 40, 'active'),
-(25, 'STMB F1-03', 1, 0, 'active'),
-(32, 'MSB 6', 2, 0, 'active'),
-(33, 'MSB 7', 2, 40, 'active'),
-(60, 'STMB F1-01', 1, 0, 'active');
+(25, 'STMB F1-03', 1, 45, 'active'),
+(32, 'MSB 6', 2, 0, 'inactive'),
+(33, 'MSB 7', 2, 40, 'inactive'),
+(60, 'STMB F1-01', 1, 45, 'active'),
+(67, 'STMB F5-01', 1, 130, 'active'),
+(68, 'STMB F6-01', 1, 130, 'active');
 
 -- --------------------------------------------------------
 
@@ -312,7 +342,7 @@ INSERT INTO `student_group` (`group_id`, `name`, `course_code`, `size`, `intake_
 (24, 'ICS3B', 'BICS', 45, 1),
 (25, 'BBT2A', 'BBIT', 22, 1),
 (26, 'BBT2B', 'BBIT', 41, 1),
-(27, 'BBT2C', 'BBIT', 49, 1);
+(27, 'BBT2C', 'BBIT', 49, 5);
 
 -- --------------------------------------------------------
 
@@ -704,6 +734,14 @@ ALTER TABLE `course_type`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `exam_session`
+--
+ALTER TABLE `exam_session`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `exam_session_ibfk_1` (`intake_id`),
+  ADD KEY `exam_session_ibfk_2` (`semester_tag`);
+
+--
 -- Indexes for table `faculty`
 --
 ALTER TABLE `faculty`
@@ -813,6 +851,12 @@ ALTER TABLE `course_type`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT for table `exam_session`
+--
+ALTER TABLE `exam_session`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `intake`
 --
 ALTER TABLE `intake`
@@ -834,7 +878,7 @@ ALTER TABLE `password_reset`
 -- AUTO_INCREMENT for table `room`
 --
 ALTER TABLE `room`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `student_group`
@@ -882,6 +926,13 @@ ALTER TABLE `user_type`
 ALTER TABLE `course`
   ADD CONSTRAINT `course_ibfk_1` FOREIGN KEY (`faculty_code`) REFERENCES `faculty` (`faculty_code`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `course_ibfk_2` FOREIGN KEY (`course_type`) REFERENCES `course_type` (`id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `exam_session`
+--
+ALTER TABLE `exam_session`
+  ADD CONSTRAINT `exam_session_ibfk_1` FOREIGN KEY (`intake_id`) REFERENCES `intake` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  ADD CONSTRAINT `exam_session_ibfk_2` FOREIGN KEY (`semester_tag`) REFERENCES `tag` (`tag_id`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Constraints for table `faculty_rep`
