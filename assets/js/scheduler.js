@@ -338,6 +338,31 @@ var initHomeScheduler = function (){
             let target = window.location.pathname;
             $('#session-list').load(target+' #session-list');
         }
+
+        
+        //?Delete
+        $('#session-list').on('click','.delete-session',event => {
+            let _this = event.target;
+            $(_this).closest('.actions').removeClass('open');
+            let session = $(_this).closest('.dropdown-menu').data('id');
+            let target = $(_this).closest('.dropdown-menu').data('delete-target');
+            const deleteSwal = mySwal();
+            deleteSwal({   
+                title: "Are you sure?",   
+                text: "This record will be deleted permanently",   
+                type: "warning",       
+                confirmButtonText: "Yes, delete!",
+            })
+            .then((result)=>{
+                if(result.value){
+                    ajaxComm(target,{sess_id: session},"json")
+                    .done(data => {
+                        notify(data.icon,data.type,data.message);
+                        reloadSessionList();
+                    });
+                }    
+            });
+        });
     }
 
     return {

@@ -122,6 +122,7 @@ var initInstitution = function(){
         //?Edit event for faculty details
         $('#faculty-list').on('click','.edit-faculty',event => {
             let _this = event.target;
+            $(_this).closest('.actions').removeClass('open');
             let form = $('form.js-faculty');
             $(form).removeClass('add-action').addClass('edit-action');
             $(form).closest('.card').find('.card-header>h2').text('EDIT FACULTY DETAILS');
@@ -178,6 +179,7 @@ var initInstitution = function(){
         //?Delete
         $('#faculty-list').on('click','.delete-faculty',event => {
             let _this = event.target;
+            $(_this).closest('.actions').removeClass('open');
             let code = $(_this).closest('.dropdown-menu').data('code');
             let target = $(_this).closest('.dropdown-menu').data('delete-target');
 
@@ -234,6 +236,7 @@ var initInstitution = function(){
         $('#invigilator-list').on('click','.edit-invigilator',event=>{
             let _this = event.target;
             $(_this).closest('.actions').removeClass('open');
+            $(_this).closest('.actions').removeClass('open');
             let form = $('form.js-invigilator');
             $(form).removeClass('add-action').addClass('edit-action');
             $(form).closest('.card').find('.card-header>h2').text('EDIT INVIGILATOR DETAILS').addClass('c-red');
@@ -265,6 +268,7 @@ var initInstitution = function(){
         //?Delete invigilator
         $('#invigilator-list').on('click','.delete-invigilator',event=>{
             let _this = event.target;
+            $(_this).closest('.actions').removeClass('open');
             $(_this).closest('.actions').removeClass('open');
             let id = $(_this).closest('.dropdown-menu').data('id');
             let target = $(_this).closest('.dropdown-menu').data('delete-target');

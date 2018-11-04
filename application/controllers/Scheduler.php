@@ -837,4 +837,28 @@
 
             return $simple_timetable;
         }
+
+        /**
+         * Delete schedule session
+         */
+        public function delete_session(){
+            is_logged_in($this->user);
+            $res=array();
+
+            $sess_id = $this->input->post('sess_id');
+            if($this->scheduler_model->delete_exam_session($sess_id)){
+                $res = array(
+                    "icon" => "zmdi zmdi-badge-check",
+                    "type" => "success",
+                    "message" => "Exam session deleted successfully"
+                );
+            }else{
+                $res = array(
+                    "icon" => "zmdi zmdi-alert-circle-o",
+                    "type" => "danger",
+                    "message" => "Could not complete request"
+                );
+            }
+            echo json_encode($res);
+        }
     }

@@ -76,12 +76,12 @@
                                                             <i class="zmdi zmdi-more-vert"></i>
                                                         </a>
 
-                                                        <ul class="dropdown-menu dropdown-menu-right" data-session=<?= htmlspecialchars(json_encode($session));?>>
+                                                        <ul class="dropdown-menu dropdown-menu-right" data-id ="<?= $session['id'];?>" data-session=<?= htmlspecialchars(json_encode($session));?> data-delete-target="<?= base_url('scheduler/delete_session');?>">
                                                             <li>
-                                                                <a href="#">Edit</a>
+                                                                <a href="#" class="edit-session">Edit</a>
                                                             </li>
                                                             <li>
-                                                                <a href="#">Delete</a>
+                                                                <a href="#" class="delete-session">Delete</a>
                                                             </li>
                                                         </ul>
                                                     </div>

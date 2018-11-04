@@ -48,10 +48,10 @@
                             <th >EXAMINATION</th>
                             <th >GROUP</th>
                             <th >VENUE</th>
-                            <th  width=2%>CHIEF INVIGILATOR</th>
+                            <th  width=3%>CHIEF INVIGILATOR</th>
                         </tr>
                     </thead>
-                    <tbody class="f-13">
+                    <tbody class="f-14">
                         <?php $first_day = true; $today; $yester_day;?>
                         <?php foreach($simple_schedule['timetable'] as $d => $day): ?>
                             <tr> <!--  Day-->

@@ -118,6 +118,14 @@
     }
 
     /**
+     * Delete session
+     */
+    public function delete_exam_session($sess_id){
+        $this->db->where('id',$sess_id);
+        return $this->db->delete('exam_session');
+    }
+
+    /**
      * Validate session name
      */
     public function validate_session_name($name){
